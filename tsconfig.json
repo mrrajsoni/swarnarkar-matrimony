@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "sourceMap": true,
+        "preserveConstEnums": true,
+        "noImplicitAny": false,
+        "target": "es6",
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "lib": ["dom", "DOM.Iterable", "es2015", "es7", "es2017"],
+        "declaration": true,
+        "skipLibCheck": true
+    },
+
+    "exclude": ["node_modules"]
+}
