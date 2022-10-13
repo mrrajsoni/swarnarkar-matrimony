@@ -24,5 +24,14 @@ module.exports = {
     plugins: ['react', '@typescript-eslint'],
     rules: {
         'react/react-in-jsx-scope': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/no-unsafe-call': 'off',
+        'prettier/prettier': [
+            'error',
+            {
+                endOfLine: 'auto',
+            },
+        ],
     },
 };
