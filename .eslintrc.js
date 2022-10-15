@@ -3,6 +3,7 @@ module.exports = {
     env: {
         browser: true,
         es2021: true,
+        node: true,
     },
     extends: [
         'eslint:recommended',
@@ -23,7 +24,6 @@ module.exports = {
     },
     plugins: ['react', '@typescript-eslint'],
     rules: {
-        'react/react-in-jsx-scope': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/no-explicit-any': 'warn',
         '@typescript-eslint/no-unsafe-call': 'off',
