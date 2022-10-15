@@ -1,0 +1,26 @@
+nav {
+    gap: 30px;
+    ul {
+        display: flex;
+        gap: 15px;
+    }
+
+    .register-menu {
+        a {
+            padding: 7px 20px;
+            background: var(--primary-pink);
+            color: var(--white);
+            border-radius: 6px;
+            border: 1px solid var(--primary-pink);
+            transition: all 400ms ease;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        a:hover {
+            background: var(--white);
+            color: var(--primary-pink);
+            border: 1px solid var(--primary-pink);
+        }
+    }
+}
