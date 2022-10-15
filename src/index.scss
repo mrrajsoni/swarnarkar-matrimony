@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('./Styles/colors.scss');
+
+@font-face {
+    font-family: Faktum-Bold;
+    src: url('./Assets/Fonts/FaktumBold.woff2');
+}
+
+@font-face {
+    font-family: TT-Commons-Normal;
+    src: url('./Assets/Fonts/TTCommonsRegular.woff2');
+}
+
+@font-face {
+    font-family: TT-Commons-Bold;
+    src: url('./Assets/Fonts/TTCommonsBold.woff2');
+}
+
+body,
+p,
+span {
+    font-family: TT-Commons-Normal;
+    line-height: 1.3;
+    font-size: 18px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Faktum-Bold;
+    line-height: 1.3;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+.fluid-container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+button {
+    padding: 15px 30px;
+    background: var(--dark-blue);
+    border-radius: 6px;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: bold;
+    margin-top: 30px;
+}
