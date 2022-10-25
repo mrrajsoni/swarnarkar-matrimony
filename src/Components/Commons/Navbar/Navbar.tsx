@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { mainMenu, SignUpMenu } from '../../../Constants/Menu';
 import './Navbar.scss';
 
@@ -15,7 +16,7 @@ const MainMenuLinks = () => {
         <ul className="main-menu">
             {mainMenu.map((mainMenuLink) => (
                 <li key={mainMenuLink.name}>
-                    <a href={mainMenuLink.link}>{mainMenuLink.name}</a>
+                    <Link to={mainMenuLink.link}>{mainMenuLink.name}</Link>
                 </li>
             ))}
         </ul>
@@ -27,7 +28,7 @@ const HeaderSignUpLinks = () => {
         <ul className="register-menu">
             {SignUpMenu.map((signUplink) => (
                 <li key={signUplink.name}>
-                    <a href={signUplink.link}>{signUplink.name}</a>
+                    <Link to={signUplink.link}>{signUplink.name}</Link>
                 </li>
             ))}
         </ul>

@@ -1,25 +1,40 @@
 export const mainMenu = [
     {
         name: 'About',
-        link: '#',
-    },
-    {
-        name: '',
-        link: '',
+        link: 'about',
     },
     {
         name: 'Contact',
-        link: '#',
+        link: '/contact',
     },
 ];
 
 export const SignUpMenu = [
     {
         name: 'Login',
-        link: '#',
+        link: '/login',
     },
     {
         name: 'Register',
-        link: '#',
+        link: '/register',
+    },
+];
+
+export const FooterQuickMenu = [
+    {
+        name: 'About',
+        link: '/about',
+    },
+    {
+        name: 'Contact',
+        link: '/contact',
+    },
+    {
+        name: 'Login',
+        link: '/login',
+    },
+    {
+        name: 'Register',
+        link: '/register',
     },
 ];
