@@ -1,0 +1,47 @@
+.register-section-inner {
+    background: var(--light-gray);
+
+    .registration-form {
+        max-width: 480px;
+        margin: 0 auto;
+
+        .form-container {
+            .error-container {
+                color: var(--error);
+                margin-bottom: 5px;
+                font-size: 16px;
+            }
+            input:not(input[type='radio']) {
+                width: 480px;
+            }
+
+            .radio-group-container {
+                input[type='radio'] {
+                    margin-right: 5px;
+                }
+            }
+
+            .mobile-input-container {
+                .disabled-input {
+                    border-right: 0;
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                    width: 60px;
+                    text-align: center;
+                }
+                .mobile-input {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    width: 450px;
+                }
+            }
+
+            .eye-icon {
+                right: 10px;
+                top: 14px;
+                width: 20px;
+                cursor: pointer;
+            }
+        }
+    }
+}
