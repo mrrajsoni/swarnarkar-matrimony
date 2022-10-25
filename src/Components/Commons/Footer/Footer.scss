@@ -1,0 +1,22 @@
+footer {
+    padding-top: 5%;
+    background-color: var(--dark-blue);
+
+    color: var(--white);
+
+    .footer-section {
+        max-width: 1350px;
+        margin: 0 auto;
+
+        h4 {
+            font-size: 22px;
+        }
+        > div:first-child {
+            padding-bottom: 3%;
+        }
+
+        .copyright-section {
+            font-size: 16px;
+        }
+    }
+}
