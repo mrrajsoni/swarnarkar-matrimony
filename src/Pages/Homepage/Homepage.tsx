@@ -1,4 +1,5 @@
 import Button from '../../Components/Commons/Button/Button';
+import Layout from '../../Components/Commons/Layout/Layout';
 import './Homepage.scss';
 
 const uspList = [
@@ -24,10 +25,12 @@ const HomePage = () => {
         console.log('Do this');
     };
     return (
-        <section className="homepage">
-            <HomeHero onRegisterClick={onRegisterClick} />
-            <USP />
-        </section>
+        <Layout>
+            <section className="homepage">
+                <HomeHero onRegisterClick={onRegisterClick} />
+                <USP />
+            </section>
+        </Layout>
     );
 };
 
