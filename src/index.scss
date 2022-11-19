@@ -47,6 +47,10 @@ h1 {
     margin: 0 auto;
 }
 
+textarea {
+    width: 100%;
+}
+
 button {
     padding: 14px 30px;
     background: var(--dark-blue);
@@ -57,7 +61,8 @@ button {
     margin-top: 30px;
 }
 
-input {
+input,
+textarea {
     border: 1px solid var(--border-color);
     border-radius: 2px;
     padding: 10px;
@@ -76,6 +81,12 @@ label {
     margin-bottom: 5px;
 }
 
+.sub-label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: var(--text-gray);
+}
+
 .required:after {
     content: ' *';
     color: var(--error);
@@ -89,18 +100,38 @@ label {
     cursor: pointer;
 }
 
+.react-select-container {
+    margin-bottom: 5px;
+}
+
 .form-section {
-    max-width: 480px;
+    max-width: 580px;
     margin: 0 auto;
 
     .form-container {
+        margin-bottom: 10px;
+        input:not(input[type='radio']) {
+            width: 480px;
+        }
+        .two-cols {
+            display: flex;
+            gap: 30px;
+
+            div {
+                width: 100%;
+            }
+            input:not(input[type='radio']) {
+                width: 100%;
+            }
+        }
+
+        input[type='radio'] {
+            margin-right: 5px;
+        }
         .error-container {
             color: var(--error);
             margin-bottom: 10px;
             font-size: 16px;
-        }
-        input:not(input[type='radio']) {
-            width: 480px;
         }
 
         .radio-group-container {
