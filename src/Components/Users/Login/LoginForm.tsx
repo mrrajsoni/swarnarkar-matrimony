@@ -4,7 +4,6 @@ import Button from '../../Commons/Button/Button';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import Login from '../../../Utils/API/Login';
-import { useUser } from '../../../Context/UserContext';
 
 export interface LoginFormValues {
     email: string;
@@ -12,8 +11,6 @@ export interface LoginFormValues {
 }
 
 const LoginForm = () => {
-    const { user } = useUser();
-    console.log(user);
     return (
         <section className="form-section">
             <UserLoginForm />
@@ -40,7 +37,6 @@ const UserLoginForm = () => {
             }}
             validationSchema={LoginSchema}
             onSubmit={(values) => {
-                console.log(values);
                 void Login.signInWithEmail(values);
             }}>
             {(props) => (
