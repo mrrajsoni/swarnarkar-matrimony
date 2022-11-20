@@ -45,7 +45,6 @@ const HeaderSignUpLinks = ({
     setProfileMenuOpen: () => void;
 }) => {
     const { user, userLogout } = useUser();
-    console.log(user);
 
     return (
         <ul className="register-menu relative">
