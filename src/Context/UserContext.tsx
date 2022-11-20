@@ -10,6 +10,11 @@ const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // Check active sessions and sets the user
+        const userSession = supabase.auth.getSession();
+        void userSession.then((value) => {
+            setUser(value.data.session?.user ?? null);
+        });
         // Listen for changes on auth state (logged in, signed out, etc.)
         // eslint-disable-next-line @typescript-eslint/require-await
         const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
