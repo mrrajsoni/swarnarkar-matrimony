@@ -3,7 +3,9 @@ import { Formik, Form, FormikProps } from 'formik';
 import Button from '../../Commons/Button/Button';
 import * as Yup from 'yup';
 import { useState } from 'react';
-import Login from '../../../Utils/API/Login';
+import { loginData } from '../../../Utils/API/Login';
+import { Link } from 'react-router-dom';
+import { useUser } from '../../../Context/UserContext';
 
 export interface LoginFormValues {
     email: string;
@@ -11,22 +13,30 @@ export interface LoginFormValues {
 }
 
 const LoginForm = () => {
+    const { userLogin } = useUser();
+
+    const handleLogin = (values) => {
+        userLogin(values);
+    };
     return (
         <section className="form-section">
-            <UserLoginForm />
+            <div className="welcome-message text-center mb-9">Welcome back! Proceed to login</div>
+            <UserLoginForm handleLogin={handleLogin} />
+            <NewUserPrompt />
         </section>
     );
 };
 
-const UserLoginForm = () => {
+const UserLoginForm = ({ handleLogin }: { handleLogin: (values: loginData) => void }) => {
     const [showPasswordField, setShowPasswordField] = useState(false);
 
     const changePasswordVisibility = () => {
         setShowPasswordField((prevState) => !prevState);
     };
+
     const LoginSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email').required('Required'),
-        password: Yup.string().required(),
+        password: Yup.string().required('Required'),
     });
 
     return (
@@ -37,7 +47,7 @@ const UserLoginForm = () => {
             }}
             validationSchema={LoginSchema}
             onSubmit={(values) => {
-                void Login.signInWithEmail(values);
+                handleLogin(values);
             }}>
             {(props) => (
                 <Form method="post" className="registration-form">
@@ -47,6 +57,7 @@ const UserLoginForm = () => {
                         props={props}
                         showPasswordField={showPasswordField}
                     />
+                    <ForgotPassword />
                     <Button onClick={undefined} name="Submit" />
                 </Form>
             )}
@@ -129,6 +140,25 @@ const PasswordInput = ({
                     <div className="error-container">{props.errors.password}</div>
                 ) : null}
             </div>
+        </div>
+    );
+};
+
+const NewUserPrompt = () => {
+    return (
+        <div className="new-signup-prompt-message text-center mt-8">
+            Here for the first time?
+            <span className="register-link cursor-pointer">
+                <Link to="/register">Register for Free</Link>
+            </span>
+        </div>
+    );
+};
+
+const ForgotPassword = () => {
+    return (
+        <div className="forgot-password-container flex justify-between">
+            <div className="forgot-password-link cursor-pointer">Forgot password?</div>
         </div>
     );
 };
