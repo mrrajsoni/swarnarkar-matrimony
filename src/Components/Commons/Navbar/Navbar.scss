@@ -1,26 +1,23 @@
 nav {
-    gap: 30px;
+    gap: 15px;
     ul {
         display: flex;
         gap: 15px;
     }
 
     .register-menu {
-        a {
-            padding: 7px 20px;
-            background: var(--primary-pink);
-            color: var(--white);
-            border-radius: 6px;
-            border: 1px solid var(--primary-pink);
-            transition: all 400ms ease;
-            text-transform: uppercase;
-            font-weight: bold;
+        svg {
+            height: 14px;
+            margin-top: 5px;
         }
 
-        a:hover {
-            background: var(--white);
-            color: var(--primary-pink);
-            border: 1px solid var(--primary-pink);
+        .profile-menu-dropdown {
+            top: 30px;
+            background: white;
+            padding: 10px 15px;
+            width: 100px;
+            border-radius: 6px;
+            box-shadow: var(--box-shadow);
         }
     }
 }
