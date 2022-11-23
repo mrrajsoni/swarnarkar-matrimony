@@ -1,10 +1,11 @@
 import { Formik, FormikProps, Form } from 'formik';
 import { Gender, Height, Marital_Status } from '../../../../Constants/FormOptions';
 import Button from '../../../Commons/Button/Button';
-import SelectInput, { selectValue } from '../../../Commons/Select/SelectInput';
+import SelectInput from '../../../Commons/Select/SelectInput';
 import * as Yup from 'yup';
 import { User } from '@supabase/supabase-js';
 import Registration from '../../../../Utils/API/SignUp';
+import { selectValue } from '../../../../Types/GlobalTypes';
 
 export interface IUserPersonalData {
     first_name: string;

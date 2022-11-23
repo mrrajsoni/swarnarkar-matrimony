@@ -1,10 +1,11 @@
 import { Formik, FormikProps, Form } from 'formik';
 import { Gotra } from '../../../../Constants/FormOptions';
 import Button from '../../../Commons/Button/Button';
-import SelectInput, { selectValue } from '../../../Commons/Select/SelectInput';
+import SelectInput from '../../../Commons/Select/SelectInput';
 import * as Yup from 'yup';
 import { User } from '@supabase/supabase-js';
 import SignUp from '../../../../Utils/API/SignUp';
+import { selectValue } from '../../../../Types/GlobalTypes';
 
 export interface IUserFamilyData {
     self_gotra: selectValue;

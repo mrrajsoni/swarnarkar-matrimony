@@ -1,50 +1,46 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
+import { IUser } from '../Types/GlobalTypes';
 import FetchUser from '../Utils/API/FetchUser';
 import Login, { loginData } from '../Utils/API/Login';
 
 export const UserContext = createContext(null);
-
 const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<IUser>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check active sessions and sets the user
-        const userSession = supabase.auth.getSession();
-        void userSession.then((value) => {
-            setUser(value.data.session?.user ?? null);
-        });
         // Listen for changes on auth state (logged in, signed out, etc.)
         // eslint-disable-next-line @typescript-eslint/require-await
-        const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
-            if (session?.user) {
-                const currentSession = session;
-                setUser(currentSession.user ?? null);
-            } else {
-                setUser(null);
-            }
+        const { data: listener } = supabase.auth.onAuthStateChange(async () => {
+            getUserProfile();
         });
 
         const getUserProfile = () => {
-            void FetchUser.getUserData(user.id).then((response) => {
-                setUser((prevState) => {
-                    return {
-                        ...prevState,
-                        ...response[0],
-                    };
-                });
+            const userSession = supabase.auth.getSession();
+            void userSession.then((value) => {
+                const userData = value.data.session?.user;
+                if (userData) {
+                    void FetchUser.getUserData(userData?.id).then((response) => {
+                        setUser(() => {
+                            return {
+                                ...userData,
+                                ...response[0],
+                            };
+                        });
+                    });
+                } else {
+                    setUser(null);
+                }
             });
         };
 
-        if (user?.id) {
-            getUserProfile();
-        }
-
+        getUserProfile();
         return () => {
             listener?.subscription.unsubscribe();
         };
     }, [user?.id]);
+    console.log(user?.id);
 
     const userLogin = (logindata: loginData) => {
         void Login.signInWithEmail(logindata);
@@ -53,7 +49,6 @@ const UserProvider = ({ children }) => {
     const userLogout = () => {
         void Login.signOut();
         setUser(null);
-        // router;
     };
     const exposed = {
         user,

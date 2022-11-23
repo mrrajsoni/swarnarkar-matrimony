@@ -1,4 +1,5 @@
 import Select, { GroupBase, OptionsOrGroups, StylesConfig } from 'react-select';
+import { selectValue } from '../../../Types/GlobalTypes';
 
 export interface ISelectInput {
     options: OptionsOrGroups<unknown, GroupBase<unknown>>;
@@ -10,10 +11,6 @@ export interface ISelectInput {
     placeHolder?: string;
 }
 
-export interface selectValue {
-    label: string;
-    value: string;
-}
 const SelectInput = (props: ISelectInput) => {
     const { options, id, onChange, name, defaultValue, value, placeHolder } = props;
     const customStyles: StylesConfig = {
