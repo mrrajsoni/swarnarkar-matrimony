@@ -1,11 +1,10 @@
-import { User } from '@supabase/supabase-js';
 import { Formik, Form, FormikProps } from 'formik';
 import { AnnualIncome, EmployedSectors, IndianState } from '../../../../Constants/FormOptions';
 import Button from '../../../Commons/Button/Button';
 import SelectInput from '../../../Commons/Select/SelectInput';
 import * as Yup from 'yup';
 import Registration from '../../../../Utils/API/SignUp';
-import { selectValue } from '../../../../Types/GlobalTypes';
+import { IUser, selectValue } from '../../../../Types/GlobalTypes';
 
 export interface IEducationalFormValues {
     state: selectValue;
@@ -41,7 +40,7 @@ const validationSchema = Yup.object().shape({
         value: Yup.string(),
     }),
 });
-const EducationalForm = ({ user }: { user: User }) => {
+const EducationalForm = ({ user }: { user: IUser }) => {
     const updateEducationalInformation = (values: IEducationalFormValues) => {
         void Registration.updateEducationalInfo(values, user.id);
     };

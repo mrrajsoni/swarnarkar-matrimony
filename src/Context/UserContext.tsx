@@ -4,7 +4,13 @@ import { IUser } from '../Types/GlobalTypes';
 import FetchUser from '../Utils/API/FetchUser';
 import Login, { loginData } from '../Utils/API/Login';
 
-export const UserContext = createContext(null);
+interface IUserContext {
+    user: IUser;
+    userLogin: (values: loginData) => void;
+    userLogout: () => void;
+}
+export const UserContext = createContext<IUserContext>(null);
+
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState<IUser>(null);
     const [loading, setLoading] = useState(true);

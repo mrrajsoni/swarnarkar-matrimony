@@ -3,9 +3,8 @@ import { Gotra } from '../../../../Constants/FormOptions';
 import Button from '../../../Commons/Button/Button';
 import SelectInput from '../../../Commons/Select/SelectInput';
 import * as Yup from 'yup';
-import { User } from '@supabase/supabase-js';
 import SignUp from '../../../../Utils/API/SignUp';
-import { selectValue } from '../../../../Types/GlobalTypes';
+import { IUser, selectValue } from '../../../../Types/GlobalTypes';
 
 export interface IUserFamilyData {
     self_gotra: selectValue;
@@ -32,7 +31,7 @@ const validationSchema = Yup.object().shape({
         .required('Required')
         .min(200, 'Please write minimum 200 characters'),
 });
-const FamilyForm = ({ user }: { user: User }) => {
+const FamilyForm = ({ user }: { user: IUser }) => {
     const updateUserInformation = (values: IUserFamilyData) => {
         void SignUp.updateFamilyInfo(values, user.id);
     };

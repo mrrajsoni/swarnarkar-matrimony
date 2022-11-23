@@ -3,9 +3,8 @@ import { Gender, Height, Marital_Status } from '../../../../Constants/FormOption
 import Button from '../../../Commons/Button/Button';
 import SelectInput from '../../../Commons/Select/SelectInput';
 import * as Yup from 'yup';
-import { User } from '@supabase/supabase-js';
 import Registration from '../../../../Utils/API/SignUp';
-import { selectValue } from '../../../../Types/GlobalTypes';
+import { IUser, selectValue } from '../../../../Types/GlobalTypes';
 
 export interface IUserPersonalData {
     first_name: string;
@@ -53,7 +52,7 @@ const validationSchema = Yup.object().shape({
         value: Yup.string(),
     }),
 });
-const PersonalInfoForm = ({ user }: { user: User }) => {
+const PersonalInfoForm = ({ user }: { user: IUser }) => {
     const updateUserInformation = (values: IUserPersonalData) => {
         void Registration.updatePersonalInfo(values, user.id);
     };
