@@ -10,7 +10,6 @@ import FetchUser from '../../Utils/API/FetchUser';
 const Register = () => {
     const { user } = useUser();
     const [userDetails, setUserDetails] = useState(null);
-    console.log(user);
 
     useEffect(() => {
         if (user) {
