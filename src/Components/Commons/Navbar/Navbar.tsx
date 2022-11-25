@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Popup from 'reactjs-popup';
 import { useUser } from '../../../Context/UserContext';
 import LoginForm from '../../Users/Login/LoginForm';
 import './Navbar.scss';
 import { ReactComponent as DownArrow } from '../../../Assets/Svg/down-arrow.svg';
 import { Link } from 'react-router-dom';
+import CommonUtils from '../../../Utils/API/Common Utils/CommonUtils';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
+    const profileMenuRef = useRef<HTMLUListElement>(null);
+
+    CommonUtils.useOutsideClick([profileMenuRef], () => {
+        setProfileMenuOpen(false);
+        setIsMenuOpen(false);
+    });
     const handleRegisterMenu = () => {
         setIsMenuOpen((prevState) => !prevState);
     };
@@ -20,6 +27,7 @@ const Navbar = () => {
         <nav className="flex justify-end ">
             <MainMenuLinks />
             <HeaderSignUpLinks
+                profileMenuRef={profileMenuRef}
                 isProfileMenuOpen={isProfileMenuOpen}
                 isMenuOpen={isMenuOpen}
                 setIsMenuOpen={handleRegisterMenu}
@@ -38,11 +46,13 @@ const HeaderSignUpLinks = ({
     setIsMenuOpen,
     isProfileMenuOpen,
     setProfileMenuOpen,
+    profileMenuRef,
 }: {
     isMenuOpen: boolean;
     setIsMenuOpen: () => void;
     isProfileMenuOpen: boolean;
     setProfileMenuOpen: () => void;
+    profileMenuRef: React.MutableRefObject<HTMLUListElement>;
 }) => {
     const { user, userLogout } = useUser();
 
@@ -60,7 +70,15 @@ const HeaderSignUpLinks = ({
                         <div className="profile-menu-dropdown absolute">
                             <ul>
                                 <li>
-                                    <Link onClick={userLogout} to="#">
+                                    <Link to="/edit-profile">Edit Profile</Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        onClick={() => {
+                                            userLogout();
+                                            setProfileMenuOpen();
+                                        }}
+                                        to="#">
                                         Logout
                                     </Link>
                                 </li>
@@ -84,22 +102,6 @@ const HeaderSignUpLinks = ({
                 </>
             )}
         </ul>
-
-        // <ul className="register-menu">
-        //     {!user ? (
-        //         SignUpMenu.map((signUplink) => (
-        //             <li key={signUplink.name}>
-        //                 <Link to={signUplink.link}>{signUplink.name}</Link>
-        //             </li>
-        //         ))
-        //     ) : (
-        //         <li>
-        //             <Link onClick={handleLogout} to="#">
-        //                 Logout
-        //             </Link>
-        //         </li>
-        //     )}
-        // </ul>
     );
 };
 
