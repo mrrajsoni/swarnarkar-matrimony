@@ -40,3 +40,41 @@ export interface selectValue {
     label: string;
     value: string;
 }
+
+export interface IPersonalDetails {
+    first_name: string;
+    last_name: string;
+    height: selectValue;
+    self_gotra: selectValue;
+    city: string;
+    profile_description: string;
+    manglik: boolean;
+    dob: string;
+    gender: selectValue;
+    martial_status: selectValue;
+    showEditForm: boolean;
+    setShowEditForm: React.Dispatch<
+        React.SetStateAction<{
+            showPersonalInfoForm: boolean;
+            showCareerInfoForm: boolean;
+            showFamilyInfoForm: boolean;
+            showHobbyInfoForm: boolean;
+        }>
+    >;
+}
+
+export interface IEducationCareerDetails {
+    degree: string;
+    employed_in: selectValue;
+    occupation: string;
+    annual_income: selectValue;
+}
+
+export interface IFamilyDetails {
+    mother_gotra: selectValue;
+}
+
+export interface IContactDetails {
+    mobile_number: string;
+    email_address: string;
+}

@@ -1,7 +1,7 @@
 import { Formik, Form, FormikProps } from 'formik';
 import { AnnualIncome, EmployedSectors, IndianState } from '../../../../Constants/FormOptions';
 import Button from '../../../Commons/Button/Button';
-import SelectInput from '../../../Commons/Select/SelectInput';
+import SelectInput from '../../../Forms/Select/SelectInput';
 import * as Yup from 'yup';
 import Registration from '../../../../Utils/API/SignUp';
 import { IUser, selectValue } from '../../../../Types/GlobalTypes';

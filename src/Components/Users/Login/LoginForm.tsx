@@ -3,7 +3,7 @@ import { Formik, Form, FormikProps } from 'formik';
 import Button from '../../Commons/Button/Button';
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { loginData } from '../../../Utils/API/Login';
+import { IloginData } from '../../../Utils/API/Login';
 import { Link } from 'react-router-dom';
 import { useUser } from '../../../Context/UserContext';
 
@@ -27,7 +27,7 @@ const LoginForm = () => {
     );
 };
 
-const UserLoginForm = ({ handleLogin }: { handleLogin: (values: loginData) => void }) => {
+const UserLoginForm = ({ handleLogin }: { handleLogin: (values: IloginData) => void }) => {
     const [showPasswordField, setShowPasswordField] = useState(false);
 
     const changePasswordVisibility = () => {

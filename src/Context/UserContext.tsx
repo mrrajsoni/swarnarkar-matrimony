@@ -2,11 +2,11 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { IUser } from '../Types/GlobalTypes';
 import FetchUser from '../Utils/API/FetchUser';
-import Login, { loginData } from '../Utils/API/Login';
+import Login, { IloginData } from '../Utils/API/Login';
 
 interface IUserContext {
     user: IUser;
-    userLogin: (values: loginData) => void;
+    userLogin: (values: IloginData) => void;
     userLogout: () => void;
 }
 export const UserContext = createContext<IUserContext>(null);
@@ -48,7 +48,7 @@ const UserProvider = ({ children }) => {
     }, [user?.id]);
     console.log(user?.id);
 
-    const userLogin = (logindata: loginData) => {
+    const userLogin = (logindata: IloginData) => {
         void Login.signInWithEmail(logindata);
     };
 
