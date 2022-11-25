@@ -47,6 +47,10 @@ h1 {
     font-size: 52px;
 }
 
+h4 {
+    font-size: 28px;
+}
+
 .fluid-container {
     max-width: 1280px;
     margin: 0 auto;
@@ -109,7 +113,8 @@ label {
     margin-bottom: 5px;
 }
 
-.form-section {
+.form-section,
+.edit-form-section {
     max-width: 580px;
     margin: 0 auto;
 
