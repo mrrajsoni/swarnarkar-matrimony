@@ -1,12 +1,12 @@
 import { supabase } from '../../supabaseClient';
 
-export interface loginData {
+export interface IloginData {
     email: string;
     password: string;
 }
 
 export default class Login {
-    static async signInWithEmail(logindata: loginData) {
+    static async signInWithEmail(logindata: IloginData) {
         const { email, password } = logindata;
         try {
             await supabase.auth.signInWithPassword({
