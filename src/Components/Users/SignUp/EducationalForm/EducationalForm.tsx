@@ -68,20 +68,17 @@ const EducationalForm = ({ user }: { user: IUser }) => {
 const LivingInfo = ({ props }: { props: FormikProps<IEducationalFormValues> }) => {
     return (
         <>
-            <div className="form-container">
-                <label className="required" htmlFor="state">
-                    State
-                </label>
-                <SelectInput
-                    onChange={(data) => props.setFieldValue('state', data)}
-                    options={IndianState}
-                    id="state"
-                    value={props.values.state}
-                />
-                {props.touched.state && props.errors.state ? (
-                    <div className="error-container">{props.errors.state.label}</div>
-                ) : null}
-            </div>
+            <SelectInput
+                isRequired
+                label="State"
+                onChange={(data) => props.setFieldValue('state', data)}
+                options={IndianState}
+                id="state"
+                value={props.values.state}
+            />
+            {props.touched.state && props.errors.state ? (
+                <div className="error-container">{props.errors.state.label}</div>
+            ) : null}
             <div className="form-container">
                 <div>
                     <label className="required" htmlFor="city">
@@ -121,22 +118,19 @@ const EducationInfo = ({ props }: { props: FormikProps<IEducationalFormValues> }
                     <div className="error-container">{props.errors.degree}</div>
                 ) : null}
             </div>
-            <div className="form-container">
-                <div>
-                    <label className="required" htmlFor="city">
-                        Employed In
-                    </label>
-                    <SelectInput
-                        onChange={(data) => props.setFieldValue('employed_in', data)}
-                        options={EmployedSectors}
-                        id="employed_in"
-                        value={props.values.employed_in}
-                    />
-                    {props.touched.employed_in && props.errors.employed_in ? (
-                        <div className="error-container">{props.errors.employed_in.label}</div>
-                    ) : null}
-                </div>
-            </div>
+
+            <SelectInput
+                label="Employed In"
+                isRequired
+                onChange={(data) => props.setFieldValue('employed_in', data)}
+                options={EmployedSectors}
+                id="employed_in"
+                value={props.values.employed_in}
+            />
+            {props.touched.employed_in && props.errors.employed_in ? (
+                <div className="error-container">{props.errors.employed_in.label}</div>
+            ) : null}
+
             <div className="form-container">
                 <label className="required" htmlFor="occupation">
                     Occupation
@@ -152,22 +146,18 @@ const EducationInfo = ({ props }: { props: FormikProps<IEducationalFormValues> }
                     <div className="error-container">{props.errors.occupation}</div>
                 ) : null}
             </div>
-            <div className="form-container">
-                <div>
-                    <label className="required" htmlFor="annual_income">
-                        Annual Income
-                    </label>
-                    <SelectInput
-                        onChange={(data) => props.setFieldValue('annual_income', data)}
-                        options={AnnualIncome}
-                        id="annual_income"
-                        value={props.values.annual_income}
-                    />
-                    {props.touched.annual_income && props.errors.annual_income ? (
-                        <div className="error-container">{props.errors.annual_income.label}</div>
-                    ) : null}
-                </div>
-            </div>
+
+            <SelectInput
+                onChange={(data) => props.setFieldValue('annual_income', data)}
+                options={AnnualIncome}
+                id="annual_income"
+                value={props.values.annual_income}
+                label={'Annual Income'}
+                isRequired
+            />
+            {props.touched.annual_income && props.errors.annual_income ? (
+                <div className="error-container">{props.errors.annual_income.label}</div>
+            ) : null}
         </>
     );
 };

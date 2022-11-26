@@ -5,15 +5,28 @@ export interface ISelectInput {
     options: OptionsOrGroups<unknown, GroupBase<unknown>>;
     id: string;
     value: selectValue;
+    label: string;
     name?: string;
     onChange?: (data: selectValue) => void;
     defaultValue?: selectValue;
     placeHolder?: string;
     disabled?: boolean;
+    isRequired?: boolean;
 }
 
 const SelectInput = (props: ISelectInput) => {
-    const { options, id, onChange, name, defaultValue, value, placeHolder, disabled } = props;
+    const {
+        options,
+        id,
+        onChange,
+        name,
+        defaultValue,
+        value,
+        placeHolder,
+        disabled,
+        label,
+        isRequired,
+    } = props;
     const customStyles: StylesConfig = {
         option: (base, state) => ({
             ...base,
@@ -35,19 +48,26 @@ const SelectInput = (props: ISelectInput) => {
         }),
     };
     return (
-        <Select
-            className="react-select-container"
-            id={id}
-            defaultValue={defaultValue}
-            name={name}
-            onChange={onChange}
-            options={options}
-            styles={customStyles}
-            value={value}
-            isSearchable
-            placeholder={placeHolder}
-            isDisabled={disabled}
-        />
+        <div className="form-container">
+            <div className="input-container">
+                <label className={`${isRequired ? 'required' : 'label'}`} htmlFor={id}>
+                    {label}
+                </label>
+                <Select
+                    className="react-select-container"
+                    id={id}
+                    defaultValue={defaultValue}
+                    name={name}
+                    onChange={onChange}
+                    options={options}
+                    styles={customStyles}
+                    value={value}
+                    isSearchable
+                    placeholder={placeHolder}
+                    isDisabled={disabled}
+                />
+            </div>
+        </div>
     );
 };
 

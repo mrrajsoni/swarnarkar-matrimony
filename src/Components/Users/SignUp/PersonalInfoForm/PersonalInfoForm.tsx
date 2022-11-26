@@ -138,26 +138,22 @@ const BasicInfo = ({ props }: { props: FormikProps<IUserPersonalData> }) => {
                     <div className="error-container">{props.errors.dob}</div>
                 ) : null}
             </div>
-            <div className="form-container">
-                <div>
-                    <label className="required" htmlFor="gender">
-                        Gender
-                    </label>
-                    <SelectInput
-                        name="gender"
-                        onChange={(selectedOption) => {
-                            props.setFieldValue('gender', selectedOption);
-                        }}
-                        id="gender"
-                        options={Gender}
-                        value={props.values.gender}
-                    />
-                </div>
 
-                {props.touched.gender && props.errors.gender ? (
-                    <div className="error-container">{props.errors.gender.label}</div>
-                ) : null}
-            </div>
+            <SelectInput
+                label="Gender"
+                isRequired={true}
+                name="gender"
+                onChange={(selectedOption) => {
+                    props.setFieldValue('gender', selectedOption);
+                }}
+                id="gender"
+                options={Gender}
+                value={props.values.gender}
+            />
+
+            {props.touched.gender && props.errors.gender ? (
+                <div className="error-container">{props.errors.gender.label}</div>
+            ) : null}
         </>
     );
 };
@@ -190,36 +186,36 @@ const ReligionInfo = ({ props }: { props: FormikProps<IUserPersonalData> }) => {
                     No
                 </label>
             </div>
-            <div className="form-container">
-                <label className="required">Marital Status</label>
-                <SelectInput
-                    onChange={(selectedOption) => {
-                        props.setFieldValue('martial_status', selectedOption);
-                    }}
-                    id="martial_status"
-                    name="martial_status"
-                    options={Marital_Status}
-                    value={props.values.martial_status}
-                />
-                {props.touched.martial_status && props.errors.martial_status ? (
-                    <div className="error-container">{props.errors.martial_status.label}</div>
-                ) : null}
-            </div>
-            <div className="form-container">
-                <label className="required">Height</label>
-                <SelectInput
-                    name="height"
-                    onChange={(selectedOption) => {
-                        props.setFieldValue('height', selectedOption);
-                    }}
-                    id="height"
-                    options={Height}
-                    value={props.values.height}
-                />
-                {props.touched.height && props.errors.height ? (
-                    <div className="error-container">{props.errors.height.label}</div>
-                ) : null}
-            </div>
+
+            <SelectInput
+                onChange={(selectedOption) => {
+                    props.setFieldValue('martial_status', selectedOption);
+                }}
+                id="martial_status"
+                name="martial_status"
+                options={Marital_Status}
+                value={props.values.martial_status}
+                label="Marital Status"
+                isRequired={true}
+            />
+            {props.touched.martial_status && props.errors.martial_status ? (
+                <div className="error-container">{props.errors.martial_status.label}</div>
+            ) : null}
+
+            <SelectInput
+                label="Height"
+                isRequired={true}
+                name="height"
+                onChange={(selectedOption) => {
+                    props.setFieldValue('height', selectedOption);
+                }}
+                id="height"
+                options={Height}
+                value={props.values.height}
+            />
+            {props.touched.height && props.errors.height ? (
+                <div className="error-container">{props.errors.height.label}</div>
+            ) : null}
         </>
     );
 };
