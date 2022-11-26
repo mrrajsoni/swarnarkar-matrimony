@@ -104,7 +104,7 @@ const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
     } = props;
 
     const age = CommonUtils.getAge(dob);
-    const reverseDob = dob.split('').reverse().join('');
+    const formattedDob = CommonUtils.getFormattedDob(dob);
     const handleEditFormVisibility = (value: boolean) => {
         setShowEditForm((prevState) => {
             return {
@@ -134,7 +134,7 @@ const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
                         onClick={() => handleEditFormVisibility(true)}
                     />
                     <ul>
-                        <ProfileField label="Date of Birth" field={reverseDob} />
+                        <ProfileField label="Date of Birth" field={formattedDob} />
                         <ProfileField label="Height" field={height.label} />
                         <ProfileField label="Marital Status" field={martial_status.label} />
                         <ProfileField label="Gotra" field={self_gotra.label} />

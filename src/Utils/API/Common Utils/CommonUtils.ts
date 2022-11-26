@@ -46,4 +46,10 @@ export default class CommonUtils {
         }
         return age;
     }
+
+    public static getFormattedDob(dateString: string) {
+        const birthDate = new Date(dateString).toDateString().split(' ');
+        const [weekDay, month, date, year] = birthDate;
+        return `${date} ${month}, ${year}`;
+    }
 }
