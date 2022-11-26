@@ -41,6 +41,10 @@
 
         .profile-field {
             flex: 1 1 50%;
+
+            &.empty {
+                color: var(--primary-pink);
+            }
         }
         .profile-label {
             color: var(--text-gray);
