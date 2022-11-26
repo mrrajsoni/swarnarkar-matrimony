@@ -219,3 +219,46 @@ export const Gotra = [
     { value: 'bhanwar', label: 'Bhanwar' },
     { value: 'bhanwar', label: 'Bhanwar' },
 ];
+
+export const Siblings = [
+    { value: 'zero ', label: '0' },
+    { value: 'one', label: '1' },
+    { value: 'two', label: '2' },
+    { value: 'three', label: '3' },
+    { value: 'threeplus', label: '3+' },
+];
+
+export const MotherOccupation = [
+    { value: 'housewife ', label: 'Housewive' },
+    { value: 'business', label: 'Business/Entrepreneur' },
+    { value: 'private', label: 'Service Private' },
+    { value: 'government', label: 'Service Government' },
+    { value: 'army', label: 'Army/Armed Force' },
+    { value: 'civil', label: 'Civil Service' },
+    { value: 'teacher', label: 'Teacher' },
+    { value: 'retired', label: 'Retired' },
+    { value: 'expired', label: 'Expired' },
+];
+
+export const FatherOccupation = [
+    { value: 'business', label: 'Business/Entrepreneur' },
+    { value: 'private', label: 'Service Private' },
+    { value: 'government', label: 'Service Government' },
+    { value: 'army', label: 'Army/Armed Force' },
+    { value: 'civil', label: 'Civil Service' },
+    { value: 'unemployed', label: 'Unemployed' },
+    { value: 'retired', label: 'Retired' },
+    { value: 'expired', label: 'Expired' },
+];
+
+export const FamilyType = [
+    { value: 'joint ', label: 'Joint' },
+    { value: 'nuclear', label: 'Nuclear' },
+    { value: 'separate', label: 'Staying Alone' },
+];
+
+export const FamilyStatus = [
+    { value: 'rich ', label: 'Rich/Affluent' },
+    { value: 'uppermiddle', label: 'Upper Middle Class' },
+    { value: 'middleclass', label: 'Middle Class' },
+];

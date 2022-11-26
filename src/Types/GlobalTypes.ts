@@ -35,6 +35,12 @@ export interface IUser {
     registration_completed?: boolean;
     last_stage?: boolean;
     second_stage?: boolean;
+    mother_occupation?: selectValue;
+    father_occupation?: selectValue;
+    brothers?: selectValue;
+    sisters?: selectValue;
+    family_type?: selectValue;
+    family_status?: selectValue;
 }
 
 export interface selectValue {
