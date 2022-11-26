@@ -21,6 +21,7 @@ const EditProfile = () => {
     });
     const { user } = useUser();
     const personalDetails: IPersonalDetails = {
+        id: user?.id,
         first_name: user?.first_name,
         last_name: user?.last_name,
         height: user?.height,
@@ -31,6 +32,7 @@ const EditProfile = () => {
         dob: user?.dob,
         gender: user?.gender,
         martial_status: user?.martial_status,
+        state: user?.state,
         showEditForm: inEditMode.showPersonalInfoForm,
         setShowEditForm: setInEditMode,
     };
@@ -56,12 +58,12 @@ const EditProfile = () => {
                     <div className="edit-profile-inner mx-auto">
                         Login
                         <div className="two-cols flex gap-3">
-                            <div className="details-col w-9/12">
+                            <div className="details-col ">
                                 <PersonalDetails props={personalDetails} />
                                 <EducationCareerDetails props={educationCareerDetails} />
                                 <FamilyDetails props={familyDetails} />
                             </div>
-                            <div>
+                            <div className="flex-1">
                                 <ContactDetails props={contactDetailsProps} />
                             </div>
                         </div>
@@ -97,6 +99,8 @@ const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
         martial_status,
         setShowEditForm,
         showEditForm,
+        state,
+        id,
     } = props;
 
     const age = CommonUtils.getAge(dob);
@@ -108,6 +112,11 @@ const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
                 showPersonalInfoForm: value,
             };
         });
+    };
+    const onSubmit = (success: boolean) => {
+        if (success) {
+            handleEditFormVisibility(false);
+        }
     };
     return (
         <div className="details-container">
@@ -130,14 +139,16 @@ const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
                         <ProfileField label="Marital Status" field={martial_status.label} />
                         <ProfileField label="Gotra" field={self_gotra.label} />
                         <ProfileField label="City" field={city} />
+                        <ProfileField label="State" field={state.label} />
                         <ProfileField label="Manglik" field={manglik ? 'Yes' : 'No'} />
                     </ul>
                 </>
             ) : (
                 <PersonalInfoEditForm
                     onCancel={handleEditFormVisibility}
-                    onSubmit={undefined}
+                    onSubmit={onSubmit}
                     initialValues={props}
+                    userId={id}
                 />
             )}
         </div>

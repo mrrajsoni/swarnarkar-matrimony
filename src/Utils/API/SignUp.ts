@@ -2,6 +2,7 @@ import { IEducationalFormValues } from '../../Components/Users/SignUp/Educationa
 import { IUserFamilyData } from '../../Components/Users/SignUp/FamilyForm/FamilyForm';
 import { IUserPersonalData } from '../../Components/Users/SignUp/PersonalInfoForm/PersonalInfoForm';
 import { supabase } from '../../supabaseClient';
+import { IUser } from '../../Types/GlobalTypes';
 
 export interface userData {
     email: string;
@@ -54,6 +55,17 @@ export default class Registration {
             await supabase
                 .from('user_registration')
                 .update({ ...userPersonalData, last_stage: false, registration_completed: true })
+                .eq('user_id', currentUserId);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async editProfileUpdate(userData: IUser, currentUserId: string) {
+        try {
+            await supabase
+                .from('user_registration')
+                .update({ ...userData })
                 .eq('user_id', currentUserId);
         } catch (error) {
             console.log(error);

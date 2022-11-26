@@ -6,6 +6,7 @@
 
         .details-col {
             border-radius: 6px;
+            width: 70%;
             .details-container {
                 padding: 40px 25px;
                 background-color: var(--white);
@@ -49,6 +50,7 @@
         .edit-form-section {
             max-width: 100%;
             .form-container {
+                margin-bottom: 20px;
                 .input-container {
                     display: flex;
                     gap: 15px;
