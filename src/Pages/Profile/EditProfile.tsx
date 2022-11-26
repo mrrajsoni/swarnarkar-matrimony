@@ -11,15 +11,17 @@ import {
 import CommonUtils from '../../Utils/API/Common Utils/CommonUtils';
 import './EditProfile.scss';
 import CareerEducationEditForm from './EditProfileForms/CareerEducationEditForm';
+import FamilyEditForm from './EditProfileForms/FamilyEditForm';
 import PersonalInfoEditForm from './EditProfileForms/PersonalInfoEditForm';
 
+const initialFormState = {
+    showPersonalInfoForm: false,
+    showCareerInfoForm: false,
+    showFamilyInfoForm: false,
+    showHobbyInfoForm: false,
+};
 const EditProfile = () => {
-    const [inEditMode, setInEditMode] = useState({
-        showPersonalInfoForm: false,
-        showCareerInfoForm: false,
-        showFamilyInfoForm: false,
-        showHobbyInfoForm: false,
-    });
+    const [inEditMode, setInEditMode] = useState(initialFormState);
     const { user } = useUser();
     const personalDetails: IPersonalDetails = {
         id: user?.id,
@@ -50,6 +52,13 @@ const EditProfile = () => {
 
     const familyDetails: IFamilyDetails = {
         mother_gotra: user?.mother_gotra,
+        id: user?.id,
+        brothers: user?.brothers,
+        sisters: user?.sisters,
+        family_status: user?.family_status,
+        family_type: user?.family_type,
+        father_occupation: user?.father_occupation,
+        mother_occupation: user?.mother_occupation,
         showEditForm: inEditMode.showFamilyInfoForm,
         setShowEditForm: setInEditMode,
     };
@@ -57,6 +66,14 @@ const EditProfile = () => {
     const contactDetailsProps: IContactDetails = {
         email_address: user?.email_address,
         mobile_number: user?.mobile_number,
+    };
+
+    const onSubmit = (success: boolean) => {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        if (success) {
+            setInEditMode(initialFormState);
+        }
     };
     return (
         <Layout>
@@ -66,9 +83,12 @@ const EditProfile = () => {
                         Login
                         <div className="two-cols flex gap-3">
                             <div className="details-col ">
-                                <PersonalDetails props={personalDetails} />
-                                <EducationCareerDetails props={educationCareerDetails} />
-                                <FamilyDetails props={familyDetails} />
+                                <PersonalDetails props={personalDetails} onSubmit={onSubmit} />
+                                <EducationCareerDetails
+                                    props={educationCareerDetails}
+                                    onSubmit={onSubmit}
+                                />
+                                <FamilyDetails props={familyDetails} onSubmit={onSubmit} />
                             </div>
                             <div className="flex-1">
                                 <ContactDetails props={contactDetailsProps} />
@@ -92,7 +112,13 @@ const ProfileDetailTitle = ({ title, onClick }: { title: string; onClick: () => 
     );
 };
 
-const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
+const PersonalDetails = ({
+    props,
+    onSubmit,
+}: {
+    props: IPersonalDetails;
+    onSubmit: (success: boolean) => void;
+}) => {
     const {
         city,
         first_name,
@@ -120,11 +146,7 @@ const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
             };
         });
     };
-    const onSubmit = (success: boolean) => {
-        if (success) {
-            handleEditFormVisibility(false);
-        }
-    };
+
     return (
         <div className="details-container">
             {!showEditForm ? (
@@ -162,7 +184,13 @@ const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
     );
 };
 
-const EducationCareerDetails = ({ props }: { props: IEducationCareerDetails }) => {
+const EducationCareerDetails = ({
+    props,
+    onSubmit,
+}: {
+    props: IEducationCareerDetails;
+    onSubmit: (value: boolean) => void;
+}) => {
     const {
         annual_income,
         degree,
@@ -181,11 +209,7 @@ const EducationCareerDetails = ({ props }: { props: IEducationCareerDetails }) =
             };
         });
     };
-    const onSubmit = (success: boolean) => {
-        if (success) {
-            handleEditFormVisibility(false);
-        }
-    };
+
     return (
         <div className="details-container">
             {!showEditForm ? (
@@ -221,14 +245,102 @@ const EducationCareerDetails = ({ props }: { props: IEducationCareerDetails }) =
     );
 };
 
-const FamilyDetails = ({ props }: { props: IFamilyDetails }) => {
-    const { mother_gotra } = props;
+const FamilyDetails = ({
+    props,
+    onSubmit,
+}: {
+    props: IFamilyDetails;
+    onSubmit: (value: boolean) => void;
+}) => {
+    const {
+        mother_gotra,
+        setShowEditForm,
+        showEditForm,
+        brothers,
+        family_status,
+        family_type,
+        father_occupation,
+        id,
+        mother_occupation,
+        sisters,
+    } = props;
+
+    const handleEditFormVisibility = (value: boolean) => {
+        setShowEditForm((prevState) => {
+            return {
+                ...prevState,
+                showFamilyInfoForm: value,
+            };
+        });
+    };
     return (
         <div className="details-container">
-            <ProfileDetailTitle title="Family" onClick={undefined} />
-            <ul>
-                <ProfileField label="Mother Gotra" field={mother_gotra.label} />
-            </ul>
+            {!showEditForm ? (
+                <>
+                    <ProfileDetailTitle
+                        title="Family"
+                        onClick={() => handleEditFormVisibility(true)}
+                    />
+                    <ul>
+                        <ProfileField label="Mother's Gotra" field={mother_gotra.label} />
+                        <ProfileField
+                            label="Mother's Occupation"
+                            field={
+                                mother_occupation?.label !== '' && mother_occupation?.label
+                                    ? mother_occupation.label
+                                    : 'Not filled in'
+                            }
+                        />
+                        <ProfileField
+                            label="Father's Occupation"
+                            field={
+                                father_occupation?.label !== '' && father_occupation?.label
+                                    ? father_occupation.label
+                                    : 'Not filled in'
+                            }
+                        />
+                        <ProfileField
+                            label="No. of Brothers"
+                            field={
+                                brothers?.label !== '' && brothers?.label
+                                    ? brothers.label
+                                    : 'Not filled in'
+                            }
+                        />
+                        <ProfileField
+                            label="No. of Sisters"
+                            field={
+                                sisters?.label !== '' && sisters?.label
+                                    ? sisters.label
+                                    : 'Not filled in'
+                            }
+                        />
+                        <ProfileField
+                            label="Family Type"
+                            field={
+                                family_type?.label !== '' && family_type?.label
+                                    ? family_type.label
+                                    : 'Not filled in'
+                            }
+                        />
+                        <ProfileField
+                            label="Family Status"
+                            field={
+                                family_status?.label !== '' && family_status?.label
+                                    ? family_status.label
+                                    : 'Not filled in'
+                            }
+                        />
+                    </ul>
+                </>
+            ) : (
+                <FamilyEditForm
+                    initialValues={props}
+                    onSubmit={onSubmit}
+                    onCancel={handleEditFormVisibility}
+                    userId={id}
+                />
+            )}
         </div>
     );
 };

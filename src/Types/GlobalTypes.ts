@@ -92,7 +92,14 @@ export interface IEducationCareerDetails {
 
 export interface IFamilyDetails {
     mother_gotra: selectValue;
+    mother_occupation?: selectValue;
+    father_occupation?: selectValue;
+    brothers?: selectValue;
+    sisters?: selectValue;
+    family_type?: selectValue;
+    family_status?: selectValue;
     showEditForm: boolean;
+    id?: string;
     setShowEditForm: React.Dispatch<
         React.SetStateAction<{
             showPersonalInfoForm: boolean;

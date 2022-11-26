@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
         label: Yup.string().required('Required'),
         value: Yup.string(),
     }),
-    occupatio: Yup.string(),
+    organization_name: Yup.string(),
 });
 
 const CareerEducationEditForm = ({

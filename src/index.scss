@@ -60,7 +60,10 @@ textarea {
     width: 100%;
 }
 
-button {
+button,
+[type='submit'],
+[type='button'],
+[type='reset'] {
     padding: 14px 30px;
     background: var(--dark-blue);
     border-radius: 6px;
