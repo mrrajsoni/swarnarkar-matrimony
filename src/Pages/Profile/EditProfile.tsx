@@ -10,6 +10,7 @@ import {
 } from '../../Types/GlobalTypes';
 import CommonUtils from '../../Utils/API/Common Utils/CommonUtils';
 import './EditProfile.scss';
+import CareerEducationEditForm from './EditProfileForms/CareerEducationEditForm';
 import PersonalInfoEditForm from './EditProfileForms/PersonalInfoEditForm';
 
 const EditProfile = () => {
@@ -41,10 +42,16 @@ const EditProfile = () => {
         degree: user?.degree,
         employed_in: user?.employed_in,
         occupation: user?.occupation,
+        id: user?.id,
+        showEditForm: inEditMode.showCareerInfoForm,
+        organization_name: user?.organization_name,
+        setShowEditForm: setInEditMode,
     };
 
     const familyDetails: IFamilyDetails = {
         mother_gotra: user?.mother_gotra,
+        showEditForm: inEditMode.showFamilyInfoForm,
+        setShowEditForm: setInEditMode,
     };
 
     const contactDetailsProps: IContactDetails = {
@@ -156,16 +163,60 @@ const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
 };
 
 const EducationCareerDetails = ({ props }: { props: IEducationCareerDetails }) => {
-    const { annual_income, degree, employed_in, occupation } = props;
+    const {
+        annual_income,
+        degree,
+        employed_in,
+        occupation,
+        setShowEditForm,
+        showEditForm,
+        id,
+        organization_name,
+    } = props;
+    const handleEditFormVisibility = (value: boolean) => {
+        setShowEditForm((prevState) => {
+            return {
+                ...prevState,
+                showCareerInfoForm: value,
+            };
+        });
+    };
+    const onSubmit = (success: boolean) => {
+        if (success) {
+            handleEditFormVisibility(false);
+        }
+    };
     return (
         <div className="details-container">
-            <ProfileDetailTitle title="Education & Career" onClick={undefined} />
-            <ul>
-                <ProfileField label="Annual Income" field={annual_income.label} />
-                <ProfileField label="Degree" field={degree} />
-                <ProfileField label="Employed In" field={employed_in.label} />
-                <ProfileField label="Occupation" field={occupation} />
-            </ul>
+            {!showEditForm ? (
+                <>
+                    <ProfileDetailTitle
+                        title="Education & Career"
+                        onClick={() => handleEditFormVisibility(true)}
+                    />
+                    <ul>
+                        <ProfileField label="Annual Income" field={annual_income.label} />
+                        <ProfileField label="Degree" field={degree} />
+                        <ProfileField label="Employed In" field={employed_in.label} />
+                        <ProfileField label="Occupation" field={occupation} />
+                        <ProfileField
+                            label="Organization Name"
+                            field={
+                                organization_name !== '' && organization_name
+                                    ? organization_name
+                                    : 'Not filled in'
+                            }
+                        />
+                    </ul>
+                </>
+            ) : (
+                <CareerEducationEditForm
+                    initialValues={props}
+                    onCancel={handleEditFormVisibility}
+                    userId={id}
+                    onSubmit={onSubmit}
+                />
+            )}
         </div>
     );
 };

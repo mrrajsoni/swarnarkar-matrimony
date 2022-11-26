@@ -28,6 +28,7 @@ export interface IUser {
     employed_in?: selectValue;
     occupation?: string;
     annual_income?: selectValue;
+    organization_name?: string;
     self_gotra?: selectValue;
     mother_gotra?: selectValue;
     profile_description?: string;
@@ -70,10 +71,30 @@ export interface IEducationCareerDetails {
     employed_in: selectValue;
     occupation: string;
     annual_income: selectValue;
+    id?: string;
+    organization_name?: string;
+    showEditForm: boolean;
+    setShowEditForm: React.Dispatch<
+        React.SetStateAction<{
+            showPersonalInfoForm: boolean;
+            showCareerInfoForm: boolean;
+            showFamilyInfoForm: boolean;
+            showHobbyInfoForm: boolean;
+        }>
+    >;
 }
 
 export interface IFamilyDetails {
     mother_gotra: selectValue;
+    showEditForm: boolean;
+    setShowEditForm: React.Dispatch<
+        React.SetStateAction<{
+            showPersonalInfoForm: boolean;
+            showCareerInfoForm: boolean;
+            showFamilyInfoForm: boolean;
+            showHobbyInfoForm: boolean;
+        }>
+    >;
 }
 
 export interface IContactDetails {
