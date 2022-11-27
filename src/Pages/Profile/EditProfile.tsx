@@ -6,23 +6,26 @@ import {
     IContactDetails,
     IEducationCareerDetails,
     IFamilyDetails,
+    ILifestyleDetails,
     IPersonalDetails,
 } from '../../Types/GlobalTypes';
 import CommonUtils from '../../Utils/API/Common Utils/CommonUtils';
 import './EditProfile.scss';
 import CareerEducationEditForm from './EditProfileForms/CareerEducationEditForm';
 import FamilyEditForm from './EditProfileForms/FamilyEditForm';
+import LifestyleEditForm from './EditProfileForms/LifestyleEditForm';
 import PersonalInfoEditForm from './EditProfileForms/PersonalInfoEditForm';
 
 const initialFormState = {
     showPersonalInfoForm: false,
     showCareerInfoForm: false,
     showFamilyInfoForm: false,
-    showHobbyInfoForm: false,
+    showLifestyleForm: false,
 };
 const EditProfile = () => {
     const [inEditMode, setInEditMode] = useState(initialFormState);
     const { user } = useUser();
+
     const personalDetails: IPersonalDetails = {
         id: user?.id,
         first_name: user?.first_name,
@@ -68,9 +71,20 @@ const EditProfile = () => {
         mobile_number: user?.mobile_number,
     };
 
+    const lifestyleDetailsProps: ILifestyleDetails = {
+        dietary_habit: user?.dietary_habit,
+        drinking_habit: user?.drinking_habit,
+        smoking_habit: user?.smoking_habit,
+        own_car: user?.own_car,
+        setShowEditForm: setInEditMode,
+        handicapped: user?.handicapped,
+        nature_handicap: user?.nature_handicap,
+        showEditForm: inEditMode.showLifestyleForm,
+        own_house: user?.own_house,
+        id: user?.id,
+    };
+
     const onSubmit = (success: boolean) => {
-        // eslint-disable-next-line no-debugger
-        debugger;
         if (success) {
             setInEditMode(initialFormState);
         }
@@ -89,6 +103,10 @@ const EditProfile = () => {
                                     onSubmit={onSubmit}
                                 />
                                 <FamilyDetails props={familyDetails} onSubmit={onSubmit} />
+                                <LifestyleDetails
+                                    props={lifestyleDetailsProps}
+                                    onSubmit={onSubmit}
+                                />
                             </div>
                             <div className="flex-1">
                                 <ContactDetails props={contactDetailsProps} />
@@ -285,52 +303,16 @@ const FamilyDetails = ({
                         <ProfileField label="Mother's Gotra" field={mother_gotra.label} />
                         <ProfileField
                             label="Mother's Occupation"
-                            field={
-                                mother_occupation?.label !== '' && mother_occupation?.label
-                                    ? mother_occupation.label
-                                    : 'Not filled in'
-                            }
+                            field={mother_occupation?.label ?? ''}
                         />
                         <ProfileField
                             label="Father's Occupation"
-                            field={
-                                father_occupation?.label !== '' && father_occupation?.label
-                                    ? father_occupation.label
-                                    : 'Not filled in'
-                            }
+                            field={father_occupation?.label ?? ''}
                         />
-                        <ProfileField
-                            label="No. of Brothers"
-                            field={
-                                brothers?.label !== '' && brothers?.label
-                                    ? brothers.label
-                                    : 'Not filled in'
-                            }
-                        />
-                        <ProfileField
-                            label="No. of Sisters"
-                            field={
-                                sisters?.label !== '' && sisters?.label
-                                    ? sisters.label
-                                    : 'Not filled in'
-                            }
-                        />
-                        <ProfileField
-                            label="Family Type"
-                            field={
-                                family_type?.label !== '' && family_type?.label
-                                    ? family_type.label
-                                    : 'Not filled in'
-                            }
-                        />
-                        <ProfileField
-                            label="Family Status"
-                            field={
-                                family_status?.label !== '' && family_status?.label
-                                    ? family_status.label
-                                    : 'Not filled in'
-                            }
-                        />
+                        <ProfileField label="No. of Brothers" field={brothers?.label ?? ''} />
+                        <ProfileField label="No. of Sisters" field={sisters?.label ?? ''} />
+                        <ProfileField label="Family Type" field={family_type?.label ?? ''} />
+                        <ProfileField label="Family Status" field={family_status?.label ?? ''} />
                     </ul>
                 </>
             ) : (
@@ -354,6 +336,73 @@ const ContactDetails = ({ props }: { props: IContactDetails }) => {
                 <ProfileField label="Email Address" field={email_address} />
                 <ProfileField label="Mobile Number" field={mobile_number} />
             </ul>
+        </div>
+    );
+};
+
+const LifestyleDetails = ({
+    props,
+    onSubmit,
+}: {
+    props: ILifestyleDetails;
+    onSubmit: (value: boolean) => void;
+}) => {
+    const {
+        setShowEditForm,
+        showEditForm,
+        dietary_habit,
+        drinking_habit,
+        handicapped,
+        id,
+        nature_handicap,
+        own_car,
+        own_house,
+        smoking_habit,
+    } = props;
+    const handleEditFormVisibility = (value: boolean) => {
+        setShowEditForm((prevState) => {
+            return {
+                ...prevState,
+                showLifestyleForm: value,
+            };
+        });
+    };
+
+    return (
+        <div className="details-container">
+            {!showEditForm ? (
+                <>
+                    <ProfileDetailTitle
+                        title="Lifestyle"
+                        onClick={() => handleEditFormVisibility(true)}
+                    />
+                    <ul>
+                        <ProfileField label="Dietary Habits" field={dietary_habit?.label ?? ''} />
+                        <ProfileField label="Drinking Habits" field={drinking_habit?.label ?? ''} />
+                        <ProfileField
+                            label="Smoking Habits In"
+                            field={smoking_habit?.label ?? ''}
+                        />
+                        <ProfileField label="Own a house" field={own_house?.label ?? ''} />
+                        <ProfileField label="Own a car" field={own_car?.label ?? ''} />
+                        <ProfileField label="Challenged" field={handicapped?.label ?? ''} />
+                        {handicapped?.value === 'physically_accident' ||
+                        handicapped?.value === 'physically_birth' ? (
+                            <ProfileField
+                                label="Nature of challenge"
+                                field={nature_handicap.label}
+                            />
+                        ) : null}
+                    </ul>
+                </>
+            ) : (
+                <LifestyleEditForm
+                    initialValues={props}
+                    onCancel={handleEditFormVisibility}
+                    userId={id}
+                    onSubmit={onSubmit}
+                />
+            )}
         </div>
     );
 };

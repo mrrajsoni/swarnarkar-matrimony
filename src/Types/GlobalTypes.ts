@@ -41,6 +41,13 @@ export interface IUser {
     sisters?: selectValue;
     family_type?: selectValue;
     family_status?: selectValue;
+    dietary_habit?: selectValue;
+    drinking_habit?: selectValue;
+    smoking_habit?: selectValue;
+    own_car?: selectValue;
+    own_house?: selectValue;
+    handicapped?: selectValue;
+    nature_handicap?: selectValue;
 }
 
 export interface selectValue {
@@ -67,7 +74,7 @@ export interface IPersonalDetails {
             showPersonalInfoForm: boolean;
             showCareerInfoForm: boolean;
             showFamilyInfoForm: boolean;
-            showHobbyInfoForm: boolean;
+            showLifestyleForm: boolean;
         }>
     >;
 }
@@ -85,7 +92,7 @@ export interface IEducationCareerDetails {
             showPersonalInfoForm: boolean;
             showCareerInfoForm: boolean;
             showFamilyInfoForm: boolean;
-            showHobbyInfoForm: boolean;
+            showLifestyleForm: boolean;
         }>
     >;
 }
@@ -105,7 +112,7 @@ export interface IFamilyDetails {
             showPersonalInfoForm: boolean;
             showCareerInfoForm: boolean;
             showFamilyInfoForm: boolean;
-            showHobbyInfoForm: boolean;
+            showLifestyleForm: boolean;
         }>
     >;
 }
@@ -113,4 +120,24 @@ export interface IFamilyDetails {
 export interface IContactDetails {
     mobile_number: string;
     email_address: string;
+}
+
+export interface ILifestyleDetails {
+    dietary_habit?: selectValue;
+    drinking_habit?: selectValue;
+    smoking_habit?: selectValue;
+    own_car?: selectValue;
+    own_house?: selectValue;
+    handicapped?: selectValue;
+    nature_handicap?: selectValue;
+    showEditForm: boolean;
+    id?: string;
+    setShowEditForm: React.Dispatch<
+        React.SetStateAction<{
+            showPersonalInfoForm: boolean;
+            showCareerInfoForm: boolean;
+            showFamilyInfoForm: boolean;
+            showLifestyleForm: boolean;
+        }>
+    >;
 }

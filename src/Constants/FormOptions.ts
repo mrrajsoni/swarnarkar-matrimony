@@ -262,3 +262,31 @@ export const FamilyStatus = [
     { value: 'uppermiddle', label: 'Upper Middle Class' },
     { value: 'middleclass', label: 'Middle Class' },
 ];
+
+export const Diets = [
+    { value: 'vegeterian ', label: 'Vegeterian' },
+    { value: 'non-vegeterian', label: 'Non Vegeterian' },
+    { value: 'eggeterian', label: 'Eggeterian' },
+];
+
+export const DrinkingSmoking = [
+    { value: 'yes ', label: 'Yes' },
+    { value: 'no', label: 'No' },
+    { value: 'occassionally', label: 'Occassionally' },
+];
+export const YesNo = [
+    { value: 'no', label: 'No' },
+    { value: 'crippled ', label: 'Crippled' },
+    { value: 'physically_birth', label: 'Physically by birth' },
+    { value: 'physically_accident', label: 'Physically by accident' },
+    { value: 'mentally_birth', label: 'Mentally by birth' },
+    { value: 'mentally_accident', label: 'Mentally by accident' },
+];
+
+export const HandicapNature = [
+    { value: 'crippled ', label: 'Crippled' },
+    { value: 'hearing_impaired', label: 'Hearing Impaired' },
+    { value: 'visually_impaired', label: 'Visually Impaired' },
+    { value: 'speech_impaired', label: 'Speech Impaired' },
+    { value: 'others', label: 'others' },
+];

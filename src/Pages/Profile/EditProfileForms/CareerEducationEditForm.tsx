@@ -37,7 +37,7 @@ const CareerEducationEditForm = ({
             if (initialValues[key] !== values[key]) {
                 acc = {
                     ...acc,
-                    [key]: values[key],
+                    [key]: values[key] === '' ? null : values[key],
                 };
             }
             return acc;
