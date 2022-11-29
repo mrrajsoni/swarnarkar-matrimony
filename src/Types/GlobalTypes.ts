@@ -1,3 +1,5 @@
+import { setShowEditFormType } from '../Pages/Profile/EditProfile';
+
 export interface IUser {
     id?: string;
     aud?: string;
@@ -48,6 +50,23 @@ export interface IUser {
     own_house?: selectValue;
     handicapped?: selectValue;
     nature_handicap?: selectValue;
+    partner_description?: string;
+    partner_age?: {
+        to: selectValue;
+        from: selectValue;
+    };
+    partner_height?: {
+        to: selectValue;
+        from: selectValue;
+    };
+    partner_income?: {
+        to: selectValue;
+        from: selectValue;
+    };
+    partner_occupation?: selectValue;
+    partner_smoke?: selectValue;
+    partner_drink?: selectValue;
+    partner_marital_status?: selectValue;
 }
 
 export interface selectValue {
@@ -69,14 +88,7 @@ export interface IPersonalDetails {
     state: selectValue;
     id?: string;
     showEditForm: boolean;
-    setShowEditForm: React.Dispatch<
-        React.SetStateAction<{
-            showPersonalInfoForm: boolean;
-            showCareerInfoForm: boolean;
-            showFamilyInfoForm: boolean;
-            showLifestyleForm: boolean;
-        }>
-    >;
+    setShowEditForm: setShowEditFormType;
 }
 
 export interface IEducationCareerDetails {
@@ -87,14 +99,7 @@ export interface IEducationCareerDetails {
     id?: string;
     organization_name?: string;
     showEditForm: boolean;
-    setShowEditForm: React.Dispatch<
-        React.SetStateAction<{
-            showPersonalInfoForm: boolean;
-            showCareerInfoForm: boolean;
-            showFamilyInfoForm: boolean;
-            showLifestyleForm: boolean;
-        }>
-    >;
+    setShowEditForm: setShowEditFormType;
 }
 
 export interface IFamilyDetails {
@@ -107,14 +112,7 @@ export interface IFamilyDetails {
     family_status?: selectValue;
     showEditForm: boolean;
     id?: string;
-    setShowEditForm: React.Dispatch<
-        React.SetStateAction<{
-            showPersonalInfoForm: boolean;
-            showCareerInfoForm: boolean;
-            showFamilyInfoForm: boolean;
-            showLifestyleForm: boolean;
-        }>
-    >;
+    setShowEditForm: setShowEditFormType;
 }
 
 export interface IContactDetails {
@@ -132,12 +130,29 @@ export interface ILifestyleDetails {
     nature_handicap?: selectValue;
     showEditForm: boolean;
     id?: string;
-    setShowEditForm: React.Dispatch<
-        React.SetStateAction<{
-            showPersonalInfoForm: boolean;
-            showCareerInfoForm: boolean;
-            showFamilyInfoForm: boolean;
-            showLifestyleForm: boolean;
-        }>
-    >;
+    setShowEditForm: setShowEditFormType;
+}
+
+export interface IDesiredPartnerDetails {
+    partner_description?: string;
+    partner_age?: {
+        to: selectValue;
+        from: selectValue;
+    };
+    partner_height?: {
+        to: selectValue;
+        from: selectValue;
+    };
+    partner_income?: {
+        to: selectValue;
+        from: selectValue;
+    };
+    partner_occupation?: selectValue;
+    partner_smoke?: selectValue;
+    partner_drink?: selectValue;
+    partner_marital_status?: selectValue;
+    gender?: selectValue;
+    showEditForm: boolean;
+    id?: string;
+    setShowEditForm: setShowEditFormType;
 }

@@ -53,6 +53,7 @@
 
         .edit-form-section {
             max-width: 100%;
+
             .form-container {
                 margin-bottom: 20px;
                 .input-container {
@@ -66,6 +67,41 @@
                     }
                     input {
                         width: 100%;
+                    }
+                }
+            }
+
+            .desired-partner-form {
+                .block {
+                    .input-container {
+                        display: block;
+                    }
+                }
+
+                .two-col-fields-container {
+                    display: flex;
+                    gap: 15px;
+                    align-items: center;
+                    margin-bottom: 20px;
+
+                    label {
+                        width: 105px;
+                        text-align: right;
+                    }
+
+                    .two-col-fields-inner {
+                        display: flex;
+                        gap: 20px;
+                        flex: 1;
+
+                        .form-container {
+                            margin-bottom: 0;
+                            flex: 1;
+                        }
+
+                        label.label {
+                            display: none;
+                        }
                     }
                 }
             }

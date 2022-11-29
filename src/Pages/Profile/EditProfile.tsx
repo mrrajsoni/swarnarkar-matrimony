@@ -4,6 +4,7 @@ import ProfileField from '../../Components/Commons/ProfileField/ProfileField';
 import { useUser } from '../../Context/UserContext';
 import {
     IContactDetails,
+    IDesiredPartnerDetails,
     IEducationCareerDetails,
     IFamilyDetails,
     ILifestyleDetails,
@@ -12,6 +13,7 @@ import {
 import CommonUtils from '../../Utils/API/Common Utils/CommonUtils';
 import './EditProfile.scss';
 import CareerEducationEditForm from './EditProfileForms/CareerEducationEditForm';
+import DesiredPartnerEditForm from './EditProfileForms/DesiredPartnerEditForm';
 import FamilyEditForm from './EditProfileForms/FamilyEditForm';
 import LifestyleEditForm from './EditProfileForms/LifestyleEditForm';
 import PersonalInfoEditForm from './EditProfileForms/PersonalInfoEditForm';
@@ -21,7 +23,19 @@ const initialFormState = {
     showCareerInfoForm: false,
     showFamilyInfoForm: false,
     showLifestyleForm: false,
+    showDesiredPartnerForm: false,
 };
+
+export type setShowEditFormType = React.Dispatch<
+    React.SetStateAction<{
+        showPersonalInfoForm: boolean;
+        showCareerInfoForm: boolean;
+        showFamilyInfoForm: boolean;
+        showLifestyleForm: boolean;
+        showDesiredPartnerForm: boolean;
+    }>
+>;
+
 const EditProfile = () => {
     const [inEditMode, setInEditMode] = useState(initialFormState);
     const { user } = useUser();
@@ -84,6 +98,30 @@ const EditProfile = () => {
         id: user?.id,
     };
 
+    const desiredPartnerDetailsProps: IDesiredPartnerDetails = {
+        partner_description: user?.partner_description,
+        partner_age: {
+            from: user?.partner_age?.from,
+            to: user?.partner_age?.to,
+        },
+        partner_height: {
+            from: user?.partner_height?.from,
+            to: user?.partner_height?.to,
+        },
+        partner_income: {
+            from: user?.partner_income?.from,
+            to: user?.partner_height?.to,
+        },
+        setShowEditForm: setInEditMode,
+        partner_occupation: user?.partner_occupation,
+        partner_smoke: user?.partner_smoke,
+        partner_drink: user?.partner_drink,
+        partner_marital_status: user?.own_house,
+        gender: user?.gender,
+        id: user?.id,
+        showEditForm: inEditMode.showDesiredPartnerForm,
+    };
+
     const onSubmit = (success: boolean) => {
         if (success) {
             setInEditMode(initialFormState);
@@ -105,6 +143,10 @@ const EditProfile = () => {
                                 <FamilyDetails props={familyDetails} onSubmit={onSubmit} />
                                 <LifestyleDetails
                                     props={lifestyleDetailsProps}
+                                    onSubmit={onSubmit}
+                                />
+                                <DesiredPartnerDetails
+                                    props={desiredPartnerDetailsProps}
                                     onSubmit={onSubmit}
                                 />
                             </div>
@@ -397,6 +439,72 @@ const LifestyleDetails = ({
                 </>
             ) : (
                 <LifestyleEditForm
+                    initialValues={props}
+                    onCancel={handleEditFormVisibility}
+                    userId={id}
+                    onSubmit={onSubmit}
+                />
+            )}
+        </div>
+    );
+};
+
+const DesiredPartnerDetails = ({
+    props,
+    onSubmit,
+}: {
+    props: IDesiredPartnerDetails;
+    onSubmit: (value: boolean) => void;
+}) => {
+    const {
+        setShowEditForm,
+        showEditForm,
+        id,
+        partner_age,
+        partner_description,
+        partner_drink,
+        partner_height,
+        partner_income,
+        partner_marital_status,
+        partner_occupation,
+        partner_smoke,
+    } = props;
+    const handleEditFormVisibility = (value: boolean) => {
+        setShowEditForm((prevState) => {
+            return {
+                ...prevState,
+                showDesiredPartnerForm: value,
+            };
+        });
+    };
+
+    return (
+        <div className="details-container">
+            {!showEditForm ? (
+                <>
+                    <ProfileDetailTitle
+                        title="Desired Partner"
+                        onClick={() => handleEditFormVisibility(true)}
+                    />
+                    <div className="mb-6">{partner_description ?? ''}</div>
+                    <ul>
+                        <ProfileField label="Age" field={partner_age.from?.label ?? ''} />
+                        <ProfileField label="Height" field={partner_height.from?.label ?? ''} />
+                        <ProfileField
+                            label="Annual Income"
+                            field={partner_income.from?.label ?? ''}
+                        />
+                        <ProfileField label="Occupation" field={partner_occupation?.label ?? ''} />
+                        <ProfileField
+                            label="Marital Status"
+                            field={partner_marital_status?.label ?? ''}
+                        />
+                        <ProfileField label="Drink" field={partner_drink?.label ?? ''} />
+                        <ProfileField label="Smoke" field={partner_smoke?.label ?? ''} />
+                    </ul>
+                </>
+            ) : (
+                <DesiredPartnerEditForm
                     initialValues={props}
                     onCancel={handleEditFormVisibility}
                     userId={id}
