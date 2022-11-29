@@ -154,8 +154,8 @@ const LifestyleInfo = ({ props }: { props: FormikProps<ILifestyleDetails> }) => 
                 options={YesNo}
                 value={props.values.handicapped}
             />
-            {props.values.handicapped.value === ' physically_birth' ||
-            props.values.handicapped.value === ' physically_accident' ? (
+            {props.values.handicapped?.value === ' physically_birth' ||
+            props.values.handicapped?.value === ' physically_accident' ? (
                 <SelectInput
                     isRequired={false}
                     label="Nature of the challenge"

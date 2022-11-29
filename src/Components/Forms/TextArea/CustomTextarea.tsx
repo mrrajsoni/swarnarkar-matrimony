@@ -15,20 +15,29 @@ interface ICustomTextarea {
     isRequired?: boolean;
     name?: string;
     subLabel?: string;
+    className?: string;
+    placeHolder?: string;
 }
 const CustomTextarea = ({ props }: { props: ICustomTextarea }) => {
-    const { label, onBlur, onChange, value, isRequired, id, name, subLabel } = props;
+    const {
+        label,
+        onBlur,
+        onChange,
+        value,
+        isRequired,
+        id,
+        name,
+        subLabel,
+        className,
+        placeHolder,
+    } = props;
     return (
-        <div className="form-container">
+        <div className={`${className} form-container"`}>
             <div className="input-container">
                 <label className={`${isRequired ? 'required' : 'label'}`} htmlFor={id}>
                     {label}
                 </label>
-                {subLabel ? (
-                    <p className="sub-label">
-                        Please don&lsquo;t put your social media handles, or something meaningless
-                    </p>
-                ) : null}
+                {subLabel ? <p className="sub-label">{subLabel}</p> : null}
                 <textarea
                     value={value}
                     onChange={onChange}
@@ -36,6 +45,7 @@ const CustomTextarea = ({ props }: { props: ICustomTextarea }) => {
                     rows={4}
                     id={id}
                     name={name}
+                    placeholder={placeHolder}
                 />
             </div>
         </div>
