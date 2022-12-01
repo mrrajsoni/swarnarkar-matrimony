@@ -29,7 +29,7 @@ export default class Registration {
         try {
             await supabase
                 .from('user_registration')
-                .update({ ...userPersonalData, third_stage: true })
+                .update({ ...userPersonalData, second_stage: false, third_stage: true })
                 .eq('user_id', currentUserId);
         } catch (error) {
             console.log(error);

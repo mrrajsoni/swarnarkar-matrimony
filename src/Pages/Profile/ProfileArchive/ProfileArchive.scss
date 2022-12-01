@@ -1,0 +1,36 @@
+.profile-archive-page {
+    max-width: var(--fluid-container);
+    margin: 0 auto;
+
+    .profiles-container {
+        flex: 1 1 50%;
+
+        .profile-card-container {
+            width: 50%;
+            box-shadow: var(--box-shadow);
+            border-radius: 6px;
+
+            .profile-meta-container {
+                padding: 20px;
+
+                .name-gotra-container {
+                    font-size: 22px;
+                    margin-bottom: 10px;
+                    h4,
+                    span {
+                        font-size: inherit;
+                    }
+
+                    h4 {
+                        margin-bottom: 0;
+                    }
+
+                    span {
+                        color: var(--primary-pink);
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}
