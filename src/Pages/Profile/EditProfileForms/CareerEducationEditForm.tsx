@@ -58,7 +58,7 @@ const CareerEducationEditForm = ({
                         <EducationalInfo props={props} />
                         <CareerInfo props={props} />
                         <div className="flex gap-4 justify-center">
-                            <Button name="Submit" onClick={undefined} />
+                            <Button name="Submit" type="submit" onClick={undefined} />
                             <Button name="Cancel" onClick={() => onCancel(false)} />
                         </div>
                     </Form>

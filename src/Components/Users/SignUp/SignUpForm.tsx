@@ -62,7 +62,7 @@ const UserSignUpForm = () => {
                         props={props}
                         onPasswordVisibilityChange={changePasswordVisibility}
                     />
-                    <Button name="Submit" onClick={undefined} />
+                    <Button name="Submit" type="submit" onClick={undefined} />
                 </Form>
             )}
         </Formik>

@@ -47,7 +47,7 @@ const FamilyForm = ({ user }: { user: IUser }) => {
                 {(props) => (
                     <Form className="registration-form">
                         <FamilyDetails props={props} />
-                        <Button name="Create Profile" onClick={undefined} />
+                        <Button name="Create Profile" type="submit" onClick={undefined} />
                     </Form>
                 )}
             </Formik>

@@ -68,7 +68,7 @@ const PersonalInfoForm = ({ user }: { user: IUser }) => {
                     <Form className="registration-form">
                         <BasicInfo props={props} />
                         <ReligionInfo props={props} />
-                        <Button name="Submit" onClick={undefined} />
+                        <Button name="Submit" type="submit" onClick={undefined} />
                     </Form>
                 )}
             </Formik>

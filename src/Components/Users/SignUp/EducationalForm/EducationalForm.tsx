@@ -49,7 +49,6 @@ const EducationalForm = ({ user }: { user: IUser }) => {
             <Formik
                 initialValues={EducationalFormValues}
                 onSubmit={(values) => {
-                    console.log(values);
                     updateEducationalInformation(values);
                 }}
                 validationSchema={validationSchema}>
@@ -57,7 +56,7 @@ const EducationalForm = ({ user }: { user: IUser }) => {
                     <Form className="registration-form">
                         <LivingInfo props={props} />
                         <EducationInfo props={props} />
-                        <Button name="Submit" onClick={undefined} />
+                        <Button name="Submit" type="submit" onClick={undefined} />
                     </Form>
                 )}
             </Formik>

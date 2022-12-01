@@ -58,7 +58,7 @@ const UserLoginForm = ({ handleLogin }: { handleLogin: (values: IloginData) => v
                         showPasswordField={showPasswordField}
                     />
                     <ForgotPassword />
-                    <Button onClick={undefined} name="Submit" />
+                    <Button onClick={undefined} type="submit" name="Submit" />
                 </Form>
             )}
         </Formik>
