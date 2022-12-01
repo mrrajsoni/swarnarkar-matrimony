@@ -6,6 +6,7 @@ import './Navbar.scss';
 import { ReactComponent as DownArrow } from '../../../Assets/Svg/down-arrow.svg';
 import { Link } from 'react-router-dom';
 import CommonUtils from '../../../Utils/API/Common Utils/CommonUtils';
+import { MainMenu } from '../../../Constants/Menu';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ const Navbar = () => {
         setProfileMenuOpen((prevState) => !prevState);
     };
     return (
-        <nav className="flex justify-end ">
+        <nav className="flex justify-center">
             <MainMenuLinks />
             <HeaderSignUpLinks
                 profileMenuRef={profileMenuRef}
@@ -38,7 +39,15 @@ const Navbar = () => {
 };
 
 const MainMenuLinks = () => {
-    return <ul className="main-menu"></ul>;
+    return (
+        <ul className="main-menu ml-auto flex gap-6">
+            {MainMenu.map((menu) => (
+                <li key={menu.link}>
+                    <Link to={menu.link}>{menu.name}</Link>
+                </li>
+            ))}
+        </ul>
+    );
 };
 
 const HeaderSignUpLinks = ({
@@ -57,7 +66,7 @@ const HeaderSignUpLinks = ({
     const { user, userLogout } = useUser();
 
     return (
-        <ul className="register-menu relative">
+        <ul className="register-menu relative ml-auto">
             {user?.registration_completed ? (
                 <>
                     <li

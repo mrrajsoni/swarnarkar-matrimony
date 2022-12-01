@@ -1,10 +1,14 @@
-export const mainMenu = [
+export const MainMenu = [
     {
-        name: 'About',
-        link: 'about',
+        name: 'Partner Search',
+        link: '/all-profiles',
     },
     {
-        name: 'Contact',
+        name: 'About',
+        link: '/about',
+    },
+    {
+        name: 'Help',
         link: '/contact',
     },
 ];
