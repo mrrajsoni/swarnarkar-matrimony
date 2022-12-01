@@ -46,7 +46,6 @@ const UserProvider = ({ children }) => {
             listener?.subscription.unsubscribe();
         };
     }, [user?.id]);
-    console.log(user?.id);
 
     const userLogin = (logindata: IloginData) => {
         void Login.signInWithEmail(logindata);
