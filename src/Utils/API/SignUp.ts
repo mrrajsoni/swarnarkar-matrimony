@@ -71,4 +71,14 @@ export default class Registration {
             console.log(error);
         }
     }
+
+    static async editProfileImageUpdate(userImage: File, currentUserId: string) {
+        try {
+            await supabase.storage
+                .from('profile-images')
+                .upload(`${currentUserId}/${userImage.name}`, userImage);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }

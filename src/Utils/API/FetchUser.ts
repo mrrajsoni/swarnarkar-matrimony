@@ -32,4 +32,29 @@ export default class FetchUser {
             console.log(error);
         }
     }
+
+    static async getUserImages(user_id: string) {
+        try {
+            const { data, error } = await supabase.storage
+                .from('profile-images')
+                .list(`${user_id}/`, {
+                    limit: 5,
+                });
+
+            if (!error) return data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    static async deleteUserImage(user_id: string, imageName: string) {
+        try {
+            const { data, error } = await supabase.storage
+                .from('profile-images')
+                .remove([`${user_id}/${imageName}`]);
+
+            if (!error) return data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }

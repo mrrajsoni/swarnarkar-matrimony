@@ -156,3 +156,10 @@ export interface IDesiredPartnerDetails {
     id?: string;
     setShowEditForm: setShowEditFormType;
 }
+
+export interface IProfileImageDetails {
+    showEditForm: boolean;
+    id?: string;
+    setShowEditForm: setShowEditFormType;
+    profile_image: string;
+}
