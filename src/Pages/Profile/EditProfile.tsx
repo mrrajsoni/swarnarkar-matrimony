@@ -9,14 +9,17 @@ import {
     IFamilyDetails,
     ILifestyleDetails,
     IPersonalDetails,
+    IProfileImageDetails,
 } from '../../Types/GlobalTypes';
 import CommonUtils from '../../Utils/API/Common Utils/CommonUtils';
 import './EditProfile.scss';
 import CareerEducationEditForm from './EditProfileForms/CareerEducationEditForm';
 import DesiredPartnerEditForm from './EditProfileForms/DesiredPartnerEditForm';
 import FamilyEditForm from './EditProfileForms/FamilyEditForm';
+import ImageEditForm from './EditProfileForms/ImageEditForm';
 import LifestyleEditForm from './EditProfileForms/LifestyleEditForm';
 import PersonalInfoEditForm from './EditProfileForms/PersonalInfoEditForm';
+import UserImages from './UserImages';
 
 const initialFormState = {
     showPersonalInfoForm: false,
@@ -24,6 +27,7 @@ const initialFormState = {
     showFamilyInfoForm: false,
     showLifestyleForm: false,
     showDesiredPartnerForm: false,
+    showProfileImageForm: false,
 };
 
 export type setShowEditFormType = React.Dispatch<
@@ -33,6 +37,7 @@ export type setShowEditFormType = React.Dispatch<
         showFamilyInfoForm: boolean;
         showLifestyleForm: boolean;
         showDesiredPartnerForm: boolean;
+        showProfileImageForm: boolean;
     }>
 >;
 
@@ -122,6 +127,13 @@ const EditProfile = () => {
         showEditForm: inEditMode.showDesiredPartnerForm,
     };
 
+    const profileImageProps: IProfileImageDetails = {
+        profile_image: '',
+        setShowEditForm: setInEditMode,
+        showEditForm: inEditMode.showProfileImageForm,
+        id: user?.id,
+    };
+
     const onSubmit = (success: boolean) => {
         if (success) {
             setInEditMode(initialFormState);
@@ -135,6 +147,7 @@ const EditProfile = () => {
                         Login
                         <div className="two-cols flex gap-3">
                             <div className="details-col ">
+                                <ProfileImages props={profileImageProps} onSubmit={onSubmit} />
                                 <PersonalDetails props={personalDetails} onSubmit={onSubmit} />
                                 <EducationCareerDetails
                                     props={educationCareerDetails}
@@ -158,6 +171,44 @@ const EditProfile = () => {
                 </section>
             ) : null}
         </Layout>
+    );
+};
+
+const ProfileImages = ({
+    props,
+    onSubmit,
+}: {
+    props: IProfileImageDetails;
+    onSubmit: (success: boolean) => void;
+}) => {
+    const handleEditFormVisibility = (value: boolean) => {
+        setShowEditForm((prevState) => {
+            return {
+                ...prevState,
+                showProfileImageForm: value,
+            };
+        });
+    };
+    const { profile_image, setShowEditForm, showEditForm, id } = props;
+    return (
+        <div className="details-container">
+            {!showEditForm ? (
+                <>
+                    <ProfileDetailTitle
+                        title="Basic Details"
+                        onClick={() => handleEditFormVisibility(true)}
+                    />
+                    <UserImages userId={id} />
+                </>
+            ) : (
+                <ImageEditForm
+                    initialValues={{ profile_image: null }}
+                    onCancel={handleEditFormVisibility}
+                    onSubmit={onSubmit}
+                    userId={id}
+                />
+            )}
+        </div>
     );
 };
 

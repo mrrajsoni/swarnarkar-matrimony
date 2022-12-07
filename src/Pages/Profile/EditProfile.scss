@@ -19,6 +19,24 @@
                     display: flex;
                     flex-wrap: wrap;
                 }
+
+                .user-image-container {
+                    > div {
+                        width: 32%;
+                        position: relative;
+                    }
+
+                    .delete-icon {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+
+                        > svg {
+                            width: 24px;
+                            stroke: red;
+                        }
+                    }
+                }
             }
         }
 
