@@ -22,20 +22,23 @@ const validationSchema = Yup.object().shape({
 interface IProfileImageEditValues {
     profile_image: File;
 }
+
+const initialValue: IProfileImageEditValues = {
+    profile_image: null,
+};
 const ImageEditForm = ({
-    initialValues,
+    userImageNames,
     onSubmit,
     onCancel,
     userId,
 }: {
-    initialValues: IProfileImageEditValues;
+    userImageNames: string;
     onSubmit: (value: boolean) => void;
     onCancel: (value: boolean) => void;
     userId: string;
 }) => {
     const [previewImage, setPreviewImage] = useState(null);
     const [uploadingProfileImage, setUploadingProfileImage] = useState<Blob | MediaSource>(null);
-
     const updateProfileImage = (value: File) => {
         setUploadingProfileImage(value);
     };
@@ -53,14 +56,27 @@ const ImageEditForm = ({
     }, [uploadingProfileImage]);
 
     const handleSubmit = (values: IProfileImageEditValues) => {
-        void Registration.editProfileImageUpdate(values.profile_image, userId);
+        // eslint-disable-next-line no-debugger
+        debugger;
+        void Registration.editProfileImageUpdate(values.profile_image, userId).then((value) => {
+            if (!value.error) {
+                let userImageNamesList: string;
+                if (userImageNames !== '') {
+                    userImageNamesList = userImageNames.concat(',', values.profile_image.name);
+                } else {
+                    userImageNamesList = values.profile_image.name;
+                }
+
+                void Registration.imageUpdateToDatabase(userImageNamesList, userId);
+            }
+        });
         onSubmit(true);
     };
     return (
         <section className="edit-form-section">
             <UserImages userId={userId} showDelete={true} />
             <Formik
-                initialValues={initialValues}
+                initialValues={initialValue}
                 onSubmit={(values) => {
                     handleSubmit(values);
                 }}
@@ -92,6 +108,7 @@ const ProfileImages = ({
     handleProfileImage: (value: File) => void;
     previewImage: string;
 }) => {
+    console.log(props.errors);
     return (
         <div className="profile-images-container">
             <img src={previewImage} alt="" />

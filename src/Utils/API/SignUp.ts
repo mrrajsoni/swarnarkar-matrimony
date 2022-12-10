@@ -74,9 +74,29 @@ export default class Registration {
 
     static async editProfileImageUpdate(userImage: File, currentUserId: string) {
         try {
-            await supabase.storage
+            const { data, error } = await supabase.storage
                 .from('profile-images')
                 .upload(`${currentUserId}/${userImage.name}`, userImage);
+
+            return {
+                error,
+                data,
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async imageUpdateToDatabase(userImage: string, currentUserId: string) {
+        try {
+            const { data } = await supabase
+                .from('user_registration')
+                .update({
+                    user_images: userImage,
+                })
+                .eq('user_id', currentUserId);
+
+            console.log(data);
         } catch (error) {
             console.log(error);
         }

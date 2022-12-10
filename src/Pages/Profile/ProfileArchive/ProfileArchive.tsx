@@ -4,6 +4,7 @@ import { useUser } from '../../../Context/UserContext';
 import { selectValue } from '../../../Types/GlobalTypes';
 import CommonUtils from '../../../Utils/API/Common Utils/CommonUtils';
 import FetchUser from '../../../Utils/API/FetchUser';
+import { CDNURL } from '../UserImages';
 import './ProfileArchive.scss';
 
 export interface IProfileArchiveData {
@@ -14,6 +15,8 @@ export interface IProfileArchiveData {
     annual_income: selectValue;
     height: selectValue;
     occupation: string;
+    user_id: string;
+    user_images: string;
 }
 const ProfileArchive = () => {
     const { user } = useUser();
@@ -33,18 +36,25 @@ const ProfileArchive = () => {
                 <div className="filter-container flex-auto">Filters</div>
                 <div className="profiles-container flex flex-wrap gap-6">
                     {profileData &&
-                        profileData.map((profile) => (
-                            <ProfileCard
-                                key={profile.dob}
-                                annual_income={profile.annual_income.label}
-                                dob={profile.dob}
-                                first_name={profile.first_name}
-                                last_name={profile.last_name}
-                                occupation={profile.occupation}
-                                height={profile.height.label}
-                                self_gotra={profile.self_gotra.label}
-                            />
-                        ))}
+                        profileData.map((profile) => {
+                            const userImageArray = profile.user_images.split(',');
+                            const userImage = userImageArray[0];
+
+                            return (
+                                <ProfileCard
+                                    key={profile.dob}
+                                    annual_income={profile.annual_income.label}
+                                    dob={profile.dob}
+                                    first_name={profile.first_name}
+                                    last_name={profile.last_name}
+                                    occupation={profile.occupation}
+                                    height={profile.height.label}
+                                    self_gotra={profile.self_gotra.label}
+                                    userImage={userImage}
+                                    userId={profile.user_id}
+                                />
+                            );
+                        })}
                 </div>
             </section>
         </Layout>
@@ -59,6 +69,8 @@ const ProfileCard = ({
     occupation,
     annual_income,
     height,
+    userImage,
+    userId,
 }: {
     first_name: string;
     last_name: string;
@@ -67,11 +79,15 @@ const ProfileCard = ({
     occupation: string;
     annual_income: string;
     height: string;
+    userImage: string;
+    userId: string;
 }) => {
     const age = CommonUtils.getAge(dob);
     return (
         <div className="profile-card-container">
-            <div className="image-container"></div>
+            <div className="image-container">
+                <img src={`${CDNURL}/${userId}/${userImage}`} alt={`${first_name} profile image`} />
+            </div>
             <div className="profile-meta-container">
                 <div className="name-gotra-container flex gap-3">
                     <h4 className="profile-name">

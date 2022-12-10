@@ -7,11 +7,17 @@
 
         .profile-card-container {
             width: 50%;
-            box-shadow: var(--box-shadow);
             border-radius: 6px;
+
+            .image-container > img {
+                width: 100%;
+                object-fit: cover;
+                height: 300px;
+            }
 
             .profile-meta-container {
                 padding: 20px;
+                background-color: var(--white);
 
                 .name-gotra-container {
                     font-size: 22px;

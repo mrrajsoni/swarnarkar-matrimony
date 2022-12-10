@@ -128,7 +128,7 @@ const EditProfile = () => {
     };
 
     const profileImageProps: IProfileImageDetails = {
-        profile_image: '',
+        user_images: user?.user_images,
         setShowEditForm: setInEditMode,
         showEditForm: inEditMode.showProfileImageForm,
         id: user?.id,
@@ -189,7 +189,7 @@ const ProfileImages = ({
             };
         });
     };
-    const { profile_image, setShowEditForm, showEditForm, id } = props;
+    const { user_images, setShowEditForm, showEditForm, id } = props;
     return (
         <div className="details-container">
             {!showEditForm ? (
@@ -202,7 +202,7 @@ const ProfileImages = ({
                 </>
             ) : (
                 <ImageEditForm
-                    initialValues={{ profile_image: null }}
+                    userImageNames={user_images}
                     onCancel={handleEditFormVisibility}
                     onSubmit={onSubmit}
                     userId={id}

@@ -3,7 +3,8 @@ import { FileObject } from '@supabase/storage-js/dist/module/lib/types';
 import FetchUser from '../../Utils/API/FetchUser';
 import { ReactComponent as DeleteIcon } from '../../Assets/Svg/delete.svg';
 
-const CDNURL = 'https://rowqudefqibehplofnhb.supabase.co/storage/v1/object/public/profile-images';
+export const CDNURL =
+    'https://rowqudefqibehplofnhb.supabase.co/storage/v1/object/public/profile-images';
 
 const UserImages = ({ userId, showDelete }: { userId: string; showDelete?: boolean }) => {
     const [userImageList, setUserImage] = useState<FileObject[]>([]);

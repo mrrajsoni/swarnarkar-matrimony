@@ -67,6 +67,7 @@ export interface IUser {
     partner_smoke?: selectValue;
     partner_drink?: selectValue;
     partner_marital_status?: selectValue;
+    user_images?: string;
 }
 
 export interface selectValue {
@@ -161,5 +162,5 @@ export interface IProfileImageDetails {
     showEditForm: boolean;
     id?: string;
     setShowEditForm: setShowEditFormType;
-    profile_image: string;
+    user_images: string;
 }
