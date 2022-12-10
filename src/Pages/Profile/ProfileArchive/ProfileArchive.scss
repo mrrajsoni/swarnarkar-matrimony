@@ -2,38 +2,43 @@
     max-width: var(--fluid-container);
     margin: 0 auto;
 
+    .archive-mini-label {
+        margin-bottom: 20px;
+    }
+
     .profiles-container {
         flex: 1 1 50%;
 
-        .profile-card-container {
+        .profile-card {
             width: 50%;
             border-radius: 6px;
+            .profile-card-container {
+                .image-container > img {
+                    width: 100%;
+                    object-fit: cover;
+                    height: 300px;
+                }
 
-            .image-container > img {
-                width: 100%;
-                object-fit: cover;
-                height: 300px;
-            }
+                .profile-meta-container {
+                    padding: 20px;
+                    background-color: var(--white);
 
-            .profile-meta-container {
-                padding: 20px;
-                background-color: var(--white);
+                    .name-gotra-container {
+                        font-size: 22px;
+                        margin-bottom: 10px;
+                        h4,
+                        span {
+                            font-size: inherit;
+                        }
 
-                .name-gotra-container {
-                    font-size: 22px;
-                    margin-bottom: 10px;
-                    h4,
-                    span {
-                        font-size: inherit;
-                    }
+                        h4 {
+                            margin-bottom: 0;
+                        }
 
-                    h4 {
-                        margin-bottom: 0;
-                    }
-
-                    span {
-                        color: var(--primary-pink);
-                        font-weight: bold;
+                        span {
+                            color: var(--primary-pink);
+                            font-weight: bold;
+                        }
                     }
                 }
             }

@@ -87,9 +87,6 @@ export interface IPersonalDetails {
     gender: selectValue;
     martial_status: selectValue;
     state: selectValue;
-    id?: string;
-    showEditForm: boolean;
-    setShowEditForm: setShowEditFormType;
 }
 
 export interface IEducationCareerDetails {
@@ -97,10 +94,7 @@ export interface IEducationCareerDetails {
     employed_in: selectValue;
     occupation: string;
     annual_income: selectValue;
-    id?: string;
     organization_name?: string;
-    showEditForm: boolean;
-    setShowEditForm: setShowEditFormType;
 }
 
 export interface IFamilyDetails {
@@ -111,9 +105,6 @@ export interface IFamilyDetails {
     sisters?: selectValue;
     family_type?: selectValue;
     family_status?: selectValue;
-    showEditForm: boolean;
-    id?: string;
-    setShowEditForm: setShowEditFormType;
 }
 
 export interface IContactDetails {
@@ -129,9 +120,6 @@ export interface ILifestyleDetails {
     own_house?: selectValue;
     handicapped?: selectValue;
     nature_handicap?: selectValue;
-    showEditForm: boolean;
-    id?: string;
-    setShowEditForm: setShowEditFormType;
 }
 
 export interface IDesiredPartnerDetails {
@@ -153,9 +141,6 @@ export interface IDesiredPartnerDetails {
     partner_drink?: selectValue;
     partner_marital_status?: selectValue;
     gender?: selectValue;
-    showEditForm: boolean;
-    id?: string;
-    setShowEditForm: setShowEditFormType;
 }
 
 export interface IProfileImageDetails {
@@ -163,4 +148,9 @@ export interface IProfileImageDetails {
     id?: string;
     setShowEditForm: setShowEditFormType;
     user_images: string;
+}
+
+export interface IProfileDataArray {
+    label: string;
+    field: string;
 }

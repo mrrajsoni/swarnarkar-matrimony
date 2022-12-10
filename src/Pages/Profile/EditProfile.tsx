@@ -9,9 +9,10 @@ import {
     IFamilyDetails,
     ILifestyleDetails,
     IPersonalDetails,
+    IProfileDataArray,
     IProfileImageDetails,
 } from '../../Types/GlobalTypes';
-import CommonUtils from '../../Utils/API/Common Utils/CommonUtils';
+import CommonUtils from '../../Utils/Common Utils/CommonUtils';
 import './EditProfile.scss';
 import CareerEducationEditForm from './EditProfileForms/CareerEducationEditForm';
 import DesiredPartnerEditForm from './EditProfileForms/DesiredPartnerEditForm';
@@ -19,7 +20,9 @@ import FamilyEditForm from './EditProfileForms/FamilyEditForm';
 import ImageEditForm from './EditProfileForms/ImageEditForm';
 import LifestyleEditForm from './EditProfileForms/LifestyleEditForm';
 import PersonalInfoEditForm from './EditProfileForms/PersonalInfoEditForm';
-import UserImages from './UserImages';
+import UserImages from '../../Components/Users/Profile/UserImages';
+import ProfileDetailsBox from '../../Components/Users/Profile/ProfileDetailsBox';
+import ProfileUtils from '../../Utils/Profile/ProfileUtils';
 
 const initialFormState = {
     showPersonalInfoForm: false,
@@ -41,12 +44,16 @@ export type setShowEditFormType = React.Dispatch<
     }>
 >;
 
+export interface IFormVisibilityProps {
+    showEditForm: boolean;
+    setShowEditForm: setShowEditFormType;
+}
+
 const EditProfile = () => {
     const [inEditMode, setInEditMode] = useState(initialFormState);
     const { user } = useUser();
 
     const personalDetails: IPersonalDetails = {
-        id: user?.id,
         first_name: user?.first_name,
         last_name: user?.last_name,
         height: user?.height,
@@ -58,31 +65,23 @@ const EditProfile = () => {
         gender: user?.gender,
         martial_status: user?.martial_status,
         state: user?.state,
-        showEditForm: inEditMode.showPersonalInfoForm,
-        setShowEditForm: setInEditMode,
     };
     const educationCareerDetails: IEducationCareerDetails = {
         annual_income: user?.annual_income,
         degree: user?.degree,
         employed_in: user?.employed_in,
         occupation: user?.occupation,
-        id: user?.id,
-        showEditForm: inEditMode.showCareerInfoForm,
         organization_name: user?.organization_name,
-        setShowEditForm: setInEditMode,
     };
 
     const familyDetails: IFamilyDetails = {
         mother_gotra: user?.mother_gotra,
-        id: user?.id,
         brothers: user?.brothers,
         sisters: user?.sisters,
         family_status: user?.family_status,
         family_type: user?.family_type,
         father_occupation: user?.father_occupation,
         mother_occupation: user?.mother_occupation,
-        showEditForm: inEditMode.showFamilyInfoForm,
-        setShowEditForm: setInEditMode,
     };
 
     const contactDetailsProps: IContactDetails = {
@@ -95,12 +94,9 @@ const EditProfile = () => {
         drinking_habit: user?.drinking_habit,
         smoking_habit: user?.smoking_habit,
         own_car: user?.own_car,
-        setShowEditForm: setInEditMode,
         handicapped: user?.handicapped,
         nature_handicap: user?.nature_handicap,
-        showEditForm: inEditMode.showLifestyleForm,
         own_house: user?.own_house,
-        id: user?.id,
     };
 
     const desiredPartnerDetailsProps: IDesiredPartnerDetails = {
@@ -117,14 +113,11 @@ const EditProfile = () => {
             from: user?.partner_income?.from,
             to: user?.partner_height?.to,
         },
-        setShowEditForm: setInEditMode,
         partner_occupation: user?.partner_occupation,
         partner_smoke: user?.partner_smoke,
         partner_drink: user?.partner_drink,
         partner_marital_status: user?.own_house,
         gender: user?.gender,
-        id: user?.id,
-        showEditForm: inEditMode.showDesiredPartnerForm,
     };
 
     const profileImageProps: IProfileImageDetails = {
@@ -148,19 +141,50 @@ const EditProfile = () => {
                         <div className="two-cols flex gap-3">
                             <div className="details-col ">
                                 <ProfileImages props={profileImageProps} onSubmit={onSubmit} />
-                                <PersonalDetails props={personalDetails} onSubmit={onSubmit} />
+                                <PersonalDetails
+                                    userId={user?.id}
+                                    props={personalDetails}
+                                    onSubmit={onSubmit}
+                                    formProps={{
+                                        setShowEditForm: setInEditMode,
+                                        showEditForm: inEditMode.showCareerInfoForm,
+                                    }}
+                                />
                                 <EducationCareerDetails
+                                    userId={user?.id}
                                     props={educationCareerDetails}
                                     onSubmit={onSubmit}
+                                    formProps={{
+                                        setShowEditForm: setInEditMode,
+                                        showEditForm: inEditMode.showCareerInfoForm,
+                                    }}
                                 />
-                                <FamilyDetails props={familyDetails} onSubmit={onSubmit} />
+                                <FamilyDetails
+                                    userId={user?.id}
+                                    props={familyDetails}
+                                    onSubmit={onSubmit}
+                                    formProps={{
+                                        setShowEditForm: setInEditMode,
+                                        showEditForm: inEditMode.showCareerInfoForm,
+                                    }}
+                                />
                                 <LifestyleDetails
+                                    userId={user?.id}
                                     props={lifestyleDetailsProps}
                                     onSubmit={onSubmit}
+                                    formProps={{
+                                        setShowEditForm: setInEditMode,
+                                        showEditForm: inEditMode.showCareerInfoForm,
+                                    }}
                                 />
                                 <DesiredPartnerDetails
+                                    userId={user?.id}
                                     props={desiredPartnerDetailsProps}
                                     onSubmit={onSubmit}
+                                    formProps={{
+                                        setShowEditForm: setInEditMode,
+                                        showEditForm: inEditMode.showCareerInfoForm,
+                                    }}
                                 />
                             </div>
                             <div className="flex-1">
@@ -226,29 +250,20 @@ const ProfileDetailTitle = ({ title, onClick }: { title: string; onClick: () => 
 const PersonalDetails = ({
     props,
     onSubmit,
+    formProps,
+    userId,
 }: {
     props: IPersonalDetails;
     onSubmit: (success: boolean) => void;
+    formProps: IFormVisibilityProps;
+    userId: string;
 }) => {
-    const {
-        city,
-        first_name,
-        height,
-        last_name,
-        self_gotra,
-        profile_description,
-        manglik,
-        dob,
-        gender,
-        martial_status,
-        setShowEditForm,
-        showEditForm,
-        state,
-        id,
-    } = props;
-
+    const { first_name, last_name, profile_description, dob, gender } = props;
+    const { setShowEditForm, showEditForm } = formProps;
     const age = CommonUtils.getAge(dob);
     const formattedDob = CommonUtils.getFormattedDob(dob);
+    const profileDataArray = ProfileUtils.convertPersonalDetailsObj(props, formattedDob);
+
     const handleEditFormVisibility = (value: boolean) => {
         setShowEditForm((prevState) => {
             return {
@@ -269,26 +284,19 @@ const PersonalDetails = ({
                         </span>
                     </h4>
                     <div className="mb-6">{profile_description}</div>
-                    <ProfileDetailTitle
-                        title="Basic Details"
-                        onClick={() => handleEditFormVisibility(true)}
+                    <ProfileDetailsBox
+                        profileData={profileDataArray}
+                        profileDetailTitle="Basic Details"
+                        showEditButton={true}
+                        onEditClick={() => handleEditFormVisibility(true)}
                     />
-                    <ul>
-                        <ProfileField label="Date of Birth" field={formattedDob} />
-                        <ProfileField label="Height" field={height.label} />
-                        <ProfileField label="Marital Status" field={martial_status.label} />
-                        <ProfileField label="Gotra" field={self_gotra.label} />
-                        <ProfileField label="City" field={city} />
-                        <ProfileField label="State" field={state.label} />
-                        <ProfileField label="Manglik" field={manglik ? 'Yes' : 'No'} />
-                    </ul>
                 </>
             ) : (
                 <PersonalInfoEditForm
                     onCancel={handleEditFormVisibility}
                     onSubmit={onSubmit}
                     initialValues={props}
-                    userId={id}
+                    userId={userId}
                 />
             )}
         </div>
@@ -298,20 +306,15 @@ const PersonalDetails = ({
 const EducationCareerDetails = ({
     props,
     onSubmit,
+    formProps,
+    userId,
 }: {
     props: IEducationCareerDetails;
     onSubmit: (value: boolean) => void;
+    formProps: IFormVisibilityProps;
+    userId: string;
 }) => {
-    const {
-        annual_income,
-        degree,
-        employed_in,
-        occupation,
-        setShowEditForm,
-        showEditForm,
-        id,
-        organization_name,
-    } = props;
+    const { setShowEditForm, showEditForm } = formProps;
     const handleEditFormVisibility = (value: boolean) => {
         setShowEditForm((prevState) => {
             return {
@@ -320,35 +323,22 @@ const EducationCareerDetails = ({
             };
         });
     };
+    const profileDataArray = ProfileUtils.convertEducationCareerDetailsObj(props);
 
     return (
         <div className="details-container">
             {!showEditForm ? (
-                <>
-                    <ProfileDetailTitle
-                        title="Education & Career"
-                        onClick={() => handleEditFormVisibility(true)}
-                    />
-                    <ul>
-                        <ProfileField label="Annual Income" field={annual_income.label} />
-                        <ProfileField label="Degree" field={degree} />
-                        <ProfileField label="Employed In" field={employed_in.label} />
-                        <ProfileField label="Occupation" field={occupation} />
-                        <ProfileField
-                            label="Organization Name"
-                            field={
-                                organization_name !== '' && organization_name
-                                    ? organization_name
-                                    : 'Not filled in'
-                            }
-                        />
-                    </ul>
-                </>
+                <ProfileDetailsBox
+                    profileData={profileDataArray}
+                    profileDetailTitle="Education & Career"
+                    showEditButton={true}
+                    onEditClick={() => handleEditFormVisibility(true)}
+                />
             ) : (
                 <CareerEducationEditForm
                     initialValues={props}
                     onCancel={handleEditFormVisibility}
-                    userId={id}
+                    userId={userId}
                     onSubmit={onSubmit}
                 />
             )}
@@ -359,22 +349,17 @@ const EducationCareerDetails = ({
 const FamilyDetails = ({
     props,
     onSubmit,
+    formProps,
+    userId,
 }: {
     props: IFamilyDetails;
     onSubmit: (value: boolean) => void;
+    formProps: IFormVisibilityProps;
+    userId: string;
 }) => {
-    const {
-        mother_gotra,
-        setShowEditForm,
-        showEditForm,
-        brothers,
-        family_status,
-        family_type,
-        father_occupation,
-        id,
-        mother_occupation,
-        sisters,
-    } = props;
+    const { setShowEditForm, showEditForm } = formProps;
+
+    const profileDataArray = ProfileUtils.convertFamilyDetailsObj(props);
 
     const handleEditFormVisibility = (value: boolean) => {
         setShowEditForm((prevState) => {
@@ -387,33 +372,18 @@ const FamilyDetails = ({
     return (
         <div className="details-container">
             {!showEditForm ? (
-                <>
-                    <ProfileDetailTitle
-                        title="Family"
-                        onClick={() => handleEditFormVisibility(true)}
-                    />
-                    <ul>
-                        <ProfileField label="Mother's Gotra" field={mother_gotra.label} />
-                        <ProfileField
-                            label="Mother's Occupation"
-                            field={mother_occupation?.label ?? ''}
-                        />
-                        <ProfileField
-                            label="Father's Occupation"
-                            field={father_occupation?.label ?? ''}
-                        />
-                        <ProfileField label="No. of Brothers" field={brothers?.label ?? ''} />
-                        <ProfileField label="No. of Sisters" field={sisters?.label ?? ''} />
-                        <ProfileField label="Family Type" field={family_type?.label ?? ''} />
-                        <ProfileField label="Family Status" field={family_status?.label ?? ''} />
-                    </ul>
-                </>
+                <ProfileDetailsBox
+                    profileData={profileDataArray}
+                    profileDetailTitle="Family"
+                    showEditButton={true}
+                    onEditClick={() => handleEditFormVisibility(true)}
+                />
             ) : (
                 <FamilyEditForm
                     initialValues={props}
                     onSubmit={onSubmit}
                     onCancel={handleEditFormVisibility}
-                    userId={id}
+                    userId={userId}
                 />
             )}
         </div>
@@ -436,22 +406,17 @@ const ContactDetails = ({ props }: { props: IContactDetails }) => {
 const LifestyleDetails = ({
     props,
     onSubmit,
+    formProps,
+    userId,
 }: {
     props: ILifestyleDetails;
     onSubmit: (value: boolean) => void;
+    formProps: IFormVisibilityProps;
+    userId: string;
 }) => {
-    const {
-        setShowEditForm,
-        showEditForm,
-        dietary_habit,
-        drinking_habit,
-        handicapped,
-        id,
-        nature_handicap,
-        own_car,
-        own_house,
-        smoking_habit,
-    } = props;
+    const { setShowEditForm, showEditForm } = formProps;
+    const profileDataArray = ProfileUtils.convertLifestyleDetailsObj(props);
+
     const handleEditFormVisibility = (value: boolean) => {
         setShowEditForm((prevState) => {
             return {
@@ -464,35 +429,17 @@ const LifestyleDetails = ({
     return (
         <div className="details-container">
             {!showEditForm ? (
-                <>
-                    <ProfileDetailTitle
-                        title="Lifestyle"
-                        onClick={() => handleEditFormVisibility(true)}
-                    />
-                    <ul>
-                        <ProfileField label="Dietary Habits" field={dietary_habit?.label ?? ''} />
-                        <ProfileField label="Drinking Habits" field={drinking_habit?.label ?? ''} />
-                        <ProfileField
-                            label="Smoking Habits In"
-                            field={smoking_habit?.label ?? ''}
-                        />
-                        <ProfileField label="Own a house" field={own_house?.label ?? ''} />
-                        <ProfileField label="Own a car" field={own_car?.label ?? ''} />
-                        <ProfileField label="Challenged" field={handicapped?.label ?? ''} />
-                        {handicapped?.value === 'physically_accident' ||
-                        handicapped?.value === 'physically_birth' ? (
-                            <ProfileField
-                                label="Nature of challenge"
-                                field={nature_handicap.label}
-                            />
-                        ) : null}
-                    </ul>
-                </>
+                <ProfileDetailsBox
+                    profileData={profileDataArray}
+                    profileDetailTitle="Lifestyle"
+                    showEditButton={true}
+                    onEditClick={() => handleEditFormVisibility(true)}
+                />
             ) : (
                 <LifestyleEditForm
                     initialValues={props}
                     onCancel={handleEditFormVisibility}
-                    userId={id}
+                    userId={userId}
                     onSubmit={onSubmit}
                 />
             )}
@@ -503,23 +450,16 @@ const LifestyleDetails = ({
 const DesiredPartnerDetails = ({
     props,
     onSubmit,
+    formProps,
+    userId,
 }: {
     props: IDesiredPartnerDetails;
     onSubmit: (value: boolean) => void;
+    formProps: IFormVisibilityProps;
+    userId: string;
 }) => {
-    const {
-        setShowEditForm,
-        showEditForm,
-        id,
-        partner_age,
-        partner_description,
-        partner_drink,
-        partner_height,
-        partner_income,
-        partner_marital_status,
-        partner_occupation,
-        partner_smoke,
-    } = props;
+    const { partner_description } = props;
+    const { setShowEditForm, showEditForm } = formProps;
     const handleEditFormVisibility = (value: boolean) => {
         setShowEditForm((prevState) => {
             return {
@@ -529,36 +469,23 @@ const DesiredPartnerDetails = ({
         });
     };
 
+    const profileDataArray = ProfileUtils.convertDesiredPartnerObj(props);
+
     return (
         <div className="details-container">
             {!showEditForm ? (
-                <>
-                    <ProfileDetailTitle
-                        title="Desired Partner"
-                        onClick={() => handleEditFormVisibility(true)}
-                    />
-                    <div className="mb-6">{partner_description ?? ''}</div>
-                    <ul>
-                        <ProfileField label="Age" field={partner_age.from?.label ?? ''} />
-                        <ProfileField label="Height" field={partner_height.from?.label ?? ''} />
-                        <ProfileField
-                            label="Annual Income"
-                            field={partner_income.from?.label ?? ''}
-                        />
-                        <ProfileField label="Occupation" field={partner_occupation?.label ?? ''} />
-                        <ProfileField
-                            label="Marital Status"
-                            field={partner_marital_status?.label ?? ''}
-                        />
-                        <ProfileField label="Drink" field={partner_drink?.label ?? ''} />
-                        <ProfileField label="Smoke" field={partner_smoke?.label ?? ''} />
-                    </ul>
-                </>
+                <ProfileDetailsBox
+                    profileData={profileDataArray}
+                    profileDetailTitle="Desired Partner"
+                    showEditButton={true}
+                    onEditClick={() => handleEditFormVisibility(true)}
+                    partner_description={partner_description}
+                />
             ) : (
                 <DesiredPartnerEditForm
                     initialValues={props}
                     onCancel={handleEditFormVisibility}
-                    userId={id}
+                    userId={userId}
                     onSubmit={onSubmit}
                 />
             )}

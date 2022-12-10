@@ -5,7 +5,7 @@ import LoginForm from '../../Users/Login/LoginForm';
 import './Navbar.scss';
 import { ReactComponent as DownArrow } from '../../../Assets/Svg/down-arrow.svg';
 import { Link } from 'react-router-dom';
-import CommonUtils from '../../../Utils/API/Common Utils/CommonUtils';
+import CommonUtils from '../../../Utils/Common Utils/CommonUtils';
 import { MainMenu } from '../../../Constants/Menu';
 
 const Navbar = () => {

@@ -6,6 +6,7 @@ import HomePage from './Pages/Homepage/Homepage';
 import Login from './Pages/Login/Login';
 import EditProfile from './Pages/Profile/EditProfile';
 import ProfileArchive from './Pages/Profile/ProfileArchive/ProfileArchive';
+import ProfilePage from './Pages/Profile/ProfilePage';
 import Register from './Pages/Register/Register';
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
                 <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
                 <Route path="/edit-profile" element={<EditProfile />} />
                 <Route path="/all-profiles" element={<ProfileArchive />} />
+                <Route path="/all-profiles/:userId" element={<ProfilePage />} />
             </Routes>
         </>
     );
