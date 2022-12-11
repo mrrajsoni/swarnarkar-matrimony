@@ -1,7 +1,9 @@
-.edit-profile-page {
+.edit-profile-page,
+.single-profile-page {
     background: var(--light-gray);
 
-    .edit-profile-inner {
+    .edit-profile-inner,
+    .profile-page-inner {
         max-width: 980px;
 
         .details-col {

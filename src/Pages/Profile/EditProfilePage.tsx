@@ -9,11 +9,10 @@ import {
     IFamilyDetails,
     ILifestyleDetails,
     IPersonalDetails,
-    IProfileDataArray,
     IProfileImageDetails,
 } from '../../Types/GlobalTypes';
 import CommonUtils from '../../Utils/Common Utils/CommonUtils';
-import './EditProfile.scss';
+import './Profile.scss';
 import CareerEducationEditForm from '../../Components/Forms/Profile/EditProfileForms/CareerEducationEditForm';
 import DesiredPartnerEditForm from '../../Components/Forms/Profile/EditProfileForms/DesiredPartnerEditForm';
 import FamilyEditForm from '../../Components/Forms/Profile/EditProfileForms/FamilyEditForm';
@@ -147,7 +146,7 @@ const EditProfile = () => {
                                     onSubmit={onSubmit}
                                     formProps={{
                                         setShowEditForm: setInEditMode,
-                                        showEditForm: inEditMode.showCareerInfoForm,
+                                        showEditForm: inEditMode.showPersonalInfoForm,
                                     }}
                                 />
                                 <EducationCareerDetails
@@ -165,7 +164,7 @@ const EditProfile = () => {
                                     onSubmit={onSubmit}
                                     formProps={{
                                         setShowEditForm: setInEditMode,
-                                        showEditForm: inEditMode.showCareerInfoForm,
+                                        showEditForm: inEditMode.showFamilyInfoForm,
                                     }}
                                 />
                                 <LifestyleDetails
@@ -174,7 +173,7 @@ const EditProfile = () => {
                                     onSubmit={onSubmit}
                                     formProps={{
                                         setShowEditForm: setInEditMode,
-                                        showEditForm: inEditMode.showCareerInfoForm,
+                                        showEditForm: inEditMode.showLifestyleForm,
                                     }}
                                 />
                                 <DesiredPartnerDetails
@@ -183,12 +182,18 @@ const EditProfile = () => {
                                     onSubmit={onSubmit}
                                     formProps={{
                                         setShowEditForm: setInEditMode,
-                                        showEditForm: inEditMode.showCareerInfoForm,
+                                        showEditForm: inEditMode.showDesiredPartnerForm,
                                     }}
                                 />
                             </div>
                             <div className="flex-1">
-                                <ContactDetails props={contactDetailsProps} />
+                                <ContactDetails
+                                    props={contactDetailsProps}
+                                    formProps={{
+                                        setShowEditForm: setInEditMode,
+                                        showEditForm: inEditMode.showDesiredPartnerForm,
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>
@@ -218,10 +223,10 @@ const ProfileImages = ({
         <div className="details-container">
             {!showEditForm ? (
                 <>
-                    <ProfileDetailTitle
+                    {/* <ProfileDetailTitle
                         title="Basic Details"
                         onClick={() => handleEditFormVisibility(true)}
-                    />
+                    /> */}
                     <UserImages userId={id} />
                 </>
             ) : (
@@ -232,17 +237,6 @@ const ProfileImages = ({
                     userId={id}
                 />
             )}
-        </div>
-    );
-};
-
-const ProfileDetailTitle = ({ title, onClick }: { title: string; onClick: () => void }) => {
-    return (
-        <div className="details-title flex justify-between">
-            {title}
-            <div onClick={onClick} className="cursor-pointer">
-                Edit
-            </div>
         </div>
     );
 };
@@ -358,9 +352,7 @@ const FamilyDetails = ({
     userId: string;
 }) => {
     const { setShowEditForm, showEditForm } = formProps;
-
     const profileDataArray = ProfileUtils.convertFamilyDetailsObj(props);
-
     const handleEditFormVisibility = (value: boolean) => {
         setShowEditForm((prevState) => {
             return {
@@ -390,15 +382,33 @@ const FamilyDetails = ({
     );
 };
 
-const ContactDetails = ({ props }: { props: IContactDetails }) => {
-    const { email_address, mobile_number } = props;
+const ContactDetails = ({
+    props,
+    formProps,
+}: {
+    props: IContactDetails;
+    formProps?: IFormVisibilityProps;
+}) => {
+    const { setShowEditForm, showEditForm } = formProps;
+    const handleEditFormVisibility = (value: boolean) => {
+        setShowEditForm((prevState) => {
+            return {
+                ...prevState,
+                showFamilyInfoForm: value,
+            };
+        });
+    };
+    const profileDataArray = ProfileUtils.convertContactDetailsObj(props);
     return (
         <div className="details-container contact-details-container p-5 bg-white sticky top-1">
-            <ProfileDetailTitle title="Contact Details" onClick={undefined} />
-            <ul>
-                <ProfileField label="Email Address" field={email_address} />
-                <ProfileField label="Mobile Number" field={mobile_number} />
-            </ul>
+            {!showEditForm ? (
+                <ProfileDetailsBox
+                    profileData={profileDataArray}
+                    profileDetailTitle="Contact Details"
+                    showEditButton={true}
+                    onEditClick={() => handleEditFormVisibility(true)}
+                />
+            ) : null}
         </div>
     );
 };

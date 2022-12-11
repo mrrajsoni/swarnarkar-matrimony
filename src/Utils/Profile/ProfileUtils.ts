@@ -1,4 +1,5 @@
 import {
+    IContactDetails,
     IDesiredPartnerDetails,
     IEducationCareerDetails,
     IFamilyDetails,
@@ -202,6 +203,21 @@ export default class ProfileUtils {
                 }
                 return profileDataArray;
             });
+        return profileDataArray;
+    }
+
+    public static convertContactDetailsObj(obj: IContactDetails) {
+        const profileDataArray: IProfileDataArray[] = [];
+        Object.keys(obj).forEach((key, index) => {
+            if (index === 0) {
+                profileDataArray.push({ label: 'Email Address', field: obj[key] });
+            }
+            if (index === 1) {
+                profileDataArray.push({ label: 'Mobile Number', field: obj[key] });
+            }
+
+            return profileDataArray;
+        });
         return profileDataArray;
     }
 }
