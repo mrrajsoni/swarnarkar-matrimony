@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './Components/Commons/ProtectedRoute';
 import { useUser } from './Context/UserContext';
 
 import HomePage from './Pages/Homepage/Homepage';
@@ -23,9 +24,23 @@ const App = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-                <Route path="/edit-profile" element={<EditProfile />} />
+                <Route
+                    path="/edit-profile"
+                    element={
+                        <ProtectedRoute isLoggedin={!!user?.id}>
+                            <EditProfile />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route path="/all-profiles" element={<ProfileArchivePage />} />
-                <Route path="/all-profiles/:userId" element={<ProfilePage />} />
+                <Route
+                    path="/all-profiles/:userId"
+                    element={
+                        <ProtectedRoute isLoggedin={!!user?.id}>
+                            <ProfilePage />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
         </>
     );
