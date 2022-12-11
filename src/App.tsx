@@ -11,13 +11,8 @@ import ProfilePage from './Pages/Profile/ProfilePage';
 import Register from './Pages/Register/Register';
 
 const App = () => {
-    const [isUserRegistered, setIsUserRegistered] = useState(false);
     const { user } = useUser();
-
-    useEffect(() => {
-        setIsUserRegistered(user?.registration_completed);
-    }, [user]);
-
+    const getLocalStorageId = localStorage.getItem('userId');
     return (
         <>
             <Routes>
@@ -27,7 +22,7 @@ const App = () => {
                 <Route
                     path="/edit-profile"
                     element={
-                        <ProtectedRoute isLoggedin={!!user?.id}>
+                        <ProtectedRoute isLoggedin={!!getLocalStorageId}>
                             <EditProfile />
                         </ProtectedRoute>
                     }
@@ -36,7 +31,7 @@ const App = () => {
                 <Route
                     path="/all-profiles/:userId"
                     element={
-                        <ProtectedRoute isLoggedin={!!user?.id}>
+                        <ProtectedRoute isLoggedin={!!getLocalStorageId}>
                             <ProfilePage />
                         </ProtectedRoute>
                     }

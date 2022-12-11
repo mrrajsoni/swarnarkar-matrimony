@@ -47,6 +47,12 @@ const UserProvider = ({ children }) => {
         };
     }, [user?.id]);
 
+    useEffect(() => {
+        if (user?.id) {
+            localStorage.setItem('userId', JSON.stringify(user?.id));
+        }
+    }, [user?.id]);
+
     const userLogin = (logindata: IloginData) => {
         void Login.signInWithEmail(logindata);
     };
@@ -54,13 +60,14 @@ const UserProvider = ({ children }) => {
     const userLogout = () => {
         void Login.signOut();
         setUser(null);
+        localStorage.removeItem('userId');
     };
     const exposed = {
         user,
         userLogin,
         userLogout,
     };
-    return <UserContext.Provider value={exposed}> {children}</UserContext.Provider>;
+    return <UserContext.Provider value={exposed}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => useContext(UserContext);
