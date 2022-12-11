@@ -1,4 +1,4 @@
-import { setShowEditFormType } from '../Pages/Profile/EditProfile';
+import { setShowEditFormType } from '../Pages/Profile/EditProfilePage';
 
 export interface IUser {
     id?: string;

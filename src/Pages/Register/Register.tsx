@@ -5,7 +5,7 @@ import FamilyForm from '../../Components/Users/SignUp/FamilyForm/FamilyForm';
 import PersonalInfoForm from '../../Components/Users/SignUp/PersonalInfoForm/PersonalInfoForm';
 import SignUpForm from '../../Components/Users/SignUp/SignUpForm';
 import { useUser } from '../../Context/UserContext';
-import FetchUser from '../../Utils/API/FetchUser';
+import FetchUser from '../../Services/API/FetchUser';
 
 const Register = () => {
     const { user } = useUser();

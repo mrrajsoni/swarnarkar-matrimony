@@ -1,9 +1,9 @@
 import { Form, Formik, FormikProps } from 'formik';
-import Button from '../../../Components/Commons/Button/Button';
-import SelectInput from '../../../Components/Forms/Select/SelectInput';
-import { IDesiredPartnerDetails, selectValue } from '../../../Types/GlobalTypes';
+import Button from '../../../Commons/Button/Button';
+import SelectInput from '../../Select/SelectInput';
+import { IDesiredPartnerDetails, selectValue } from '../../../../Types/GlobalTypes';
 import * as Yup from 'yup';
-import Registration from '../../../Utils/API/SignUp';
+import Registration from '../../../../Services/API/SignUp';
 import {
     DrinkingSmoking,
     Marital_Status,
@@ -11,8 +11,8 @@ import {
     AgeNumbers,
     PartnerIncome,
     EmployedSectors,
-} from '../../../Constants/FormOptions';
-import CustomTextarea from '../../../Components/Forms/TextArea/CustomTextarea';
+} from '../../../../Constants/FormOptions';
+import CustomTextarea from '../../TextArea/CustomTextarea';
 
 const validationSchema = Yup.object().shape({
     partner_description: Yup.string().min(200, 'Please write minimum 150 characters').nullable(),

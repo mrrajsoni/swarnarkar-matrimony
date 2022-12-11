@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../../Components/Commons/Layout/Layout';
 import { IUser } from '../../Types/GlobalTypes';
-import FetchUser from '../../Utils/API/FetchUser';
+import FetchUser from '../../Services/API/FetchUser';
 
 const ProfilePage = (props) => {
     const { userId } = useParams();

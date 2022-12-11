@@ -3,7 +3,7 @@ import { Gender, Height, Marital_Status } from '../../../../Constants/FormOption
 import Button from '../../../Commons/Button/Button';
 import SelectInput from '../../../Forms/Select/SelectInput';
 import * as Yup from 'yup';
-import Registration from '../../../../Utils/API/SignUp';
+import Registration from '../../../../Services/API/SignUp';
 import { IUser, selectValue } from '../../../../Types/GlobalTypes';
 
 export interface IUserPersonalData {

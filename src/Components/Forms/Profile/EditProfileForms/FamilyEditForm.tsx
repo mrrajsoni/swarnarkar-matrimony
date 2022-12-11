@@ -1,9 +1,9 @@
 import { Form, Formik, FormikProps } from 'formik';
-import Button from '../../../Components/Commons/Button/Button';
-import SelectInput from '../../../Components/Forms/Select/SelectInput';
-import { IFamilyDetails } from '../../../Types/GlobalTypes';
+import Button from '../../../Commons/Button/Button';
+import SelectInput from '../../Select/SelectInput';
+import { IFamilyDetails } from '../../../../Types/GlobalTypes';
 import * as Yup from 'yup';
-import Registration from '../../../Utils/API/SignUp';
+import Registration from '../../../../Services/API/SignUp';
 import {
     MotherOccupation,
     FatherOccupation,
@@ -11,7 +11,7 @@ import {
     Gotra,
     FamilyStatus,
     FamilyType,
-} from '../../../Constants/FormOptions';
+} from '../../../../Constants/FormOptions';
 
 const validationSchema = Yup.object().shape({
     mother_gotra: Yup.object({

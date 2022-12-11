@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FileObject } from '@supabase/storage-js/dist/module/lib/types';
-import FetchUser from '../../../Utils/API/FetchUser';
+import FetchUser from '../../../Services/API/FetchUser';
 import { ReactComponent as DeleteIcon } from '../../../Assets/Svg/delete.svg';
 
 export const CDNURL =

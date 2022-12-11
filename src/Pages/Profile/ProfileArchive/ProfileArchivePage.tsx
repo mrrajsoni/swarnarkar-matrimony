@@ -3,7 +3,7 @@ import Layout from '../../../Components/Commons/Layout/Layout';
 import { useUser } from '../../../Context/UserContext';
 import { selectValue } from '../../../Types/GlobalTypes';
 import CommonUtils from '../../../Utils/Common Utils/CommonUtils';
-import FetchUser from '../../../Utils/API/FetchUser';
+import FetchUser from '../../../Services/API/FetchUser';
 import { CDNURL } from '../../../Components/Users/Profile/UserImages';
 import './ProfileArchive.scss';
 import { Link } from 'react-router-dom';

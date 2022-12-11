@@ -3,7 +3,7 @@ import { Gotra } from '../../../../Constants/FormOptions';
 import Button from '../../../Commons/Button/Button';
 import SelectInput from '../../../Forms/Select/SelectInput';
 import * as Yup from 'yup';
-import SignUp from '../../../../Utils/API/SignUp';
+import SignUp from '../../../../Services/API/SignUp';
 import { IUser, selectValue } from '../../../../Types/GlobalTypes';
 import CustomTextarea from '../../../Forms/TextArea/CustomTextarea';
 

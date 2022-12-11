@@ -2,7 +2,7 @@ import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import './SignUpForm.scss';
 import { useState } from 'react';
-import Registration, { userData } from '../../../Utils/API/SignUp';
+import Registration, { userData } from '../../../Services/API/SignUp';
 import Button from '../../Commons/Button/Button';
 export interface FormIntialValues {
     email: string;

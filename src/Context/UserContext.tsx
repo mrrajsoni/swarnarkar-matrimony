@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { IUser } from '../Types/GlobalTypes';
-import FetchUser from '../Utils/API/FetchUser';
-import Login, { IloginData } from '../Utils/API/Login';
+import FetchUser from '../Services/API/FetchUser';
+import Login, { IloginData } from '../Services/API/Login';
 
 interface IUserContext {
     user: IUser;

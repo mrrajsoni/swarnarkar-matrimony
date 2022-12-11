@@ -4,8 +4,8 @@ import { useUser } from './Context/UserContext';
 
 import HomePage from './Pages/Homepage/Homepage';
 import Login from './Pages/Login/Login';
-import EditProfile from './Pages/Profile/EditProfile';
-import ProfileArchive from './Pages/Profile/ProfileArchive/ProfileArchive';
+import EditProfile from './Pages/Profile/EditProfilePage';
+import ProfileArchivePage from './Pages/Profile/ProfileArchive/ProfileArchivePage';
 import ProfilePage from './Pages/Profile/ProfilePage';
 import Register from './Pages/Register/Register';
 
@@ -24,7 +24,7 @@ const App = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
                 <Route path="/edit-profile" element={<EditProfile />} />
-                <Route path="/all-profiles" element={<ProfileArchive />} />
+                <Route path="/all-profiles" element={<ProfileArchivePage />} />
                 <Route path="/all-profiles/:userId" element={<ProfilePage />} />
             </Routes>
         </>

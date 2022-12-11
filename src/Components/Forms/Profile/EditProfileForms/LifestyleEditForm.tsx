@@ -1,11 +1,11 @@
 import { Form, Formik, FormikProps } from 'formik';
-import Button from '../../../Components/Commons/Button/Button';
-import CustomInput from '../../../Components/Forms/Input/CustomInput';
-import SelectInput from '../../../Components/Forms/Select/SelectInput';
+import Button from '../../../Commons/Button/Button';
+import CustomInput from '../../Input/CustomInput';
+import SelectInput from '../../Select/SelectInput';
 import * as Yup from 'yup';
-import Registration from '../../../Utils/API/SignUp';
-import { ILifestyleDetails } from '../../../Types/GlobalTypes';
-import { Diets, DrinkingSmoking, HandicapNature, YesNo } from '../../../Constants/FormOptions';
+import Registration from '../../../../Services/API/SignUp';
+import { ILifestyleDetails } from '../../../../Types/GlobalTypes';
+import { Diets, DrinkingSmoking, HandicapNature, YesNo } from '../../../../Constants/FormOptions';
 
 const validationSchema = Yup.object().shape({
     dietary_habit: Yup.object({

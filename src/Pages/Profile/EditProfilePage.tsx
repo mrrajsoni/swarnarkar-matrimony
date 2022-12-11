@@ -14,12 +14,12 @@ import {
 } from '../../Types/GlobalTypes';
 import CommonUtils from '../../Utils/Common Utils/CommonUtils';
 import './EditProfile.scss';
-import CareerEducationEditForm from './EditProfileForms/CareerEducationEditForm';
-import DesiredPartnerEditForm from './EditProfileForms/DesiredPartnerEditForm';
-import FamilyEditForm from './EditProfileForms/FamilyEditForm';
-import ImageEditForm from './EditProfileForms/ImageEditForm';
-import LifestyleEditForm from './EditProfileForms/LifestyleEditForm';
-import PersonalInfoEditForm from './EditProfileForms/PersonalInfoEditForm';
+import CareerEducationEditForm from '../../Components/Forms/Profile/EditProfileForms/CareerEducationEditForm';
+import DesiredPartnerEditForm from '../../Components/Forms/Profile/EditProfileForms/DesiredPartnerEditForm';
+import FamilyEditForm from '../../Components/Forms/Profile/EditProfileForms/FamilyEditForm';
+import ImageEditForm from '../../Components/Forms/Profile/EditProfileForms/ImageEditForm';
+import LifestyleEditForm from '../../Components/Forms/Profile/EditProfileForms/LifestyleEditForm';
+import PersonalInfoEditForm from '../../Components/Forms/Profile/EditProfileForms/PersonalInfoEditForm';
 import UserImages from '../../Components/Users/Profile/UserImages';
 import ProfileDetailsBox from '../../Components/Users/Profile/ProfileDetailsBox';
 import ProfileUtils from '../../Utils/Profile/ProfileUtils';

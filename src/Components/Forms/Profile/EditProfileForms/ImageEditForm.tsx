@@ -1,9 +1,9 @@
 import { Form, Formik, FormikProps } from 'formik';
-import Button from '../../../Components/Commons/Button/Button';
-import Registration from '../../../Utils/API/SignUp';
+import Button from '../../../Commons/Button/Button';
+import Registration from '../../../../Services/API/SignUp';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
-import UserImages from '../../../Components/Users/Profile/UserImages';
+import UserImages from '../../../Users/Profile/UserImages';
 
 const FILE_SIZE = 160 * 1024;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];

@@ -3,7 +3,7 @@ import { Formik, Form, FormikProps } from 'formik';
 import Button from '../../Commons/Button/Button';
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { IloginData } from '../../../Utils/API/Login';
+import { IloginData } from '../../../Services/API/Login';
 import { Link } from 'react-router-dom';
 import { useUser } from '../../../Context/UserContext';
 

@@ -1,11 +1,11 @@
 import { Form, Formik, FormikProps } from 'formik';
-import Button from '../../../Components/Commons/Button/Button';
-import CustomInput from '../../../Components/Forms/Input/CustomInput';
-import SelectInput from '../../../Components/Forms/Select/SelectInput';
-import { IEducationCareerDetails } from '../../../Types/GlobalTypes';
+import Button from '../../../Commons/Button/Button';
+import CustomInput from '../../Input/CustomInput';
+import SelectInput from '../../Select/SelectInput';
+import { IEducationCareerDetails } from '../../../../Types/GlobalTypes';
 import * as Yup from 'yup';
-import Registration from '../../../Utils/API/SignUp';
-import { AnnualIncome, EmployedSectors } from '../../../Constants/FormOptions';
+import Registration from '../../../../Services/API/SignUp';
+import { AnnualIncome, EmployedSectors } from '../../../../Constants/FormOptions';
 
 const validationSchema = Yup.object().shape({
     degree: Yup.string().required('Required'),
