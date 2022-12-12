@@ -14,6 +14,12 @@ import FetchUser from '../../Services/API/FetchUser';
 import ProfileDetailsBox from '../../Components/Users/Profile/ProfileDetailsBox';
 import ProfileUtils from '../../Utils/Profile/ProfileUtils';
 import CommonUtils from '../../Utils/Common Utils/CommonUtils';
+import { ReactComponent as DesiredPartnerIcon } from '../../Assets/Svg/desired-partner.svg';
+import { ReactComponent as LifestyleIcon } from '../../Assets/Svg/lifestyle-icon.svg';
+import { ReactComponent as FamilyIcon } from '../../Assets/Svg/family-icon.svg';
+import { ReactComponent as EducationIcon } from '../../Assets/Svg/education-icon.svg';
+import { ReactComponent as ProfileIcon } from '../../Assets/Svg/profile-icon.svg';
+
 import './Profile.scss';
 
 const ProfilePage = () => {
@@ -138,7 +144,11 @@ const PersonalDetails = ({ props }: { props: IPersonalDetails }) => {
                 </span>
             </h4>
             <div className="mb-6">{profile_description}</div>
-            <ProfileDetailsBox profileData={profileDataArray} profileDetailTitle="Basic Details" />
+            <ProfileDetailsBox
+                profileData={profileDataArray}
+                profileDetailTitle="Basic Details"
+                section_icon={<ProfileIcon />}
+            />
         </div>
     );
 };
@@ -151,6 +161,7 @@ const EducationCareerDetails = ({ props }: { props: IEducationCareerDetails }) =
             <ProfileDetailsBox
                 profileData={profileDataArray}
                 profileDetailTitle="Education & Career"
+                section_icon={<EducationIcon />}
             />
         </div>
     );
@@ -161,7 +172,11 @@ const FamilyDetails = ({ props }: { props: IFamilyDetails }) => {
 
     return (
         <div className="details-container">
-            <ProfileDetailsBox profileData={profileDataArray} profileDetailTitle="Family" />
+            <ProfileDetailsBox
+                profileData={profileDataArray}
+                profileDetailTitle="Family"
+                section_icon={<FamilyIcon />}
+            />
         </div>
     );
 };
@@ -182,7 +197,11 @@ const LifestyleDetails = ({ props }: { props: ILifestyleDetails }) => {
     const profileDataArray = ProfileUtils.convertLifestyleDetailsObj(props);
     return (
         <div className="details-container">
-            <ProfileDetailsBox profileData={profileDataArray} profileDetailTitle="Lifestyle" />
+            <ProfileDetailsBox
+                profileData={profileDataArray}
+                profileDetailTitle="Lifestyle"
+                section_icon={<LifestyleIcon />}
+            />
         </div>
     );
 };
@@ -196,6 +215,7 @@ const DesiredPartnerDetails = ({ props }: { props: IDesiredPartnerDetails }) => 
                 profileData={profileDataArray}
                 profileDetailTitle="Desired Partner"
                 partner_description={partner_description}
+                section_icon={<DesiredPartnerIcon />}
             />
         </div>
     );

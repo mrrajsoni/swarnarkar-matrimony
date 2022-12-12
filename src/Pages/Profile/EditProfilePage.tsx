@@ -22,6 +22,11 @@ import PersonalInfoEditForm from '../../Components/Forms/Profile/EditProfileForm
 import UserImages from '../../Components/Users/Profile/UserImages';
 import ProfileDetailsBox from '../../Components/Users/Profile/ProfileDetailsBox';
 import ProfileUtils from '../../Utils/Profile/ProfileUtils';
+import { ReactComponent as DesiredPartnerIcon } from '../../Assets/Svg/desired-partner.svg';
+import { ReactComponent as LifestyleIcon } from '../../Assets/Svg/lifestyle-icon.svg';
+import { ReactComponent as FamilyIcon } from '../../Assets/Svg/family-icon.svg';
+import { ReactComponent as EducationIcon } from '../../Assets/Svg/education-icon.svg';
+import { ReactComponent as ProfileIcon } from '../../Assets/Svg/profile-icon.svg';
 
 const initialFormState = {
     showPersonalInfoForm: false,
@@ -283,6 +288,7 @@ const PersonalDetails = ({
                         profileDetailTitle="Basic Details"
                         showEditButton={true}
                         onEditClick={() => handleEditFormVisibility(true)}
+                        section_icon={<ProfileIcon />}
                     />
                 </>
             ) : (
@@ -327,6 +333,7 @@ const EducationCareerDetails = ({
                     profileDetailTitle="Education & Career"
                     showEditButton={true}
                     onEditClick={() => handleEditFormVisibility(true)}
+                    section_icon={<EducationIcon />}
                 />
             ) : (
                 <CareerEducationEditForm
@@ -368,6 +375,7 @@ const FamilyDetails = ({
                     profileData={profileDataArray}
                     profileDetailTitle="Family"
                     showEditButton={true}
+                    section_icon={<FamilyIcon />}
                     onEditClick={() => handleEditFormVisibility(true)}
                 />
             ) : (
@@ -444,6 +452,7 @@ const LifestyleDetails = ({
                     profileDetailTitle="Lifestyle"
                     showEditButton={true}
                     onEditClick={() => handleEditFormVisibility(true)}
+                    section_icon={<LifestyleIcon />}
                 />
             ) : (
                 <LifestyleEditForm
@@ -490,6 +499,7 @@ const DesiredPartnerDetails = ({
                     showEditButton={true}
                     onEditClick={() => handleEditFormVisibility(true)}
                     partner_description={partner_description}
+                    section_icon={<DesiredPartnerIcon />}
                 />
             ) : (
                 <DesiredPartnerEditForm

@@ -6,12 +6,14 @@ const ProfileDetailsBox = ({
     profileData,
     showEditButton,
     partner_description,
+    section_icon,
 }: {
     profileDetailTitle: string;
     onEditClick?: () => void;
     profileData: { label: string; field: string }[];
     showEditButton?: boolean;
     partner_description?: string;
+    section_icon?: any;
 }) => {
     return (
         <div>
@@ -19,6 +21,7 @@ const ProfileDetailsBox = ({
                 title={profileDetailTitle}
                 onClick={onEditClick}
                 showEditButton={showEditButton}
+                section_icon={section_icon}
             />
             {partner_description ? <div className="mb-6">{partner_description ?? ''}</div> : null}
             <ul>
@@ -36,16 +39,19 @@ const ProfileDetailTitle = ({
     title,
     onClick,
     showEditButton,
+    section_icon,
 }: {
     title: string;
     onClick?: () => void;
     showEditButton?: boolean;
+    section_icon?: any;
 }) => {
     return (
-        <div className="details-title flex justify-between">
+        <div className="details-title flex">
+            {section_icon}
             {title}
             {showEditButton && (
-                <div onClick={onClick} className="cursor-pointer">
+                <div onClick={onClick} className="cursor-pointer ml-auto">
                     Edit
                 </div>
             )}
