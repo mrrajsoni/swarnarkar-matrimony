@@ -17,32 +17,32 @@ const validationSchema = Yup.object().shape({
     mother_gotra: Yup.object({
         label: Yup.string().required('Required'),
         value: Yup.string(),
-    }),
+    }).nullable(),
     father_occupation: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     brothers: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     sisters: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
 
     mother_occupation: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     family_status: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     family_type: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
 });
 
 const FamilyEditForm = ({

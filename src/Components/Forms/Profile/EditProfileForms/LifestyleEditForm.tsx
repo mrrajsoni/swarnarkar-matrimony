@@ -11,31 +11,31 @@ const validationSchema = Yup.object().shape({
     dietary_habit: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     drinking_habit: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     smoking_habit: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     own_car: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     own_house: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     handicapped: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
     nature_handicap: Yup.object({
         label: Yup.string(),
         value: Yup.string(),
-    }),
+    }).nullable(),
 });
 
 const LifestyleEditForm = ({
