@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './Components/Commons/ProtectedRoute';
 import { useUser } from './Context/UserContext';
-
 import HomePage from './Pages/Homepage/Homepage';
 import Login from './Pages/Login/Login';
 import EditProfile from './Pages/Profile/EditProfilePage';
@@ -12,7 +10,7 @@ import Register from './Pages/Register/Register';
 
 const App = () => {
     const { user } = useUser();
-    const getLocalStorageId = localStorage.getItem('userId');
+    const localStorageUserId = localStorage.getItem('userId');
     return (
         <>
             <Routes>
@@ -22,8 +20,8 @@ const App = () => {
                 <Route
                     path="/edit-profile"
                     element={
-                        <ProtectedRoute isLoggedin={!!getLocalStorageId}>
-                            <EditProfile />
+                        <ProtectedRoute isLoggedin={!!localStorageUserId}>
+                            <EditProfile userId={localStorageUserId} />
                         </ProtectedRoute>
                     }
                 />
@@ -31,7 +29,7 @@ const App = () => {
                 <Route
                     path="/all-profiles/:userId"
                     element={
-                        <ProtectedRoute isLoggedin={!!getLocalStorageId}>
+                        <ProtectedRoute isLoggedin={!!localStorageUserId}>
                             <ProfilePage />
                         </ProtectedRoute>
                     }

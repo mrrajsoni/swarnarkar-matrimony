@@ -49,7 +49,7 @@ const UserProvider = ({ children }) => {
 
     useEffect(() => {
         if (user?.id) {
-            localStorage.setItem('userId', JSON.stringify(user?.id));
+            localStorage.setItem('userId', user?.id);
         }
     }, [user?.id]);
 

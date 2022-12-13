@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../../Components/Commons/Layout/Layout';
-import ProfileField from '../../Components/Commons/ProfileField/ProfileField';
 import { useUser } from '../../Context/UserContext';
 import {
     IContactDetails,
@@ -10,6 +9,7 @@ import {
     ILifestyleDetails,
     IPersonalDetails,
     IProfileImageDetails,
+    IUser,
 } from '../../Types/GlobalTypes';
 import CommonUtils from '../../Utils/Common Utils/CommonUtils';
 import './Profile.scss';
@@ -27,6 +27,7 @@ import { ReactComponent as LifestyleIcon } from '../../Assets/Svg/lifestyle-icon
 import { ReactComponent as FamilyIcon } from '../../Assets/Svg/family-icon.svg';
 import { ReactComponent as EducationIcon } from '../../Assets/Svg/education-icon.svg';
 import { ReactComponent as ProfileIcon } from '../../Assets/Svg/profile-icon.svg';
+import { useGetUserProfile } from '../../Services/API/UserHooks/getCurrentUserProfile';
 
 const initialFormState = {
     showPersonalInfoForm: false,
@@ -53,92 +54,104 @@ export interface IFormVisibilityProps {
     setShowEditForm: setShowEditFormType;
 }
 
-const EditProfile = () => {
+const EditProfile = ({ userId }: { userId: string }) => {
     const [inEditMode, setInEditMode] = useState(initialFormState);
-    const { user } = useUser();
+    const [formUpdated, setFormUpdated] = useState(false);
+
+    const [profileData, setProfileData] = useState<IUser>(null);
+
+    const { data, error, isLoading, refetch } = useGetUserProfile(userId);
+
+    useEffect(() => {
+        if (data) {
+            setProfileData(data);
+        }
+    }, [data, isLoading, formUpdated]);
 
     const personalDetails: IPersonalDetails = {
-        first_name: user?.first_name,
-        last_name: user?.last_name,
-        height: user?.height,
-        self_gotra: user?.self_gotra,
-        city: user?.city,
-        profile_description: user?.profile_description,
-        manglik: user?.manglik,
-        dob: user?.dob,
-        gender: user?.gender,
-        martial_status: user?.martial_status,
-        state: user?.state,
+        first_name: profileData?.first_name,
+        last_name: profileData?.last_name,
+        height: profileData?.height,
+        self_gotra: profileData?.self_gotra,
+        city: profileData?.city,
+        profile_description: profileData?.profile_description,
+        manglik: profileData?.manglik,
+        dob: profileData?.dob,
+        gender: profileData?.gender,
+        martial_status: profileData?.martial_status,
+        state: profileData?.state,
     };
     const educationCareerDetails: IEducationCareerDetails = {
-        annual_income: user?.annual_income,
-        degree: user?.degree,
-        employed_in: user?.employed_in,
-        occupation: user?.occupation,
-        organization_name: user?.organization_name,
+        annual_income: profileData?.annual_income,
+        degree: profileData?.degree,
+        employed_in: profileData?.employed_in,
+        occupation: profileData?.occupation,
+        organization_name: profileData?.organization_name,
     };
 
     const familyDetails: IFamilyDetails = {
-        mother_gotra: user?.mother_gotra,
-        brothers: user?.brothers,
-        sisters: user?.sisters,
-        family_status: user?.family_status,
-        family_type: user?.family_type,
-        father_occupation: user?.father_occupation,
-        mother_occupation: user?.mother_occupation,
+        mother_gotra: profileData?.mother_gotra,
+        brothers: profileData?.brothers,
+        sisters: profileData?.sisters,
+        family_status: profileData?.family_status,
+        family_type: profileData?.family_type,
+        father_occupation: profileData?.father_occupation,
+        mother_occupation: profileData?.mother_occupation,
     };
 
     const contactDetailsProps: IContactDetails = {
-        email_address: user?.email_address,
-        mobile_number: user?.mobile_number,
+        email_address: profileData?.email_address,
+        mobile_number: profileData?.mobile_number,
     };
 
     const lifestyleDetailsProps: ILifestyleDetails = {
-        dietary_habit: user?.dietary_habit,
-        drinking_habit: user?.drinking_habit,
-        smoking_habit: user?.smoking_habit,
-        own_car: user?.own_car,
-        handicapped: user?.handicapped,
-        nature_handicap: user?.nature_handicap,
-        own_house: user?.own_house,
+        dietary_habit: profileData?.dietary_habit,
+        drinking_habit: profileData?.drinking_habit,
+        smoking_habit: profileData?.smoking_habit,
+        own_car: profileData?.own_car,
+        handicapped: profileData?.handicapped,
+        nature_handicap: profileData?.nature_handicap,
+        own_house: profileData?.own_house,
     };
 
     const desiredPartnerDetailsProps: IDesiredPartnerDetails = {
-        partner_description: user?.partner_description,
+        partner_description: profileData?.partner_description,
         partner_age: {
-            from: user?.partner_age?.from,
-            to: user?.partner_age?.to,
+            from: profileData?.partner_age?.from,
+            to: profileData?.partner_age?.to,
         },
         partner_height: {
-            from: user?.partner_height?.from,
-            to: user?.partner_height?.to,
+            from: profileData?.partner_height?.from,
+            to: profileData?.partner_height?.to,
         },
         partner_income: {
-            from: user?.partner_income?.from,
-            to: user?.partner_height?.to,
+            from: profileData?.partner_income?.from,
+            to: profileData?.partner_height?.to,
         },
-        partner_occupation: user?.partner_occupation,
-        partner_smoke: user?.partner_smoke,
-        partner_drink: user?.partner_drink,
-        partner_marital_status: user?.own_house,
-        gender: user?.gender,
+        partner_occupation: profileData?.partner_occupation,
+        partner_smoke: profileData?.partner_smoke,
+        partner_drink: profileData?.partner_drink,
+        partner_marital_status: profileData?.own_house,
+        gender: profileData?.gender,
     };
 
     const profileImageProps: IProfileImageDetails = {
-        user_images: user?.user_images,
+        user_images: profileData?.user_images,
         setShowEditForm: setInEditMode,
         showEditForm: inEditMode.showProfileImageForm,
-        id: user?.id,
+        id: profileData?.id,
     };
 
     const onSubmit = (success: boolean) => {
         if (success) {
             setInEditMode(initialFormState);
+            void refetch();
         }
     };
+    console.log(profileData);
     return (
         <Layout>
-            {user?.id ? (
+            {profileData?.user_id && !isLoading ? (
                 <section className="edit-profile-page py-10 ">
                     <div className="edit-profile-inner mx-auto">
                         Login
@@ -146,7 +159,7 @@ const EditProfile = () => {
                             <div className="details-col ">
                                 <ProfileImages props={profileImageProps} onSubmit={onSubmit} />
                                 <PersonalDetails
-                                    userId={user?.id}
+                                    userId={userId}
                                     props={personalDetails}
                                     onSubmit={onSubmit}
                                     formProps={{
@@ -155,7 +168,7 @@ const EditProfile = () => {
                                     }}
                                 />
                                 <EducationCareerDetails
-                                    userId={user?.id}
+                                    userId={userId}
                                     props={educationCareerDetails}
                                     onSubmit={onSubmit}
                                     formProps={{
@@ -164,7 +177,7 @@ const EditProfile = () => {
                                     }}
                                 />
                                 <FamilyDetails
-                                    userId={user?.id}
+                                    userId={userId}
                                     props={familyDetails}
                                     onSubmit={onSubmit}
                                     formProps={{
@@ -173,7 +186,7 @@ const EditProfile = () => {
                                     }}
                                 />
                                 <LifestyleDetails
-                                    userId={user?.id}
+                                    userId={userId}
                                     props={lifestyleDetailsProps}
                                     onSubmit={onSubmit}
                                     formProps={{
@@ -182,7 +195,7 @@ const EditProfile = () => {
                                     }}
                                 />
                                 <DesiredPartnerDetails
-                                    userId={user?.id}
+                                    userId={userId}
                                     props={desiredPartnerDetailsProps}
                                     onSubmit={onSubmit}
                                     formProps={{
@@ -203,7 +216,9 @@ const EditProfile = () => {
                         </div>
                     </div>
                 </section>
-            ) : null}
+            ) : (
+                <h2>I am loading man</h2>
+            )}
         </Layout>
     );
 };
