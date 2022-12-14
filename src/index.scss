@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('./Styles/colors.scss');
+@import url('./Styles/variables.scss');
+
+@font-face {
+    font-family: Satoshi-Bold;
+    src: url('./Assets/Fonts/Satoshi-Bold.woff2');
+}
+@font-face {
+    font-family: Satoshi-Black;
+    src: url('./Assets/Fonts/Satoshi-Black.woff2');
+}
+
+@font-face {
+    font-family: TT-Commons-Normal;
+    src: url('./Assets/Fonts/TTCommonsRegular.woff2');
+}
+
+@font-face {
+    font-family: TT-Commons-Bold;
+    src: url('./Assets/Fonts/TTCommonsBold.woff2');
+}
+
+body,
+p,
+span {
+    font-family: TT-Commons-Normal;
+    line-height: 1.3;
+    font-size: 18px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Satoshi-Bold;
+    line-height: 1.3;
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-size: 52px;
+}
+
+h4 {
+    font-size: 28px;
+}
+
+main {
+    background: var(--light-gray);
+}
+
+.fluid-container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+textarea {
+    width: 100%;
+}
+
+button,
+[type='submit'],
+[type='button'],
+[type='reset'] {
+    padding: 14px 30px;
+    background: var(--dark-blue);
+    border-radius: 6px;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+button[title='Cancel'] {
+    background: var(--error);
+}
+
+input,
+textarea {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 5px;
+    transition: var(--transition);
+}
+
+input:focus {
+    border: 1px solid var(--border-color);
+    outline: none;
+    box-shadow: var(--box-shadow);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.sub-label {
+    font-size: var(--small-font);
+    margin-bottom: 5px;
+    color: var(--text-gray);
+}
+
+.required:after {
+    content: ' *';
+    color: var(--error);
+    font-size: 18px;
+}
+
+.eye-icon {
+    right: 10px;
+    top: 14px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.react-select-container {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.form-section,
+.edit-form-section {
+    max-width: 580px;
+    margin: 0 auto;
+
+    .form-container {
+        margin-bottom: 10px;
+        input:not(input[type='radio']) {
+            width: 480px;
+        }
+        .two-cols {
+            display: flex;
+            gap: 30px;
+
+            div {
+                width: 100%;
+            }
+            input:not(input[type='radio']) {
+                width: 100%;
+            }
+        }
+
+        input[type='radio'] {
+            margin-right: 5px;
+        }
+        .error-container {
+            color: var(--error);
+            margin-bottom: 10px;
+            font-size: var(--small-font);
+        }
+
+        .radio-group-container {
+            input[type='radio'] {
+                margin-right: 5px;
+            }
+        }
+
+        .mobile-input-container {
+            .disabled-input {
+                border-right: 0;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                width: 60px;
+                text-align: center;
+            }
+            .mobile-input {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                width: 450px;
+            }
+        }
+    }
+}
+
+.popup-overlay {
+    background: #00000030;
+    backdrop-filter: blur(2px);
+}
+
+.registration-popup-container {
+    padding: 35px;
+    background: #fff;
+    border-radius: 20px;
+
+    .form-section {
+        width: 300px;
+
+        .welcome-message {
+            font-size: 24px;
+        }
+        input {
+            width: 100% !important;
+        }
+        button {
+            width: 100%;
+        }
+        .register-link {
+            padding: 2px 7px 4px;
+            border-radius: 12px;
+            &:hover {
+                transition: all 300ms ease;
+                background-color: var(--hover-gray);
+            }
+        }
+
+        .forgot-password-container {
+            font-size: var(--small-font);
+            &:hover {
+                color: var(--primary-pink);
+                transition: var(--transition);
+            }
+        }
+    }
+}

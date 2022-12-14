@@ -1,0 +1,138 @@
+.edit-profile-page,
+.single-profile-page {
+    background: var(--light-gray);
+
+    .edit-profile-inner,
+    .profile-page-inner {
+        max-width: 980px;
+
+        .details-col {
+            border-radius: 6px;
+            width: 70%;
+            .details-container {
+                padding: 40px 25px;
+                background-color: var(--white);
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid var(--border-color);
+                }
+
+                ul {
+                    display: flex;
+                    flex-wrap: wrap;
+                    padding-left: 30px;
+                }
+
+                .user-image-container {
+                    > div {
+                        width: 32%;
+                        position: relative;
+                    }
+
+                    .delete-icon {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+
+                        > svg {
+                            width: 24px;
+                            stroke: red;
+                        }
+                    }
+                }
+            }
+        }
+
+        .details-title {
+            color: var(--primary-pink);
+            margin-bottom: 20px;
+            font-size: 20px;
+            gap: 8px;
+
+            svg {
+                width: 22px;
+                stroke: var(--primary-pink);
+                fill: var(--primary-pink);
+            }
+        }
+        .name-label {
+            > span {
+                font-size: inherit;
+                &:first-child {
+                    color: var(--text-gray);
+                }
+                &:not(:first-child) {
+                    font-family: Satoshi-Bold;
+                }
+            }
+        }
+
+        .profile-field {
+            flex: 1 1 50%;
+
+            &.empty {
+                color: var(--primary-pink);
+            }
+        }
+        .profile-label {
+            color: var(--text-gray);
+            font-size: 17px;
+        }
+
+        .edit-form-section {
+            max-width: 100%;
+
+            .form-container {
+                margin-bottom: 20px;
+                .input-container {
+                    display: flex;
+                    gap: 15px;
+                    align-items: center;
+
+                    label {
+                        width: 130px;
+                        text-align: right;
+                    }
+                    input {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .desired-partner-form {
+                .block {
+                    .input-container {
+                        display: block;
+                    }
+                }
+
+                .two-col-fields-container {
+                    display: flex;
+                    gap: 15px;
+                    align-items: center;
+                    margin-bottom: 20px;
+
+                    label {
+                        width: 105px;
+                        text-align: right;
+                    }
+
+                    .two-col-fields-inner {
+                        display: flex;
+                        gap: 20px;
+                        flex: 1;
+
+                        .form-container {
+                            margin-bottom: 0;
+                            flex: 1;
+                        }
+
+                        label.label {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

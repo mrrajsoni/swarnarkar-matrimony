@@ -1,0 +1,30 @@
+nav {
+   
+    .register-menu {
+        ul {
+            li {
+                margin-bottom: 5px;
+                &:not(:last-child) {
+                    border-bottom: 1px solid var(--text-gray);
+                }
+                a {
+                    padding: 10px 15px;
+                    display: block;
+                }
+            }
+        }
+        svg {
+            height: 14px;
+            margin-top: 5px;
+        }
+
+        .profile-menu-dropdown {
+            top: 30px;
+            background: white;
+
+            width: 120px;
+            border-radius: 6px;
+            box-shadow: var(--box-shadow);
+        }
+    }
+}

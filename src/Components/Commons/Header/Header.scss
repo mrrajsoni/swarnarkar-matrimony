@@ -1,0 +1,13 @@
+header {
+    border-bottom: 1px solid rgb(211, 211, 211);
+    padding: 15px 0;
+
+    > div {
+        max-width: 1350px;
+        margin: 0 auto;
+
+        .logo-wrapper {
+            max-width: 11%;
+        }
+    }
+}

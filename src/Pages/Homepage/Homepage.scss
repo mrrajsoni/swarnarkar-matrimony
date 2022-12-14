@@ -1,0 +1,16 @@
+.homepage {
+    .homepage-hero-section {
+        min-height: 85vh;
+    }
+
+    .usp-section {
+        background-color: var(--light-gray);
+        > .fluid-container > div {
+            width: 30%;
+            font-weight: bold;
+            .usp-icon {
+                width: 20%;
+            }
+        }
+    }
+}

@@ -1,23 +1,42 @@
-import './App.css';
-import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './Components/Commons/ProtectedRoute';
+import { useUser } from './Context/UserContext';
+import HomePage from './Pages/Homepage/Homepage';
+import Login from './Pages/Login/Login';
+import EditProfile from './Pages/Profile/EditProfilePage';
+import ProfileArchivePage from './Pages/Profile/ProfileArchive/ProfileArchivePage';
+import ProfilePage from './Pages/Profile/ProfilePage';
+import Register from './Pages/Register/Register';
 
-function App() {
+const App = () => {
+    const { user } = useUser();
+    const localStorageUserId = localStorage.getItem('userId');
     return (
-        <div className="App">
-            <header className="App-header">
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/register" element={user ? <Navigate to="/" /> : <Register />} />
+                <Route path="/login" element={user ? <Navigate to="/edit-profile" /> : <Login />} />
+                <Route
+                    path="/edit-profile"
+                    element={
+                        <ProtectedRoute isLoggedin={!!localStorageUserId}>
+                            <EditProfile userId={localStorageUserId} />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route path="/all-profiles" element={<ProfileArchivePage />} />
+                <Route
+                    path="/all-profiles/:userId"
+                    element={
+                        <ProtectedRoute isLoggedin={!!localStorageUserId}>
+                            <ProfilePage />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
+        </>
     );
-}
+};
 
 export default App;
