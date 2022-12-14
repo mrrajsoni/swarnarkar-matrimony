@@ -28,6 +28,7 @@ import { ReactComponent as FamilyIcon } from '../../Assets/Svg/family-icon.svg';
 import { ReactComponent as EducationIcon } from '../../Assets/Svg/education-icon.svg';
 import { ReactComponent as ProfileIcon } from '../../Assets/Svg/profile-icon.svg';
 import { useGetUserProfile } from '../../Services/API/UserHooks/getCurrentUserProfile';
+import { debounce } from 'lodash';
 
 const initialFormState = {
     showPersonalInfoForm: false,
@@ -56,7 +57,6 @@ export interface IFormVisibilityProps {
 
 const EditProfile = ({ userId }: { userId: string }) => {
     const [inEditMode, setInEditMode] = useState(initialFormState);
-    const [formUpdated, setFormUpdated] = useState(false);
 
     const [profileData, setProfileData] = useState<IUser>(null);
 
@@ -66,7 +66,7 @@ const EditProfile = ({ userId }: { userId: string }) => {
         if (data) {
             setProfileData(data);
         }
-    }, [data, isLoading, formUpdated]);
+    }, [isLoading]);
 
     const personalDetails: IPersonalDetails = {
         first_name: profileData?.first_name,
@@ -145,10 +145,10 @@ const EditProfile = ({ userId }: { userId: string }) => {
     const onSubmit = (success: boolean) => {
         if (success) {
             setInEditMode(initialFormState);
-            void refetch();
+            debounce(void refetch().then((value) => setProfileData(value.data)), 500);
         }
     };
-    console.log(profileData);
+
     return (
         <Layout>
             {profileData?.user_id && !isLoading ? (
