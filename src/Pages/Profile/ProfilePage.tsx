@@ -21,20 +21,19 @@ import { ReactComponent as EducationIcon } from '../../Assets/Svg/education-icon
 import { ReactComponent as ProfileIcon } from '../../Assets/Svg/profile-icon.svg';
 
 import './Profile.scss';
+import { useGetUserProfile } from '../../Services/API/UserHooks/getCurrentUserProfile';
 
 const ProfilePage = () => {
     const { userId } = useParams();
-    const [loading, setLoading] = useState(true);
     const [profileData, setProfileData] = useState<IUser>(null);
 
+    const { data, error, isLoading } = useGetUserProfile(userId);
+
     useEffect(() => {
-        if (userId) {
-            void FetchUser.getUserData(userId).then((response) => {
-                setProfileData(response[0]);
-            });
-            setLoading(false);
+        if (data) {
+            setProfileData(data);
         }
-    }, [userId]);
+    }, [isLoading]);
 
     const personalDetails: IPersonalDetails = {
         first_name: profileData?.first_name,
@@ -105,7 +104,7 @@ const ProfilePage = () => {
 
     return (
         <Layout>
-            {profileData?.user_id && !loading ? (
+            {profileData?.user_id && !isLoading ? (
                 <section className="single-profile-page py-10">
                     <div className="profile-page-inner mx-auto">
                         <div className="two-cols flex gap-3">

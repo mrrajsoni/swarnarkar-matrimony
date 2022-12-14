@@ -6,7 +6,7 @@ export default class FetchUser {
         try {
             const { data, error, status } = await supabase
                 .from('user_registration')
-                .select('registration_completed')
+                .select('registration_completed, gender')
                 .eq('user_id', user_id)
                 .single();
             if (status === 200) {
