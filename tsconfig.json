@@ -8,13 +8,15 @@
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
         "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node",
+        "moduleResolution": "Node",
         "experimentalDecorators": true,
-        "lib": ["dom", "DOM.Iterable", "es2015", "es7", "es2017", "ESNext"],
+        "lib": ["dom", "DOM.Iterable", "ESNext"],
         "declaration": true,
         "skipLibCheck": true,
         "module": "ES2022",
-        "types": ["vite/client"]
+        "types": ["vite/client"],
+        "isolatedModules": true
     },
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    "references": [{ "path": "./tsconfig.node.json" }]
 }
