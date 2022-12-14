@@ -6,11 +6,15 @@ export default class FetchUser {
         try {
             const { data, error, status } = await supabase
                 .from('user_registration')
-                .select('*')
-                .eq('user_id', user_id);
+                .select('registration_completed')
+                .eq('user_id', user_id)
+                .single();
             if (status === 200) {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 return data;
+            }
+            if (error) {
+                return error;
             }
         } catch (error) {
             console.log(error);
