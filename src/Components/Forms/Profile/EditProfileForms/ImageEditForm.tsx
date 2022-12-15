@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import UserImages from '../../../Users/Profile/UserImages';
 
-const FILE_SIZE = 160 * 1024;
+const FILE_SIZE = 500 * 1024;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
 const GUIDELINES = [
     { label: 'Recommended image dimensions are 500x500' },
