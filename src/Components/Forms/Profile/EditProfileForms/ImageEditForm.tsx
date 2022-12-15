@@ -7,6 +7,12 @@ import UserImages from '../../../Users/Profile/UserImages';
 
 const FILE_SIZE = 160 * 1024;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
+const GUIDELINES = [
+    { label: 'Recommended image dimensions are 500x500' },
+    { label: 'Make sure image size under 500kb' },
+    { label: 'Avoid uploading blur images, group images, or fake celebrity images' },
+    { label: 'Maximum upto 5 images are allowed' },
+];
 
 const validationSchema = Yup.object().shape({
     profile_image: Yup.mixed()
@@ -68,9 +74,9 @@ const ImageEditForm = ({
                 }
 
                 void Registration.imageUpdateToDatabase(userImageNamesList, userId);
+                onSubmit(true);
             }
         });
-        onSubmit(true);
     };
     return (
         <section className="edit-form-section">
@@ -110,17 +116,38 @@ const ProfileImages = ({
 }) => {
     console.log(props.errors);
     return (
-        <div className="profile-images-container">
-            <img src={previewImage} alt="" />
-            <input
-                id="profile_image"
-                type="file"
-                onChange={(event) => {
-                    props.setFieldValue('profile_image', event.currentTarget.files[0]);
-                    handleProfileImage(event.currentTarget.files[0]);
-                }}
-                accept="image/png, image/jpg, image/jpeg"
-            />
+        <>
+            <ImageUploadGuidelines />
+            <div className="upload-images-container text-center">
+                {props.values.profile_image && <img src={previewImage} />}
+
+                <input
+                    id="profile_image"
+                    type="file"
+                    onChange={(event) => {
+                        props.setFieldValue('profile_image', event.currentTarget.files[0]);
+                        handleProfileImage(event.currentTarget.files[0]);
+                    }}
+                    accept="image/png, image/jpg, image/jpeg"
+                />
+
+                {props.errors.profile_image && props.touched.profile_image && (
+                    <div className="error-container">{props.errors.profile_image as any}</div>
+                )}
+            </div>
+        </>
+    );
+};
+
+const ImageUploadGuidelines = () => {
+    return (
+        <div className="guidelines-container">
+            <h3>Important guidelines while uploading images.</h3>
+            <ol className="guidelines-container">
+                {GUIDELINES.map((points) => (
+                    <li key={points.label}>{points.label}</li>
+                ))}
+            </ol>
         </div>
     );
 };

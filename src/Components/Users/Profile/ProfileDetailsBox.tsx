@@ -35,7 +35,7 @@ const ProfileDetailsBox = ({
     );
 };
 
-const ProfileDetailTitle = ({
+export const ProfileDetailTitle = ({
     title,
     onClick,
     showEditButton,

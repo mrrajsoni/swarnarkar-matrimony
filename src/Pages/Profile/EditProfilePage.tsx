@@ -20,7 +20,9 @@ import ImageEditForm from '../../Components/Forms/Profile/EditProfileForms/Image
 import LifestyleEditForm from '../../Components/Forms/Profile/EditProfileForms/LifestyleEditForm';
 import PersonalInfoEditForm from '../../Components/Forms/Profile/EditProfileForms/PersonalInfoEditForm';
 import UserImages from '../../Components/Users/Profile/UserImages';
-import ProfileDetailsBox from '../../Components/Users/Profile/ProfileDetailsBox';
+import ProfileDetailsBox, {
+    ProfileDetailTitle,
+} from '../../Components/Users/Profile/ProfileDetailsBox';
 import ProfileUtils from '../../Utils/Profile/ProfileUtils';
 import { ReactComponent as DesiredPartnerIcon } from '../../Assets/Svg/desired-partner.svg';
 import { ReactComponent as LifestyleIcon } from '../../Assets/Svg/lifestyle-icon.svg';
@@ -137,9 +139,6 @@ const EditProfile = ({ userId }: { userId: string }) => {
 
     const profileImageProps: IProfileImageDetails = {
         user_images: profileData?.user_images,
-        setShowEditForm: setInEditMode,
-        showEditForm: inEditMode.showProfileImageForm,
-        id: profileData?.id,
     };
 
     const onSubmit = (success: boolean) => {
@@ -157,7 +156,15 @@ const EditProfile = ({ userId }: { userId: string }) => {
                         Login
                         <div className="two-cols flex gap-3">
                             <div className="details-col ">
-                                <ProfileImages props={profileImageProps} onSubmit={onSubmit} />
+                                <ProfileImages
+                                    props={profileImageProps}
+                                    onSubmit={onSubmit}
+                                    userId={userId}
+                                    formProps={{
+                                        setShowEditForm: setInEditMode,
+                                        showEditForm: inEditMode.showProfileImageForm,
+                                    }}
+                                />
                                 <PersonalDetails
                                     userId={userId}
                                     props={personalDetails}
@@ -226,9 +233,13 @@ const EditProfile = ({ userId }: { userId: string }) => {
 const ProfileImages = ({
     props,
     onSubmit,
+    formProps,
+    userId,
 }: {
     props: IProfileImageDetails;
     onSubmit: (success: boolean) => void;
+    formProps: IFormVisibilityProps;
+    userId: string;
 }) => {
     const handleEditFormVisibility = (value: boolean) => {
         setShowEditForm((prevState) => {
@@ -238,23 +249,26 @@ const ProfileImages = ({
             };
         });
     };
-    const { user_images, setShowEditForm, showEditForm, id } = props;
+    const { setShowEditForm, showEditForm } = formProps;
+
+    const { user_images } = props;
     return (
         <div className="details-container">
             {!showEditForm ? (
                 <>
-                    {/* <ProfileDetailTitle
+                    <ProfileDetailTitle
                         title="Basic Details"
                         onClick={() => handleEditFormVisibility(true)}
-                    /> */}
-                    <UserImages userId={id} />
+                        showEditButton
+                    />
+                    <UserImages userId={userId} />
                 </>
             ) : (
                 <ImageEditForm
                     userImageNames={user_images}
                     onCancel={handleEditFormVisibility}
                     onSubmit={onSubmit}
-                    userId={id}
+                    userId={userId}
                 />
             )}
         </div>

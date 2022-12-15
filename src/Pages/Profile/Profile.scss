@@ -133,6 +133,68 @@
                     }
                 }
             }
+
+            .registration-form {
+                margin: 50px 0 20px;
+
+                .guidelines-container {
+                    > h3 {
+                        color: var(--error);
+                    }
+                    > ol {
+                        list-style: inherit;
+                        margin-bottom: 20px;
+                    }
+                }
+
+                .error-container {
+                    color: var(--error);
+                    font-size: var(--small-font);
+                }
+            }
+            .upload-images-container {
+                > img {
+                    height: 300px;
+                    width: 300px;
+                    object-fit: cover;
+                    margin: 0 auto 20px;
+                }
+            }
+        }
+
+        .user-image-container {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+
+            img {
+                height: 200px;
+                width: 200px;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+// Mobile styles
+
+@media (max-width: 767px) {
+    .edit-profile-page,
+    .single-profile-page {
+        .two-cols {
+            flex-direction: column;
+
+            .details-col {
+                width: 100%;
+
+                .details-container {
+                    padding-left: 15px;
+                    padding-right: 15px;
+
+                    ul {
+                        padding-left: 0;
+                    }
+                }
+            }
         }
     }
 }
