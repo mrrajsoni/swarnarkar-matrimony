@@ -24,6 +24,9 @@
     src: url('./Assets/Fonts/TTCommonsBold.woff2');
 }
 
+html {
+    overflow: hidden;
+}
 body,
 p,
 span {

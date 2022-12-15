@@ -10,7 +10,6 @@ import {
     IPersonalDetails,
     IUser,
 } from '../../Types/GlobalTypes';
-import FetchUser from '../../Services/API/FetchUser';
 import ProfileDetailsBox from '../../Components/Users/Profile/ProfileDetailsBox';
 import ProfileUtils from '../../Utils/Profile/ProfileUtils';
 import CommonUtils from '../../Utils/Common Utils/CommonUtils';

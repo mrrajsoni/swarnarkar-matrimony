@@ -7,10 +7,21 @@ import { ReactComponent as DownArrow } from '../../../Assets/Svg/down-arrow.svg'
 import { Link } from 'react-router-dom';
 import CommonUtils from '../../../Utils/Common Utils/CommonUtils';
 import { MainMenu } from '../../../Constants/Menu';
+import useWindowDimensions from '../../../CustomHooks/getScreenSize';
+import Hamburger from 'hamburger-react';
+import MobileMenu from './MobileMenu/MobileMenu';
 
+interface IDesktopMenuProps {
+    profileMenuRef: React.MutableRefObject<HTMLUListElement>;
+    isProfileMenuOpen: boolean;
+    isMenuOpen: boolean;
+    setIsMenuOpen: () => void;
+    setProfileMenuOpen: () => void;
+}
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const profileMenuRef = useRef<HTMLUListElement>(null);
 
     CommonUtils.useOutsideClick([profileMenuRef], () => {
@@ -24,23 +35,30 @@ const Navbar = () => {
     const handleProfileMenu = () => {
         setProfileMenuOpen((prevState) => !prevState);
     };
+    const { width } = useWindowDimensions();
+    const showMobileMenu = width < 767;
     return (
-        <nav className="flex justify-center">
-            <MainMenuLinks />
-            <HeaderSignUpLinks
-                profileMenuRef={profileMenuRef}
-                isProfileMenuOpen={isProfileMenuOpen}
-                isMenuOpen={isMenuOpen}
-                setIsMenuOpen={handleRegisterMenu}
-                setProfileMenuOpen={handleProfileMenu}
-            />
+        <nav className={`flex ${showMobileMenu && 'justify-end'}`}>
+            {!showMobileMenu ? (
+                <DesktopMenu
+                    props={{
+                        isMenuOpen: isMenuOpen,
+                        isProfileMenuOpen: isProfileMenuOpen,
+                        profileMenuRef: profileMenuRef,
+                        setIsMenuOpen: handleRegisterMenu,
+                        setProfileMenuOpen: handleProfileMenu,
+                    }}
+                />
+            ) : (
+                <MobileMenu />
+            )}
         </nav>
     );
 };
 
-const MainMenuLinks = () => {
+export const MainMenuLinks = ({ isDesktopMenu }: { isDesktopMenu: boolean }) => {
     return (
-        <ul className="main-menu ml-auto flex gap-6">
+        <ul className={`${isDesktopMenu ? 'desktop-main-menu' : 'mobile-main-menu'} main-menu `}>
             {MainMenu.map((menu) => (
                 <li key={menu.link}>
                     <Link to={menu.link}>{menu.name}</Link>
@@ -117,4 +135,22 @@ const HeaderSignUpLinks = ({
 const LoginPopupForm = () => {
     return <LoginForm />;
 };
+
+const DesktopMenu = ({ props }: { props: IDesktopMenuProps }) => {
+    const { isMenuOpen, isProfileMenuOpen, profileMenuRef, setIsMenuOpen, setProfileMenuOpen } =
+        props;
+    return (
+        <>
+            <MainMenuLinks isDesktopMenu={true} />
+            <HeaderSignUpLinks
+                profileMenuRef={profileMenuRef}
+                isProfileMenuOpen={isProfileMenuOpen}
+                isMenuOpen={isMenuOpen}
+                setIsMenuOpen={setIsMenuOpen}
+                setProfileMenuOpen={setProfileMenuOpen}
+            />
+        </>
+    );
+};
+
 export default Navbar;

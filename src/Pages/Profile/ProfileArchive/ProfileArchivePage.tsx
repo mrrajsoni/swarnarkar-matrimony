@@ -36,7 +36,7 @@ const ProfileArchive = () => {
     const profileTerm =
         profileCount === 1
             ? `Showing ${profileCount} profile`
-            : `Showing all ${profileCount} profiles'`;
+            : `Showing all ${profileCount} profiles`;
     return (
         <Layout>
             <section className="profile-archive-page flex  py-10">
