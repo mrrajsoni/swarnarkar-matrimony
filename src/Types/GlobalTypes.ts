@@ -144,9 +144,6 @@ export interface IDesiredPartnerDetails {
 }
 
 export interface IProfileImageDetails {
-    showEditForm: boolean;
-    id?: string;
-    setShowEditForm: setShowEditFormType;
     user_images: string;
 }
 

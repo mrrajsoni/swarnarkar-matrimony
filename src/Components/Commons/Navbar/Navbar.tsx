@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import CommonUtils from '../../../Utils/Common Utils/CommonUtils';
 import { MainMenu } from '../../../Constants/Menu';
 import useWindowDimensions from '../../../CustomHooks/getScreenSize';
-import Hamburger from 'hamburger-react';
 import MobileMenu from './MobileMenu/MobileMenu';
 
 interface IDesktopMenuProps {
@@ -21,7 +20,6 @@ interface IDesktopMenuProps {
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const profileMenuRef = useRef<HTMLUListElement>(null);
 
     CommonUtils.useOutsideClick([profileMenuRef], () => {
@@ -38,7 +36,7 @@ const Navbar = () => {
     const { width } = useWindowDimensions();
     const showMobileMenu = width < 767;
     return (
-        <nav className={`flex ${showMobileMenu && 'justify-end'}`}>
+        <nav className={`flex`}>
             {!showMobileMenu ? (
                 <DesktopMenu
                     props={{

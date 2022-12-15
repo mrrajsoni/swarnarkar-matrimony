@@ -45,3 +45,17 @@
         }
     }
 }
+
+// Mobile styles
+
+@media (max-width: 767px) {
+    .profile-archive-page {
+        flex-direction: column;
+
+        .profiles-container {
+            .profile-card {
+                width: 100%;
+            }
+        }
+    }
+}

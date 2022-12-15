@@ -11,3 +11,11 @@ header {
         }
     }
 }
+
+@media (max-width: 767px) {
+    header {
+        > div {
+            flex-direction: row-reverse;
+        }
+    }
+}

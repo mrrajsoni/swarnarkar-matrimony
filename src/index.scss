@@ -25,7 +25,7 @@
 }
 
 html {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 body,
 p,
@@ -221,4 +221,10 @@ label {
             }
         }
     }
+}
+
+// Mobile Syles
+
+main {
+    padding: 15px;
 }
