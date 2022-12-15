@@ -1,3 +1,7 @@
 {
-    "cSpell.words": ["formik", "supabase"]
+    "cSpell.words": ["formik", "supabase"],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.probe": ["typescript", "typescriptreact"]
 }
