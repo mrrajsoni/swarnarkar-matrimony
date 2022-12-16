@@ -4,6 +4,7 @@ import Registration from '../../../../Services/API/SignUp';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import UserImages from '../../../Users/Profile/UserImages';
+import { useResizedImage } from '../../../../CustomHooks/getResizedImage';
 
 const FILE_SIZE = 500 * 1024;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
@@ -62,8 +63,6 @@ const ImageEditForm = ({
     }, [uploadingProfileImage]);
 
     const handleSubmit = (values: IProfileImageEditValues) => {
-        // eslint-disable-next-line no-debugger
-        debugger;
         void Registration.editProfileImageUpdate(values.profile_image, userId).then((value) => {
             if (!value.error) {
                 let userImageNamesList: string;
@@ -74,9 +73,9 @@ const ImageEditForm = ({
                 }
 
                 void Registration.imageUpdateToDatabase(userImageNamesList, userId);
-                onSubmit(true);
             }
         });
+        onSubmit(true);
     };
     return (
         <section className="edit-form-section">
@@ -114,7 +113,6 @@ const ProfileImages = ({
     handleProfileImage: (value: File) => void;
     previewImage: string;
 }) => {
-    console.log(props.errors);
     return (
         <>
             <ImageUploadGuidelines />
