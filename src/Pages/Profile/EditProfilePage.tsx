@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Layout from '../../Components/Commons/Layout/Layout';
 import { useUser } from '../../Context/UserContext';
 import {
@@ -31,6 +31,7 @@ import { ReactComponent as EducationIcon } from '../../Assets/Svg/education-icon
 import { ReactComponent as ProfileIcon } from '../../Assets/Svg/profile-icon.svg';
 import { useGetUserProfile } from '../../Services/API/UserHooks/getCurrentUserProfile';
 import { debounce } from 'lodash';
+import { GridLoader } from 'react-spinners';
 
 const initialFormState = {
     showPersonalInfoForm: false,
@@ -69,6 +70,16 @@ const EditProfile = ({ userId }: { userId: string }) => {
             setProfileData(data);
         }
     }, [isLoading]);
+
+    const handleRefetch = () => {
+        void refetch()
+            .then((value) => {
+                setProfileData(value.data);
+            })
+            .catch((reason) => console.log(reason));
+    };
+
+    const debouncedRefetch = useCallback(debounce(handleRefetch, 500), []);
 
     const personalDetails: IPersonalDetails = {
         first_name: profileData?.first_name,
@@ -144,7 +155,7 @@ const EditProfile = ({ userId }: { userId: string }) => {
     const onSubmit = (success: boolean) => {
         if (success) {
             setInEditMode(initialFormState);
-            debounce(void refetch().then((value) => setProfileData(value.data)), 500);
+            debouncedRefetch();
         }
     };
 
@@ -224,7 +235,7 @@ const EditProfile = ({ userId }: { userId: string }) => {
                     </div>
                 </section>
             ) : (
-                <h2>I am loading man</h2>
+                <GridLoader color="#fe46ae" />
             )}
         </Layout>
     );
