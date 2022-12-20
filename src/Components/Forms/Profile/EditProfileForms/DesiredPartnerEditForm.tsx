@@ -125,6 +125,8 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                     value: props.values.partner_description,
                     isRequired: false,
                     name: 'partner_description',
+                    error: props.errors.partner_description,
+                    fieldTouched: props.touched.partner_description,
                 }}
             />
 
@@ -132,16 +134,22 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 gender={props.values.gender}
                 partner_age={props.values.partner_age}
                 setFieldValue={props.setFieldValue}
+                error={props.errors.gender.label}
+                fieldTouched={props.touched.gender.label}
             />
 
             <PartnerHeightField
                 partner_height={props.values.partner_height}
                 setFieldValue={props.setFieldValue}
+                error={props.errors.partner_height.from.label}
+                fieldTouched={props.touched.partner_height.from.label}
             />
 
             <PartnerIncomeField
                 partner_income={props.values.partner_income}
                 setFieldValue={props.setFieldValue}
+                error={props.errors.gender.label}
+                fieldTouched={props.touched.gender.label}
             />
 
             <SelectInput
@@ -154,6 +162,8 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 id="partner_occupation"
                 options={EmployedSectors}
                 value={props.values.partner_occupation}
+                error={props.errors.partner_occupation.label}
+                fieldTouched={props.touched.partner_occupation.label}
             />
 
             <SelectInput
@@ -166,6 +176,8 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 id="partner_smoke"
                 options={DrinkingSmoking}
                 value={props.values.partner_smoke}
+                error={props.errors.partner_smoke.label}
+                fieldTouched={props.touched.partner_smoke.label}
             />
 
             <SelectInput
@@ -178,6 +190,8 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 id="partner_drink"
                 options={DrinkingSmoking}
                 value={props.values.partner_drink}
+                error={props.errors.partner_drink.label}
+                fieldTouched={props.touched.partner_drink.label}
             />
             <SelectInput
                 isRequired={false}
@@ -189,6 +203,8 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 id="partner_marital_status"
                 options={Marital_Status}
                 value={props.values.partner_marital_status}
+                error={props.errors.partner_marital_status.label}
+                fieldTouched={props.touched.partner_marital_status.label}
             />
         </>
     );
@@ -198,6 +214,8 @@ const PartnerAgeField = ({
     gender,
     partner_age,
     setFieldValue,
+    error,
+    fieldTouched,
 }: {
     gender: selectValue;
     partner_age: {
@@ -205,6 +223,8 @@ const PartnerAgeField = ({
         from: selectValue;
     };
     setFieldValue: (field: string, value: selectValue, shouldValidate?: boolean) => void;
+    error: string;
+    fieldTouched: boolean;
 }) => {
     const startingAge =
         gender?.value === 'female' ? AgeNumbers.slice(3, AgeNumbers?.length - 1) : AgeNumbers;
@@ -248,6 +268,8 @@ const PartnerAgeField = ({
                         id={ageField.id}
                         options={ageField.option}
                         value={ageField.value}
+                        error={error}
+                        fieldTouched={fieldTouched}
                     />
                 ))}
             </div>
@@ -258,12 +280,16 @@ const PartnerAgeField = ({
 const PartnerHeightField = ({
     partner_height,
     setFieldValue,
+    error,
+    fieldTouched,
 }: {
     partner_height: {
         to: selectValue;
         from: selectValue;
     };
     setFieldValue: (field: string, value: selectValue, shouldValidate?: boolean) => void;
+    error: string;
+    fieldTouched: boolean;
 }) => {
     const selectedStartingHeight = Height.findIndex(
         (value) => value.value === partner_height?.from?.value,
@@ -305,6 +331,8 @@ const PartnerHeightField = ({
                         id={height.id}
                         options={height.option}
                         value={height.value}
+                        error={error}
+                        fieldTouched={fieldTouched}
                     />
                 ))}
             </div>
@@ -315,12 +343,16 @@ const PartnerHeightField = ({
 const PartnerIncomeField = ({
     partner_income,
     setFieldValue,
+    error,
+    fieldTouched,
 }: {
     partner_income: {
         to: selectValue;
         from: selectValue;
     };
     setFieldValue: (field: string, value: selectValue, shouldValidate?: boolean) => void;
+    error: string;
+    fieldTouched: boolean;
 }) => {
     const startPartnerIncome = PartnerIncome.slice(0, PartnerIncome.length - 1);
     const selectedStartingIncome = startPartnerIncome.findIndex(
@@ -366,6 +398,8 @@ const PartnerIncomeField = ({
                         options={income.option}
                         value={income.value}
                         defaultValue={income.defaultValue}
+                        error={error}
+                        fieldTouched={fieldTouched}
                     />
                 ))}
             </div>
