@@ -10,7 +10,9 @@ import {
     IPersonalDetails,
     IUser,
 } from '../../Types/GlobalTypes';
-import ProfileDetailsBox from '../../Components/Users/Profile/ProfileDetailsBox';
+import ProfileDetailsBox, {
+    ProfileDetailTitle,
+} from '../../Components/Users/Profile/ProfileDetailsBox';
 import ProfileUtils from '../../Utils/Profile/ProfileUtils';
 import CommonUtils from '../../Utils/Common Utils/CommonUtils';
 import { ReactComponent as DesiredPartnerIcon } from '../../Assets/Svg/desired-partner.svg';
@@ -21,6 +23,8 @@ import { ReactComponent as ProfileIcon } from '../../Assets/Svg/profile-icon.svg
 
 import './Profile.scss';
 import { useGetUserProfile } from '../../Services/API/UserHooks/getCurrentUserProfile';
+import { GridLoader } from 'react-spinners';
+import UserImages from '../../Components/Users/Profile/UserImages';
 
 const ProfilePage = () => {
     const { userId } = useParams();
@@ -108,6 +112,7 @@ const ProfilePage = () => {
                     <div className="profile-page-inner mx-auto">
                         <div className="two-cols flex gap-3">
                             <div className="details-col ">
+                                <ProfileImages userId={userId} />
                                 <PersonalDetails props={personalDetails} />
                                 <EducationCareerDetails props={educationCareerDetails} />
                                 <FamilyDetails props={familyDetails} />
@@ -121,9 +126,22 @@ const ProfilePage = () => {
                     </div>
                 </section>
             ) : (
-                <div>Loading</div>
+                <div>
+                    <GridLoader color="#fe46ae" />
+                </div>
             )}
         </Layout>
+    );
+};
+
+const ProfileImages = ({ userId }: { userId: string }) => {
+    return (
+        <div className="details-container">
+            <>
+                <ProfileDetailTitle title="Photos" />
+                <UserImages userId={userId} />
+            </>
+        </div>
     );
 };
 

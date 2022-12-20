@@ -24,9 +24,9 @@
                 }
 
                 .user-image-container {
-                    > div {
-                        width: 32%;
+                    .user-image-wrapper {
                         position: relative;
+                        padding: 10px;
                     }
 
                     .delete-icon {
