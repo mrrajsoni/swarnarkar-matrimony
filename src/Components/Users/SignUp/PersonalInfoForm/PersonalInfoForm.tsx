@@ -149,11 +149,9 @@ const BasicInfo = ({ props }: { props: FormikProps<IUserPersonalData> }) => {
                 id="gender"
                 options={Gender}
                 value={props.values.gender}
+                fieldTouched={props.touched.gender?.label}
+                error={props.errors.gender?.label}
             />
-
-            {props.touched.gender && props.errors.gender ? (
-                <div className="error-container">{props.errors.gender.label}</div>
-            ) : null}
         </>
     );
 };
@@ -197,10 +195,9 @@ const ReligionInfo = ({ props }: { props: FormikProps<IUserPersonalData> }) => {
                 value={props.values.martial_status}
                 label="Marital Status"
                 isRequired={true}
+                fieldTouched={props.touched.martial_status.label}
+                error={props.errors.martial_status.label}
             />
-            {props.touched.martial_status && props.errors.martial_status ? (
-                <div className="error-container">{props.errors.martial_status.label}</div>
-            ) : null}
 
             <SelectInput
                 label="Height"
@@ -212,10 +209,9 @@ const ReligionInfo = ({ props }: { props: FormikProps<IUserPersonalData> }) => {
                 id="height"
                 options={Height}
                 value={props.values.height}
+                fieldTouched={props.touched.height.label}
+                error={props.errors.height.label}
             />
-            {props.touched.height && props.errors.height ? (
-                <div className="error-container">{props.errors.height.label}</div>
-            ) : null}
         </>
     );
 };
