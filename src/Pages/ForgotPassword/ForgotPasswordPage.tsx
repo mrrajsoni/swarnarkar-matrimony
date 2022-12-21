@@ -46,8 +46,6 @@ const ForgotPasswordPage = () => {
         makeButtonDisable();
     };
 
-    console.log(data);
-    console.log(isLoading);
     return (
         <Layout>
             <section className="forgot-password-page py-10">
