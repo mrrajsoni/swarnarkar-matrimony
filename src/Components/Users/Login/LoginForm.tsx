@@ -6,27 +6,37 @@ import { useState } from 'react';
 import Login, { IloginData } from '../../../Services/API/Login';
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import CustomInput from '../../Forms/Input/CustomInput';
+import { LOGIN_ERRORS } from '../../../Constants/UserMessages';
+import FetchUser from '../../../Services/API/FetchUser';
 
 export interface LoginFormValues {
     email: string;
     password: string;
 }
 
-enum LOGIN_ERRORS {
-    EMAIL_NOT_CONFIRMED = 'Email not confirmed',
-    INVALID_CREDENTIALS = 'Invalid login credentials',
-}
 const LoginForm = () => {
     const [loginError, setLoginError] = useState('');
     const [showPasswordField, setShowPasswordField] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = (values) => {
-        void Login.signInWithEmail(values).then((value) => {
-            if (value.error) {
-                setLoginError(value.error.message);
-            }
-        });
+        void Login.signInWithEmail(values)
+            .then((value) => {
+                if (value.error) {
+                    setLoginError(value.error.message);
+                    return;
+                }
+                return value;
+            })
+            .then(async (value) => {
+                await FetchUser.getUserData(value.data.user.id).then((response) => {
+                    if (!response.data.registration_completed) {
+                        navigate('/register');
+                    } else {
+                        navigate('/');
+                    }
+                });
+            });
     };
 
     const handleShowPasswordField = () => {
@@ -174,7 +184,7 @@ const ForgotPassword = ({ navigate }: { navigate: NavigateFunction }) => {
 const LoginError = ({ error }: { error: string }) => {
     switch (error) {
         case LOGIN_ERRORS.EMAIL_NOT_CONFIRMED:
-            return <ErrorMessageBox error={error} message=". Resend email confirmation" />;
+            return <ErrorMessageBox error={error} message=". Please register again" />;
         case LOGIN_ERRORS.INVALID_CREDENTIALS:
             return (
                 <ErrorMessageBox
@@ -188,7 +198,15 @@ const LoginError = ({ error }: { error: string }) => {
     }
 };
 
-const ErrorMessageBox = ({ error, message }: { error: string; message: string }) => {
+const ErrorMessageBox = ({
+    error,
+    message,
+    onClick,
+}: {
+    error: string;
+    message: string;
+    onClick?: () => string;
+}) => {
     return (
         <div className="error-container">
             {error}

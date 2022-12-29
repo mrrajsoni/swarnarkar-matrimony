@@ -149,3 +149,10 @@ export interface IProfileDataArray {
     label: string;
     field: string;
 }
+
+export interface IStepCompleteStatus {
+    one: boolean;
+    two: boolean;
+    three: boolean;
+    four: boolean;
+}

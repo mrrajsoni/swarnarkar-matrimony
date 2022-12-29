@@ -29,7 +29,7 @@ const UserProvider = ({ children }) => {
                         setUser(() => {
                             return {
                                 ...userData,
-                                ...response,
+                                ...response.data,
                             };
                         });
                     });

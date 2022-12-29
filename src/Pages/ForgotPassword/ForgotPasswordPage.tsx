@@ -7,7 +7,7 @@ import './ForgotPassword.scss';
 import useSupabaseCall from '../../CustomHooks/useSupabaseCall';
 import Login from '../../Services/API/Login';
 import { useEffect, useRef, useState } from 'react';
-import useTimeout from '../../CustomHooks/useTimeout';
+import { SIGN_UP } from '../../Constants/UserMessages';
 
 const emailSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email Address is required'),
@@ -90,8 +90,7 @@ const ForgotPasswordPage = () => {
                     </Formik>
                     {disableButton ? (
                         <div className="email-sent-message text-center mt-4 underline">
-                            Please check your inbox. Also check your SPAM in case you don&apos;t see
-                            a mail in your inbox. Kindly wait for 1 minute before retrying.
+                            {SIGN_UP.FORGOT_PASSWORD}
                         </div>
                     ) : null}
                 </div>

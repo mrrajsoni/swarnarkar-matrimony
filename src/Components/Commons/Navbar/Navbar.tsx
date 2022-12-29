@@ -83,7 +83,7 @@ const HeaderSignUpLinks = ({
 
     return (
         <ul className="register-menu relative ml-auto">
-            {user?.registration_completed ? (
+            {user ? (
                 <>
                     <li
                         className="profile-menu cursor-pointer flex items-center gap-1"
