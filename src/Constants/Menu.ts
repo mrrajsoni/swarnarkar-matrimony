@@ -15,10 +15,6 @@ export const MainMenu = [
 
 export const SignUpMenu = [
     {
-        name: 'Login',
-        link: '/login',
-    },
-    {
         name: 'Register',
         link: '/register',
     },
@@ -32,10 +28,6 @@ export const FooterQuickMenu = [
     {
         name: 'Contact',
         link: '/contact',
-    },
-    {
-        name: 'Login',
-        link: '/login',
     },
     {
         name: 'Register',
