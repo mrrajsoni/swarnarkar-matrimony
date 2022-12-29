@@ -4,6 +4,9 @@ import './SignUpForm.scss';
 import { useState } from 'react';
 import Registration, { userData } from '../../../Services/API/SignUp';
 import Button from '../../Commons/Button/Button';
+import { User } from '@supabase/supabase-js';
+import useSupabaseCall from '../../../CustomHooks/useSupabaseCall';
+import { SIGN_UP } from '../../../Constants/UserMessages';
 export interface FormIntialValues {
     email: string;
     password: string;
@@ -11,11 +14,11 @@ export interface FormIntialValues {
 }
 const SignupSchema = Yup.object().shape({
     mobile: Yup.string()
-        .required()
+        .required('Mobile number is required')
         .matches(/^[0-9]+$/, 'Must be only digits')
         .min(10, 'Must be exactly 10 digits')
         .max(10, 'Must be exactly 10 digits'),
-    email: Yup.string().email('Invalid email').required('Required'),
+    email: Yup.string().email('Invalid email').required('Email Address is required'),
     password: Yup.string()
         .required()
         .min(8, 'Must be 8 characters or more')
@@ -33,8 +36,17 @@ const SignUpForm = () => {
     );
 };
 const UserSignUpForm = () => {
+    const [emailSent, setEmailSent] = useState(false);
+    const [disableButton, setDisableButton] = useState(false);
+
     const handleUserData = (userdata: userData, email: string) => {
-        void Registration.initialSignUp(userdata, email);
+        void Registration.initialSignUp(userdata, email)
+            .then((value) => {
+                localStorage.setItem('userId', (value as User)?.id);
+                setEmailSent(true);
+                setDisableButton(false);
+            })
+            .catch((reason) => console.log(reason));
     };
 
     const [showPasswordField, setShowPasswordField] = useState(false);
@@ -42,7 +54,9 @@ const UserSignUpForm = () => {
     const changePasswordVisibility = () => {
         setShowPasswordField((prevState) => !prevState);
     };
-    return (
+    return emailSent ? (
+        <EmailSentMessage />
+    ) : (
         <Formik
             initialValues={{
                 email: '',
@@ -51,6 +65,7 @@ const UserSignUpForm = () => {
             }}
             onSubmit={(values) => {
                 handleUserData(values, values.email);
+                setDisableButton(true);
             }}
             validationSchema={SignupSchema}>
             {(props) => (
@@ -62,7 +77,12 @@ const UserSignUpForm = () => {
                         props={props}
                         onPasswordVisibilityChange={changePasswordVisibility}
                     />
-                    <Button name="Submit" type="submit" onClick={undefined} />
+                    <Button
+                        disabled={disableButton}
+                        name="Submit"
+                        type="submit"
+                        onClick={undefined}
+                    />
                 </Form>
             )}
         </Formik>
@@ -181,6 +201,10 @@ const PasswordInput = ({
             </div>
         </div>
     );
+};
+
+const EmailSentMessage = () => {
+    return <div>{SIGN_UP.CONFIRMATION_EMAIL_SENT}</div>;
 };
 
 export default SignUpForm;
