@@ -5,8 +5,8 @@ import { useState } from 'react';
 import Registration, { userData } from '../../../Services/API/SignUp';
 import Button from '../../Commons/Button/Button';
 import { User } from '@supabase/supabase-js';
-import useSupabaseCall from '../../../CustomHooks/useSupabaseCall';
 import { SIGN_UP } from '../../../Constants/UserMessages';
+import CustomInput from '../../Forms/Input/CustomInput';
 export interface FormIntialValues {
     email: string;
     password: string;
@@ -91,57 +91,47 @@ const UserSignUpForm = () => {
 
 const EmailInput = ({ props }: { props: FormikProps<FormIntialValues> }) => {
     return (
-        <div className="form-container">
-            <div>
-                <div>
-                    <label className="required" htmlFor="email">
-                        Email Address
-                    </label>
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        onChange={props.handleChange}
-                        value={props.values.email}
-                        onBlur={props.handleBlur}
-                    />
-                </div>
-
-                {props.touched.email && props.errors.email ? (
-                    <div className="error-container">{props.errors.email}</div>
-                ) : null}
-            </div>
-        </div>
+        <CustomInput
+            props={{
+                error: props.errors.email,
+                fieldTouched: props.touched.email,
+                id: 'email',
+                label: 'Email Address',
+                onBlur: props.handleBlur,
+                onChange: props.handleChange,
+                type: 'email',
+                value: props.values.email,
+                isRequired: true,
+            }}
+        />
     );
 };
 
 const MobileInput = ({ props }: { props: FormikProps<FormIntialValues> }) => {
     return (
         <div className="form-container">
-            <div>
-                <label className="required" htmlFor="mobile">
-                    Mobile
-                </label>
-                <div className="mobile-input-container flex">
-                    <input
-                        className="disabled-input"
-                        type="text"
-                        name="mobile-prefix"
-                        value="+91"
-                        disabled
-                    />
-                    <input
-                        className="mobile-input"
-                        id="mobile"
-                        name="mobile"
-                        type="tel"
-                        maxLength={10}
-                        minLength={10}
-                        onChange={props.handleChange}
-                        value={props.values.mobile}
-                        onBlur={props.handleBlur}
-                    />
-                </div>
+            <label className="required" htmlFor="mobile">
+                Mobile
+            </label>
+            <div className="mobile-input-container flex">
+                <input
+                    className="disabled-input"
+                    type="text"
+                    name="mobile-prefix"
+                    value="+91"
+                    disabled
+                />
+                <input
+                    className="mobile-input"
+                    id="mobile"
+                    name="mobile"
+                    type="tel"
+                    maxLength={10}
+                    minLength={10}
+                    onChange={props.handleChange}
+                    value={props.values.mobile}
+                    onBlur={props.handleBlur}
+                />
             </div>
             {props.errors || props.touched.mobile ? (
                 <div className="error-container">{props.errors.mobile}</div>
@@ -160,45 +150,26 @@ const PasswordInput = ({
     onPasswordVisibilityChange: () => void;
 }) => {
     return (
-        <div className="form-container">
-            <div>
-                <div>
-                    <label className="required" htmlFor="password">
-                        Password
-                    </label>
-                    <div className="relative">
-                        {showPasswordField ? (
-                            <input
-                                id="password"
-                                name="password"
-                                type="text"
-                                onChange={props.handleChange}
-                                value={props.values.password}
-                                onBlur={props.handleBlur}
-                            />
-                        ) : (
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                onChange={props.handleChange}
-                                value={props.values.password}
-                                onBlur={props.handleBlur}
-                            />
-                        )}
-                        <img
-                            onClick={onPasswordVisibilityChange}
-                            className="eye-icon absolute"
-                            src="https://res.cloudinary.com/rajsoni/image/upload/v1666615487/eye_ge3ubz.png"
-                            alt="show-password"
-                        />
-                    </div>
-                </div>
-
-                {props.errors.password && props.touched.password ? (
-                    <div className="error-container">{props.errors.password}</div>
-                ) : null}
-            </div>
+        <div className="relative">
+            <CustomInput
+                props={{
+                    error: props.errors.password,
+                    fieldTouched: props.touched.password,
+                    id: 'password',
+                    label: 'Password',
+                    onBlur: props.handleBlur,
+                    onChange: props.handleChange,
+                    type: showPasswordField ? 'text' : 'password',
+                    value: props.values.password,
+                    isRequired: true,
+                }}
+            />
+            <img
+                onClick={onPasswordVisibilityChange}
+                className="eye-icon absolute"
+                src="https://res.cloudinary.com/rajsoni/image/upload/v1666615487/eye_ge3ubz.png"
+                alt="show-password"
+            />
         </div>
     );
 };

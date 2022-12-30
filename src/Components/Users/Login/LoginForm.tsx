@@ -131,28 +131,26 @@ const PasswordInput = ({
     onPasswordVisibilityChange: () => void;
 }) => {
     return (
-        <div className="form-container">
-            <div className="relative">
-                <CustomInput
-                    props={{
-                        error: props.errors.password,
-                        fieldTouched: props.touched.password,
-                        id: 'password',
-                        label: 'Password',
-                        onBlur: props.handleBlur,
-                        onChange: props.handleChange,
-                        type: showPasswordField ? 'text' : 'password',
-                        value: props.values.password,
-                        isRequired: true,
-                    }}
-                />
-                <img
-                    onClick={onPasswordVisibilityChange}
-                    className="eye-icon absolute"
-                    src="https://res.cloudinary.com/rajsoni/image/upload/v1666615487/eye_ge3ubz.png"
-                    alt="show-password"
-                />
-            </div>
+        <div className="relative">
+            <CustomInput
+                props={{
+                    error: props.errors.password,
+                    fieldTouched: props.touched.password,
+                    id: 'password',
+                    label: 'Password',
+                    onBlur: props.handleBlur,
+                    onChange: props.handleChange,
+                    type: showPasswordField ? 'text' : 'password',
+                    value: props.values.password,
+                    isRequired: true,
+                }}
+            />
+            <img
+                onClick={onPasswordVisibilityChange}
+                className="eye-icon absolute"
+                src="https://res.cloudinary.com/rajsoni/image/upload/v1666615487/eye_ge3ubz.png"
+                alt="show-password"
+            />
         </div>
     );
 };
