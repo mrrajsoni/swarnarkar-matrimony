@@ -241,6 +241,25 @@ label {
     }
 }
 
+.title-heading {
+    > span {
+        font-size: inherit;
+        font-family: inherit;
+    }
+    .tapered-underline {
+        background-image: linear-gradient(
+            179deg,
+            rgb(254, 97, 158) 0%,
+            rgb(254, 97, 158) 50%,
+            transparent 54%,
+            transparent 100%
+        );
+        background-size: 100% 20%;
+        background-repeat: repeat-x;
+        background-position: left 0% bottom 10%;
+    }
+}
+
 // Mobile Syles
 
 main {

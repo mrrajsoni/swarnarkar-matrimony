@@ -13,4 +13,48 @@
             }
         }
     }
+
+    .about-platform-section {
+        > div {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .purpose-platform-container {
+            margin-top: 50px;
+        }
+    }
+
+    .process-steps-section {
+        background-color: var(--grayBg);
+        .process-steps-container {
+            max-width: var(--fluid-container);
+            margin: 50px auto 0;
+            > div {
+                flex: 1;
+            }
+            h6 {
+                margin-bottom: 10px;
+            }
+            svg {
+                width: 64px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .call-to-action-section {
+        > div {
+            max-width: 525px;
+            margin: 0 auto;
+            position: relative;
+        }
+        img.curved-arrow {
+            position: absolute;
+            right: 10px;
+            transform: rotate3d(2, 88, -30, 170deg);
+            top: 40%;
+            width: 20%;
+        }
+    }
 }
