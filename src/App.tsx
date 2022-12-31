@@ -47,7 +47,16 @@ const App = () => {
                         </ProtectedRoute>
                     }
                 />
-                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route
+                    path="/forgot-password"
+                    element={
+                        <ProtectedRoute
+                            isRegistrationComplete={isRegistrationComplete}
+                            isLoggedin={!!localStorageUserId}>
+                            <ForgotPasswordPage />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
         </>
     );

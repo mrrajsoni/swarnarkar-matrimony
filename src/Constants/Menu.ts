@@ -4,10 +4,6 @@ export const MainMenu = [
         link: '/all-profiles',
     },
     {
-        name: 'About',
-        link: '/about',
-    },
-    {
         name: 'Help',
         link: '/contact',
     },
