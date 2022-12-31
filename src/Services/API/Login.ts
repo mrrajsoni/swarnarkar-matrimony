@@ -9,12 +9,17 @@ export default class Login {
     static async signInWithEmail(logindata: IloginData) {
         const { email, password } = logindata;
         try {
-            await supabase.auth.signInWithPassword({
+            const { data, error } = await supabase.auth.signInWithPassword({
                 email: email,
                 password: password,
             });
+
+            return {
+                data,
+                error,
+            };
         } catch (error) {
-            console.log(error);
+            return error;
         }
     }
 
@@ -24,5 +29,10 @@ export default class Login {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    static async sendPasswordRecovery(email: string) {
+        const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+        return { data, error };
     }
 }

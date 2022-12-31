@@ -32,9 +32,16 @@ const validationSchema = Yup.object().shape({
         .required('Required')
         .min(200, 'Please write minimum 200 characters'),
 });
-const FamilyForm = ({ user }: { user: IUser }) => {
+const FamilyForm = ({
+    user,
+    onFormUpdate,
+}: {
+    user: IUser;
+    onFormUpdate: (value: boolean) => void;
+}) => {
     const updateUserInformation = (values: IUserFamilyData) => {
         void SignUp.updateFamilyInfo(values, user.id);
+        onFormUpdate(true);
     };
     return (
         <section className="form-section">
@@ -69,11 +76,9 @@ const FamilyDetails = ({ props }: { props: FormikProps<IUserFamilyData> }) => {
                 options={Gotra}
                 value={props.values.self_gotra}
                 placeHolder="Select your gotra"
+                fieldTouched={props.touched.self_gotra?.label}
+                error={props.errors.self_gotra?.label}
             />
-
-            {props.touched.self_gotra && props.errors.self_gotra ? (
-                <div className="error-container">{props.errors.self_gotra.label}</div>
-            ) : null}
 
             <SelectInput
                 name="mother_gotra"
@@ -85,11 +90,9 @@ const FamilyDetails = ({ props }: { props: FormikProps<IUserFamilyData> }) => {
                 value={props.values.mother_gotra}
                 label="  Mother Gotra"
                 isRequired
+                fieldTouched={props.touched.mother_gotra?.label}
+                error={props.errors.mother_gotra?.label}
             />
-
-            {props.touched.mother_gotra && props.errors.mother_gotra ? (
-                <div className="error-container">{props.errors.mother_gotra.label}</div>
-            ) : null}
 
             <CustomTextarea
                 props={{
@@ -100,11 +103,10 @@ const FamilyDetails = ({ props }: { props: FormikProps<IUserFamilyData> }) => {
                     value: props.values.profile_description,
                     isRequired: true,
                     name: 'profile_description',
+                    error: props.errors.profile_description,
+                    fieldTouched: props.touched.profile_description,
                 }}
             />
-            {props.touched.profile_description && props.errors.profile_description ? (
-                <div className="error-container">{props.errors.profile_description}</div>
-            ) : null}
         </>
     );
 };

@@ -2,18 +2,16 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { IUser } from '../Types/GlobalTypes';
 import FetchUser from '../Services/API/FetchUser';
-import Login, { IloginData } from '../Services/API/Login';
+import Login from '../Services/API/Login';
 
 interface IUserContext {
     user: IUser;
-    userLogin: (values: IloginData) => void;
     userLogout: () => void;
 }
 export const UserContext = createContext<IUserContext>(null);
 
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState<IUser>(null);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Listen for changes on auth state (logged in, signed out, etc.)
@@ -31,7 +29,7 @@ const UserProvider = ({ children }) => {
                         setUser(() => {
                             return {
                                 ...userData,
-                                ...response[0],
+                                ...response.data,
                             };
                         });
                     });
@@ -53,10 +51,6 @@ const UserProvider = ({ children }) => {
         }
     }, [user?.id]);
 
-    const userLogin = (logindata: IloginData) => {
-        void Login.signInWithEmail(logindata);
-    };
-
     const userLogout = () => {
         void Login.signOut();
         setUser(null);
@@ -64,7 +58,6 @@ const UserProvider = ({ children }) => {
     };
     const exposed = {
         user,
-        userLogin,
         userLogout,
     };
     return <UserContext.Provider value={exposed}>{children}</UserContext.Provider>;

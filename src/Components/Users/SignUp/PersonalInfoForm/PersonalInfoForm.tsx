@@ -5,6 +5,7 @@ import SelectInput from '../../../Forms/Select/SelectInput';
 import * as Yup from 'yup';
 import Registration from '../../../../Services/API/SignUp';
 import { IUser, selectValue } from '../../../../Types/GlobalTypes';
+import CustomInput from '../../../Forms/Input/CustomInput';
 
 export interface IUserPersonalData {
     first_name: string;
@@ -52,9 +53,16 @@ const validationSchema = Yup.object().shape({
         value: Yup.string(),
     }),
 });
-const PersonalInfoForm = ({ user }: { user: IUser }) => {
+const PersonalInfoForm = ({
+    user,
+    onFormUpdate,
+}: {
+    user: IUser;
+    onFormUpdate: (value: boolean) => void;
+}) => {
     const updateUserInformation = (values: IUserPersonalData) => {
         void Registration.updatePersonalInfo(values, user.id);
+        onFormUpdate(true);
     };
     return (
         <section className="form-section">
@@ -81,64 +89,48 @@ const BasicInfo = ({ props }: { props: FormikProps<IUserPersonalData> }) => {
         <>
             <div className="form-container">
                 <div className="two-cols">
-                    <div>
-                        <div>
-                            <label className="required" htmlFor="first_name">
-                                First Name
-                            </label>
-                            <input
-                                id="first_name"
-                                type="text"
-                                onChange={props.handleChange}
-                                value={props.values.first_name}
-                                onBlur={props.handleBlur}
-                            />
-                        </div>
-
-                        {props.touched.first_name && props.errors.first_name ? (
-                            <div className="error-container">{props.errors.first_name}</div>
-                        ) : null}
-                    </div>
-                    <div>
-                        <div>
-                            <label className="required" htmlFor="last_name">
-                                Last Name
-                            </label>
-                            <input
-                                id="last_name"
-                                type="text"
-                                onChange={props.handleChange}
-                                value={props.values.last_name}
-                                onBlur={props.handleBlur}
-                            />
-                        </div>
-
-                        {props.touched.last_name && props.errors.last_name ? (
-                            <div className="error-container">{props.errors.last_name}</div>
-                        ) : null}
-                    </div>
-                </div>
-            </div>
-            <div className="form-container">
-                <div>
-                    <label className="required" htmlFor="dob">
-                        Date of Birth
-                    </label>
-                    <input
-                        min={'1996-04-12'}
-                        id="dob"
-                        type="date"
-                        onChange={props.handleChange}
-                        value={props.values.dob}
-                        onBlur={props.handleBlur}
+                    <CustomInput
+                        props={{
+                            error: props.errors.first_name,
+                            fieldTouched: props.touched.first_name,
+                            id: 'first_name',
+                            label: 'First Name',
+                            onBlur: props.handleBlur,
+                            onChange: props.handleChange,
+                            type: 'text',
+                            value: props.values.first_name,
+                            isRequired: true,
+                        }}
+                    />
+                    <CustomInput
+                        props={{
+                            error: props.errors.last_name,
+                            fieldTouched: props.touched.last_name,
+                            id: 'last_name',
+                            label: 'Last Name',
+                            onBlur: props.handleBlur,
+                            onChange: props.handleChange,
+                            type: 'text',
+                            value: props.values.last_name,
+                            isRequired: true,
+                        }}
                     />
                 </div>
-
-                {props.touched.dob && props.errors.dob ? (
-                    <div className="error-container">{props.errors.dob}</div>
-                ) : null}
             </div>
-
+            <CustomInput
+                props={{
+                    error: props.errors.dob,
+                    fieldTouched: props.touched.dob,
+                    id: 'dob',
+                    label: 'Date of Birth',
+                    onBlur: props.handleBlur,
+                    onChange: props.handleChange,
+                    type: 'date',
+                    value: props.values.dob,
+                    isRequired: true,
+                    minValue: '1996-04-12',
+                }}
+            />
             <SelectInput
                 label="Gender"
                 isRequired={true}
@@ -149,11 +141,9 @@ const BasicInfo = ({ props }: { props: FormikProps<IUserPersonalData> }) => {
                 id="gender"
                 options={Gender}
                 value={props.values.gender}
+                fieldTouched={props.touched.gender?.label}
+                error={props.errors.gender?.label}
             />
-
-            {props.touched.gender && props.errors.gender ? (
-                <div className="error-container">{props.errors.gender.label}</div>
-            ) : null}
         </>
     );
 };
@@ -197,10 +187,9 @@ const ReligionInfo = ({ props }: { props: FormikProps<IUserPersonalData> }) => {
                 value={props.values.martial_status}
                 label="Marital Status"
                 isRequired={true}
+                fieldTouched={props.touched.martial_status?.label}
+                error={props.errors.martial_status?.label}
             />
-            {props.touched.martial_status && props.errors.martial_status ? (
-                <div className="error-container">{props.errors.martial_status.label}</div>
-            ) : null}
 
             <SelectInput
                 label="Height"
@@ -212,10 +201,9 @@ const ReligionInfo = ({ props }: { props: FormikProps<IUserPersonalData> }) => {
                 id="height"
                 options={Height}
                 value={props.values.height}
+                fieldTouched={props.touched.height?.label}
+                error={props.errors.height?.label}
             />
-            {props.touched.height && props.errors.height ? (
-                <div className="error-container">{props.errors.height.label}</div>
-            ) : null}
         </>
     );
 };

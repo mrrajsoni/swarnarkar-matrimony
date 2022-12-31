@@ -4,6 +4,9 @@ import './SignUpForm.scss';
 import { useState } from 'react';
 import Registration, { userData } from '../../../Services/API/SignUp';
 import Button from '../../Commons/Button/Button';
+import { User } from '@supabase/supabase-js';
+import { SIGN_UP } from '../../../Constants/UserMessages';
+import CustomInput from '../../Forms/Input/CustomInput';
 export interface FormIntialValues {
     email: string;
     password: string;
@@ -11,11 +14,11 @@ export interface FormIntialValues {
 }
 const SignupSchema = Yup.object().shape({
     mobile: Yup.string()
-        .required()
+        .required('Mobile number is required')
         .matches(/^[0-9]+$/, 'Must be only digits')
         .min(10, 'Must be exactly 10 digits')
         .max(10, 'Must be exactly 10 digits'),
-    email: Yup.string().email('Invalid email').required('Required'),
+    email: Yup.string().email('Invalid email').required('Email Address is required'),
     password: Yup.string()
         .required()
         .min(8, 'Must be 8 characters or more')
@@ -33,8 +36,17 @@ const SignUpForm = () => {
     );
 };
 const UserSignUpForm = () => {
+    const [emailSent, setEmailSent] = useState(false);
+    const [disableButton, setDisableButton] = useState(false);
+
     const handleUserData = (userdata: userData, email: string) => {
-        void Registration.initialSignUp(userdata, email);
+        void Registration.initialSignUp(userdata, email)
+            .then((value) => {
+                localStorage.setItem('userId', (value as User)?.id);
+                setEmailSent(true);
+                setDisableButton(false);
+            })
+            .catch((reason) => console.log(reason));
     };
 
     const [showPasswordField, setShowPasswordField] = useState(false);
@@ -42,7 +54,9 @@ const UserSignUpForm = () => {
     const changePasswordVisibility = () => {
         setShowPasswordField((prevState) => !prevState);
     };
-    return (
+    return emailSent ? (
+        <EmailSentMessage />
+    ) : (
         <Formik
             initialValues={{
                 email: '',
@@ -51,6 +65,7 @@ const UserSignUpForm = () => {
             }}
             onSubmit={(values) => {
                 handleUserData(values, values.email);
+                setDisableButton(true);
             }}
             validationSchema={SignupSchema}>
             {(props) => (
@@ -62,7 +77,12 @@ const UserSignUpForm = () => {
                         props={props}
                         onPasswordVisibilityChange={changePasswordVisibility}
                     />
-                    <Button name="Submit" type="submit" onClick={undefined} />
+                    <Button
+                        disabled={disableButton}
+                        name="Submit"
+                        type="submit"
+                        onClick={undefined}
+                    />
                 </Form>
             )}
         </Formik>
@@ -71,57 +91,47 @@ const UserSignUpForm = () => {
 
 const EmailInput = ({ props }: { props: FormikProps<FormIntialValues> }) => {
     return (
-        <div className="form-container">
-            <div>
-                <div>
-                    <label className="required" htmlFor="email">
-                        Email Address
-                    </label>
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        onChange={props.handleChange}
-                        value={props.values.email}
-                        onBlur={props.handleBlur}
-                    />
-                </div>
-
-                {props.touched.email && props.errors.email ? (
-                    <div className="error-container">{props.errors.email}</div>
-                ) : null}
-            </div>
-        </div>
+        <CustomInput
+            props={{
+                error: props.errors.email,
+                fieldTouched: props.touched.email,
+                id: 'email',
+                label: 'Email Address',
+                onBlur: props.handleBlur,
+                onChange: props.handleChange,
+                type: 'email',
+                value: props.values.email,
+                isRequired: true,
+            }}
+        />
     );
 };
 
 const MobileInput = ({ props }: { props: FormikProps<FormIntialValues> }) => {
     return (
         <div className="form-container">
-            <div>
-                <label className="required" htmlFor="mobile">
-                    Mobile
-                </label>
-                <div className="mobile-input-container flex">
-                    <input
-                        className="disabled-input"
-                        type="text"
-                        name="mobile-prefix"
-                        value="+91"
-                        disabled
-                    />
-                    <input
-                        className="mobile-input"
-                        id="mobile"
-                        name="mobile"
-                        type="tel"
-                        maxLength={10}
-                        minLength={10}
-                        onChange={props.handleChange}
-                        value={props.values.mobile}
-                        onBlur={props.handleBlur}
-                    />
-                </div>
+            <label className="required" htmlFor="mobile">
+                Mobile
+            </label>
+            <div className="mobile-input-container flex">
+                <input
+                    className="disabled-input"
+                    type="text"
+                    name="mobile-prefix"
+                    value="+91"
+                    disabled
+                />
+                <input
+                    className="mobile-input"
+                    id="mobile"
+                    name="mobile"
+                    type="tel"
+                    maxLength={10}
+                    minLength={10}
+                    onChange={props.handleChange}
+                    value={props.values.mobile}
+                    onBlur={props.handleBlur}
+                />
             </div>
             {props.errors || props.touched.mobile ? (
                 <div className="error-container">{props.errors.mobile}</div>
@@ -140,47 +150,32 @@ const PasswordInput = ({
     onPasswordVisibilityChange: () => void;
 }) => {
     return (
-        <div className="form-container">
-            <div>
-                <div>
-                    <label className="required" htmlFor="password">
-                        Password
-                    </label>
-                    <div className="relative">
-                        {showPasswordField ? (
-                            <input
-                                id="password"
-                                name="password"
-                                type="text"
-                                onChange={props.handleChange}
-                                value={props.values.password}
-                                onBlur={props.handleBlur}
-                            />
-                        ) : (
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                onChange={props.handleChange}
-                                value={props.values.password}
-                                onBlur={props.handleBlur}
-                            />
-                        )}
-                        <img
-                            onClick={onPasswordVisibilityChange}
-                            className="eye-icon absolute"
-                            src="https://res.cloudinary.com/rajsoni/image/upload/v1666615487/eye_ge3ubz.png"
-                            alt="show-password"
-                        />
-                    </div>
-                </div>
-
-                {props.errors.password && props.touched.password ? (
-                    <div className="error-container">{props.errors.password}</div>
-                ) : null}
-            </div>
+        <div className="relative">
+            <CustomInput
+                props={{
+                    error: props.errors.password,
+                    fieldTouched: props.touched.password,
+                    id: 'password',
+                    label: 'Password',
+                    onBlur: props.handleBlur,
+                    onChange: props.handleChange,
+                    type: showPasswordField ? 'text' : 'password',
+                    value: props.values.password,
+                    isRequired: true,
+                }}
+            />
+            <img
+                onClick={onPasswordVisibilityChange}
+                className="eye-icon absolute"
+                src="https://res.cloudinary.com/rajsoni/image/upload/v1666615487/eye_ge3ubz.png"
+                alt="show-password"
+            />
         </div>
     );
+};
+
+const EmailSentMessage = () => {
+    return <div>{SIGN_UP.CONFIRMATION_EMAIL_SENT}</div>;
 };
 
 export default SignUpForm;

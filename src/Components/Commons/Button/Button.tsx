@@ -3,12 +3,14 @@ export interface IButtonProps {
     onClick: () => void;
     theme?: string;
     type?: 'button' | 'submit' | 'reset';
+    disabled?: boolean;
+    className?: string;
 }
 const Button = (props: IButtonProps) => {
-    const { name, onClick, theme, type } = props;
+    const { name, onClick, theme, type, disabled, className } = props;
     return (
-        <div className={`button-wrapper ${theme}`}>
-            <button type={type ?? 'button'} onClick={onClick} title={name}>
+        <div className={`button-wrapper ${theme} ${className}`}>
+            <button disabled={disabled} type={type ?? 'button'} onClick={onClick} title={name}>
                 {name}
             </button>
         </div>

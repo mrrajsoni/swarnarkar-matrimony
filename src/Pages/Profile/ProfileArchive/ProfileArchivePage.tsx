@@ -4,7 +4,7 @@ import { useUser } from '../../../Context/UserContext';
 import { selectValue } from '../../../Types/GlobalTypes';
 import CommonUtils from '../../../Utils/Common Utils/CommonUtils';
 import FetchUser from '../../../Services/API/FetchUser';
-import { CDNURL } from '../../../Components/Users/Profile/UserImages';
+import { CDNURL, fallbackProfileImage } from '../../../Components/Users/Profile/UserImages';
 import './ProfileArchive.scss';
 import { Link } from 'react-router-dom';
 
@@ -36,38 +36,42 @@ const ProfileArchive = () => {
     const profileTerm =
         profileCount === 1
             ? `Showing ${profileCount} profile`
-            : `Showing all ${profileCount} profiles'`;
+            : `Showing all ${profileCount} profiles`;
     return (
         <Layout>
             <section className="profile-archive-page flex  py-10">
                 <div className="filter-container flex-auto archive-mini-label">Filters</div>
                 <div className="profiles-container">
                     <div className="archive-mini-label">{profileTerm}</div>
-                    <div className="flex flex-wrap gap-6">
-                        {profileData &&
-                            profileData.map((profile) => {
-                                const userImageArray = profile.user_images.split(',');
-                                const userImage = userImageArray[0];
+                    {user?.id && user?.registration_completed ? (
+                        <div className="flex flex-wrap gap-6">
+                            {profileData &&
+                                profileData.map((profile) => {
+                                    const userImageArray =
+                                        profile?.user_images && profile.user_images.split(',');
+                                    const userImage = userImageArray
+                                        ? `${CDNURL}/${profile.user_id}/${userImageArray[0]}`
+                                        : fallbackProfileImage;
 
-                                return (
-                                    <div className="profile-card" key={profile.user_id}>
-                                        <Link to={`/all-profiles/${profile.user_id}`}>
-                                            <ProfileCard
-                                                annual_income={profile.annual_income.label}
-                                                dob={profile.dob}
-                                                first_name={profile.first_name}
-                                                last_name={profile.last_name}
-                                                occupation={profile.occupation}
-                                                height={profile.height.label}
-                                                self_gotra={profile.self_gotra.label}
-                                                userImage={userImage}
-                                                userId={profile.user_id}
-                                            />
-                                        </Link>
-                                    </div>
-                                );
-                            })}
-                    </div>
+                                    return (
+                                        <div className="profile-card" key={profile.user_id}>
+                                            <Link to={`/all-profiles/${profile.user_id}`}>
+                                                <ProfileCard
+                                                    annual_income={profile.annual_income.label}
+                                                    dob={profile.dob}
+                                                    first_name={profile.first_name}
+                                                    last_name={profile.last_name}
+                                                    occupation={profile.occupation}
+                                                    height={profile.height.label}
+                                                    self_gotra={profile.self_gotra.label}
+                                                    userImage={userImage}
+                                                />
+                                            </Link>
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    ) : null}
                 </div>
             </section>
         </Layout>
@@ -83,7 +87,6 @@ const ProfileCard = ({
     annual_income,
     height,
     userImage,
-    userId,
 }: {
     first_name: string;
     last_name: string;
@@ -93,13 +96,12 @@ const ProfileCard = ({
     annual_income: string;
     height: string;
     userImage: string;
-    userId: string;
 }) => {
     const age = CommonUtils.getAge(dob);
     return (
         <div className="profile-card-container">
             <div className="image-container">
-                <img src={`${CDNURL}/${userId}/${userImage}`} alt={`${first_name} profile image`} />
+                <img src={userImage} alt={`${first_name} profile image`} />
             </div>
             <div className="profile-meta-container">
                 <div className="name-gotra-container flex gap-3">

@@ -1,3 +1,5 @@
+import InputErrors from '../InputErrors';
+
 interface ICustomInput {
     label: string;
     type: string;
@@ -14,11 +16,25 @@ interface ICustomInput {
             ? void
             : (e: string | React.ChangeEvent<any>) => void;
     };
+    fieldTouched: boolean;
+    error: string;
     minValue?: string;
     isRequired?: boolean;
 }
 const CustomInput = ({ props }: { props: ICustomInput }) => {
-    const { id, label, name, onBlur, onChange, type, value, minValue, isRequired } = props;
+    const {
+        id,
+        label,
+        name,
+        onBlur,
+        onChange,
+        type,
+        value,
+        minValue,
+        isRequired,
+        fieldTouched,
+        error,
+    } = props;
     return (
         <div className={`form-container`}>
             <div className={`input-container`}>
@@ -34,6 +50,7 @@ const CustomInput = ({ props }: { props: ICustomInput }) => {
                     onBlur={onBlur}
                     name={name}
                 />
+                <InputErrors error={error} fieldTouched={fieldTouched} />
             </div>
         </div>
     );

@@ -45,3 +45,19 @@
         }
     }
 }
+
+// Mobile styles
+
+@media (max-width: 767px) {
+    .profile-archive-page {
+        flex-direction: column;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        .profiles-container {
+            .profile-card {
+                width: 100%;
+            }
+        }
+    }
+}

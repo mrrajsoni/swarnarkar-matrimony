@@ -1,11 +1,14 @@
 import Select, { GroupBase, OptionsOrGroups, StylesConfig } from 'react-select';
 import { selectValue } from '../../../Types/GlobalTypes';
+import InputErrors from '../InputErrors';
 
 export interface ISelectInput {
     options: OptionsOrGroups<unknown, GroupBase<unknown>>;
     id: string;
     value: selectValue;
     label: string;
+    fieldTouched: boolean;
+    error: string;
     name?: string;
     onChange?: (data: selectValue) => void;
     defaultValue?: selectValue;
@@ -26,6 +29,8 @@ const SelectInput = (props: ISelectInput) => {
         disabled,
         label,
         isRequired,
+        fieldTouched,
+        error,
     } = props;
     const customStyles: StylesConfig = {
         option: (base, state) => ({
@@ -66,6 +71,7 @@ const SelectInput = (props: ISelectInput) => {
                     placeholder={placeHolder}
                     isDisabled={disabled}
                 />
+                <InputErrors error={error} fieldTouched={fieldTouched} />
             </div>
         </div>
     );

@@ -1,5 +1,3 @@
-import { setShowEditFormType } from '../Pages/Profile/EditProfilePage';
-
 export interface IUser {
     id?: string;
     aud?: string;
@@ -144,13 +142,17 @@ export interface IDesiredPartnerDetails {
 }
 
 export interface IProfileImageDetails {
-    showEditForm: boolean;
-    id?: string;
-    setShowEditForm: setShowEditFormType;
     user_images: string;
 }
 
 export interface IProfileDataArray {
     label: string;
     field: string;
+}
+
+export interface IStepCompleteStatus {
+    one: boolean;
+    two: boolean;
+    three: boolean;
+    four: boolean;
 }

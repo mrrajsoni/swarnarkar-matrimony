@@ -16,7 +16,25 @@ footer {
         }
 
         .copyright-section {
-            font-size: 16px;
+            font-size: var(--small-font);
+        }
+    }
+}
+
+// Mobile styles max width 767px
+
+@media (max-width: 767px) {
+    footer {
+        padding-top: 50px;
+        .footer-section {
+            padding: var(--mobilePadding);
+            > div:first-child {
+                flex-direction: column;
+
+                > div:first-child {
+                    margin-bottom: calc(var(--marginTop) / 2);
+                }
+            }
         }
     }
 }

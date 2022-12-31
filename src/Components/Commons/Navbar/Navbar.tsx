@@ -7,7 +7,16 @@ import { ReactComponent as DownArrow } from '../../../Assets/Svg/down-arrow.svg'
 import { Link } from 'react-router-dom';
 import CommonUtils from '../../../Utils/Common Utils/CommonUtils';
 import { MainMenu } from '../../../Constants/Menu';
+import useWindowDimensions from '../../../CustomHooks/getScreenSize';
+import MobileMenu from './MobileMenu/MobileMenu';
 
+interface IDesktopMenuProps {
+    profileMenuRef: React.MutableRefObject<HTMLUListElement>;
+    isProfileMenuOpen: boolean;
+    isMenuOpen: boolean;
+    setIsMenuOpen: () => void;
+    setProfileMenuOpen: () => void;
+}
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -24,23 +33,36 @@ const Navbar = () => {
     const handleProfileMenu = () => {
         setProfileMenuOpen((prevState) => !prevState);
     };
+    const { width } = useWindowDimensions();
+    const showMobileMenu = width < 767;
     return (
-        <nav className="flex justify-center">
-            <MainMenuLinks />
-            <HeaderSignUpLinks
-                profileMenuRef={profileMenuRef}
-                isProfileMenuOpen={isProfileMenuOpen}
-                isMenuOpen={isMenuOpen}
-                setIsMenuOpen={handleRegisterMenu}
-                setProfileMenuOpen={handleProfileMenu}
-            />
+        <nav className={`flex`}>
+            {!showMobileMenu ? (
+                <DesktopMenu
+                    props={{
+                        isMenuOpen: isMenuOpen,
+                        isProfileMenuOpen: isProfileMenuOpen,
+                        profileMenuRef: profileMenuRef,
+                        setIsMenuOpen: handleRegisterMenu,
+                        setProfileMenuOpen: handleProfileMenu,
+                    }}
+                />
+            ) : (
+                <MobileMenu
+                    isMenuOpen={isMenuOpen}
+                    isProfileMenuOpen={isProfileMenuOpen}
+                    setIsMenuOpen={handleRegisterMenu}
+                    setProfileMenuOpen={handleProfileMenu}
+                    profileMenuRef={profileMenuRef}
+                />
+            )}
         </nav>
     );
 };
 
-const MainMenuLinks = () => {
+export const MainMenuLinks = ({ isDesktopMenu }: { isDesktopMenu: boolean }) => {
     return (
-        <ul className="main-menu ml-auto flex gap-6">
+        <ul className={`${isDesktopMenu ? 'desktop-main-menu' : 'mobile-main-menu'} main-menu`}>
             {MainMenu.map((menu) => (
                 <li key={menu.link}>
                     <Link to={menu.link}>{menu.name}</Link>
@@ -50,7 +72,7 @@ const MainMenuLinks = () => {
     );
 };
 
-const HeaderSignUpLinks = ({
+export const HeaderSignUpLinks = ({
     isMenuOpen,
     setIsMenuOpen,
     isProfileMenuOpen,
@@ -67,7 +89,7 @@ const HeaderSignUpLinks = ({
 
     return (
         <ul className="register-menu relative ml-auto">
-            {user?.registration_completed ? (
+            {user ? (
                 <>
                     <li
                         className="profile-menu cursor-pointer flex items-center gap-1"
@@ -114,7 +136,25 @@ const HeaderSignUpLinks = ({
     );
 };
 
-const LoginPopupForm = () => {
+export const LoginPopupForm = () => {
     return <LoginForm />;
 };
+
+const DesktopMenu = ({ props }: { props: IDesktopMenuProps }) => {
+    const { isMenuOpen, isProfileMenuOpen, profileMenuRef, setIsMenuOpen, setProfileMenuOpen } =
+        props;
+    return (
+        <>
+            <MainMenuLinks isDesktopMenu={true} />
+            <HeaderSignUpLinks
+                profileMenuRef={profileMenuRef}
+                isProfileMenuOpen={isProfileMenuOpen}
+                isMenuOpen={isMenuOpen}
+                setIsMenuOpen={setIsMenuOpen}
+                setProfileMenuOpen={setProfileMenuOpen}
+            />
+        </>
+    );
+};
+
 export default Navbar;

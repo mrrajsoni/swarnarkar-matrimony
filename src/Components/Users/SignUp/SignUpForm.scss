@@ -1,8 +1,144 @@
+.registration-page-main {
+    padding: 0;
+}
 .register-page {
     background: var(--light-gray);
 
-    .registration-form {
-        max-width: 480px;
-        margin: 0 auto;
+    .register-section-inner {
+        .form-steps-section {
+            flex: 1 1 auto;
+            padding-top: 2.5rem;
+            padding-bottom: 2.5rem;
+            .steps-container {
+                padding: 0 15px;
+                > div {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+
+                    h4 {
+                        margin-bottom: 0;
+                        font-size: 22px;
+                    }
+                    .svg-wrapper {
+                        padding: 10px;
+                        border-radius: 50%;
+                    }
+                    &.active-step {
+                        .svg-wrapper {
+                            background-color: var(--primary-pink);
+                        }
+
+                        &.one-step {
+                            polyline {
+                                stroke: white;
+                            }
+                        }
+                    }
+
+                    &.completed {
+                        .svg-wrapper {
+                            position: relative;
+                            background-color: var(--primary-pink);
+                            path {
+                                stroke: white;
+                                fill: white;
+                            }
+                        }
+
+                        .svg-wrapper:after {
+                            content: '';
+                            height: 30px;
+                            width: 1px;
+                            background: var(--primary-pink);
+                            position: absolute;
+                            left: 50%;
+                            top: 40px;
+                        }
+                    }
+                }
+                svg {
+                    width: 24px;
+                }
+            }
+        }
+        .registration-form-section {
+            flex: 1 1 60%;
+            padding-top: 2.5rem;
+            padding-bottom: 2.5rem;
+            background-color: var(--white);
+            .registration-form {
+                max-width: 480px;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
+// Mobile styles
+
+@media (max-width: 767px) {
+    .register-page {
+        .register-section-inner {
+            flex-direction: column;
+            .form-steps-section {
+                .steps-container {
+                    gap: 1rem;
+                    > div {
+                        h4 {
+                            font-size: 20px;
+                        }
+                        .svg-wrapper {
+                            padding: 10px;
+                            border-radius: 50%;
+                        }
+                        &.active-step {
+                            .svg-wrapper {
+                                background-color: var(--primary-pink);
+                            }
+
+                            &.one-step {
+                                polyline {
+                                    stroke: white;
+                                }
+                            }
+                        }
+
+                        &.completed {
+                            .svg-wrapper {
+                                position: relative;
+                                background-color: var(--primary-pink);
+                                path {
+                                    stroke: white;
+                                    fill: white;
+                                }
+                            }
+
+                            .svg-wrapper:after {
+                                content: '';
+                                height: 30px;
+                                width: 1px;
+                                background: var(--primary-pink);
+                                position: absolute;
+                                left: 50%;
+                                top: 40px;
+                            }
+                        }
+                    }
+                    svg {
+                        width: 18px;
+                    }
+                }
+            }
+            .registration-form-section {
+                padding-left: 20px;
+                padding-right: 20px;
+
+                .registration-form {
+                    max-width: 100%;
+                    margin: 0 auto;
+                }
+            }
+        }
     }
 }

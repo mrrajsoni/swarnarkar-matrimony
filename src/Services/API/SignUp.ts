@@ -13,13 +13,19 @@ export interface userData {
 export default class Registration {
     static async initialSignUp(userData: userData, email: string) {
         try {
-            await supabase.auth.signUp({
+            const { data, error } = await supabase.auth.signUp({
                 email: email,
                 password: userData.password,
                 options: {
                     data: userData,
                 },
             });
+
+            if (!error) {
+                return data.user;
+            } else {
+                return error;
+            }
         } catch (error) {
             console.log(error);
         }

@@ -99,11 +99,11 @@ const BasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }) => {
                     onChange: props.handleChange,
                     type: 'text',
                     value: props.values.first_name,
+                    error: props.errors.first_name,
+                    fieldTouched: props.touched.first_name,
                 }}
             />
-            {props.touched.first_name && props.errors.first_name ? (
-                <div className="error-container">{props.errors.first_name}</div>
-            ) : null}
+
             <CustomInput
                 props={{
                     id: 'last_name',
@@ -112,11 +112,11 @@ const BasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }) => {
                     onChange: props.handleChange,
                     type: 'text',
                     value: props.values.last_name,
+                    error: props.errors.last_name,
+                    fieldTouched: props.touched.last_name,
                 }}
             />
-            {props.touched.last_name && props.errors.last_name ? (
-                <div className="error-container">{props.errors.last_name}</div>
-            ) : null}
+
             <CustomInput
                 props={{
                     id: 'dob',
@@ -125,11 +125,10 @@ const BasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }) => {
                     onChange: props.handleChange,
                     type: 'date',
                     value: props.values.dob,
+                    error: props.errors.dob,
+                    fieldTouched: props.touched.dob,
                 }}
             />
-            {props.touched.dob && props.errors.dob ? (
-                <div className="error-container">{props.errors.dob}</div>
-            ) : null}
 
             <SelectInput
                 isRequired={false}
@@ -142,11 +141,9 @@ const BasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }) => {
                 disabled
                 options={Gender}
                 value={props.values.gender}
+                error={''}
+                fieldTouched={false}
             />
-
-            {props.touched.gender && props.errors.gender ? (
-                <div className="error-container">{props.errors.gender.label}</div>
-            ) : null}
         </>
     );
 };
@@ -162,6 +159,8 @@ const AdditionalBasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }
                     onChange: props.handleChange,
                     type: 'text',
                     value: props.values.city,
+                    error: props.errors.city,
+                    fieldTouched: props.touched.city,
                 }}
             />
 
@@ -175,14 +174,10 @@ const AdditionalBasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }
                 id="state"
                 options={IndianState}
                 value={props.values.state}
+                error={props.errors.state?.label}
+                fieldTouched={props.touched.state?.label}
             />
 
-            {props.touched.height && props.errors.height ? (
-                <div className="error-container">{props.errors.height.label}</div>
-            ) : null}
-            {props.touched.city && props.errors.city ? (
-                <div className="error-container">{props.errors.city}</div>
-            ) : null}
             <SelectInput
                 isRequired={false}
                 label="Marital Status"
@@ -194,10 +189,10 @@ const AdditionalBasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }
                 id="martial_status"
                 options={Marital_Status}
                 value={props.values.martial_status}
+                error={''}
+                fieldTouched={false}
             />
-            {props.touched.martial_status && props.errors.martial_status ? (
-                <div className="error-container">{props.errors.martial_status.label}</div>
-            ) : null}
+
             <SelectInput
                 isRequired={false}
                 label="Gotra"
@@ -208,10 +203,9 @@ const AdditionalBasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }
                 id="self_gotra"
                 options={Gotra}
                 value={props.values.self_gotra}
+                error={props.errors.self_gotra?.label}
+                fieldTouched={props.touched.self_gotra?.label}
             />
-            {props.touched.self_gotra && props.errors.self_gotra ? (
-                <div className="error-container">{props.errors.self_gotra.label}</div>
-            ) : null}
 
             <SelectInput
                 isRequired={false}
@@ -223,11 +217,9 @@ const AdditionalBasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }
                 id="height"
                 options={Height}
                 value={props.values.height}
+                error={props.errors.height?.label}
+                fieldTouched={props.touched.height?.label}
             />
-
-            {props.touched.height && props.errors.height ? (
-                <div className="error-container">{props.errors.height.label}</div>
-            ) : null}
 
             <CustomTextarea
                 props={{
@@ -238,11 +230,10 @@ const AdditionalBasicInfo = ({ props }: { props: FormikProps<IPersonalDetails> }
                     value: props.values.profile_description,
                     isRequired: false,
                     name: 'profile_description',
+                    error: props.errors.profile_description,
+                    fieldTouched: props.touched.profile_description,
                 }}
             />
-            {props.touched.profile_description && props.errors.profile_description ? (
-                <div className="error-container">{props.errors.profile_description}</div>
-            ) : null}
         </>
     );
 };

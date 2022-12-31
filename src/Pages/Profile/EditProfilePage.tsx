@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Layout from '../../Components/Commons/Layout/Layout';
 import { useUser } from '../../Context/UserContext';
 import {
@@ -20,7 +20,9 @@ import ImageEditForm from '../../Components/Forms/Profile/EditProfileForms/Image
 import LifestyleEditForm from '../../Components/Forms/Profile/EditProfileForms/LifestyleEditForm';
 import PersonalInfoEditForm from '../../Components/Forms/Profile/EditProfileForms/PersonalInfoEditForm';
 import UserImages from '../../Components/Users/Profile/UserImages';
-import ProfileDetailsBox from '../../Components/Users/Profile/ProfileDetailsBox';
+import ProfileDetailsBox, {
+    ProfileDetailTitle,
+} from '../../Components/Users/Profile/ProfileDetailsBox';
 import ProfileUtils from '../../Utils/Profile/ProfileUtils';
 import { ReactComponent as DesiredPartnerIcon } from '../../Assets/Svg/desired-partner.svg';
 import { ReactComponent as LifestyleIcon } from '../../Assets/Svg/lifestyle-icon.svg';
@@ -28,6 +30,8 @@ import { ReactComponent as FamilyIcon } from '../../Assets/Svg/family-icon.svg';
 import { ReactComponent as EducationIcon } from '../../Assets/Svg/education-icon.svg';
 import { ReactComponent as ProfileIcon } from '../../Assets/Svg/profile-icon.svg';
 import { useGetUserProfile } from '../../Services/API/UserHooks/getCurrentUserProfile';
+import { debounce } from 'lodash';
+import { GridLoader } from 'react-spinners';
 
 const initialFormState = {
     showPersonalInfoForm: false,
@@ -56,7 +60,6 @@ export interface IFormVisibilityProps {
 
 const EditProfile = ({ userId }: { userId: string }) => {
     const [inEditMode, setInEditMode] = useState(initialFormState);
-    const [formUpdated, setFormUpdated] = useState(false);
 
     const [profileData, setProfileData] = useState<IUser>(null);
 
@@ -66,7 +69,17 @@ const EditProfile = ({ userId }: { userId: string }) => {
         if (data) {
             setProfileData(data);
         }
-    }, [data, isLoading, formUpdated]);
+    }, [isLoading]);
+
+    const handleRefetch = () => {
+        void refetch()
+            .then((value) => {
+                setProfileData(value.data);
+            })
+            .catch((reason) => console.log(reason));
+    };
+
+    const debouncedRefetch = useCallback(debounce(handleRefetch, 500), []);
 
     const personalDetails: IPersonalDetails = {
         first_name: profileData?.first_name,
@@ -131,33 +144,37 @@ const EditProfile = ({ userId }: { userId: string }) => {
         partner_occupation: profileData?.partner_occupation,
         partner_smoke: profileData?.partner_smoke,
         partner_drink: profileData?.partner_drink,
-        partner_marital_status: profileData?.own_house,
+        partner_marital_status: profileData?.martial_status,
         gender: profileData?.gender,
     };
 
     const profileImageProps: IProfileImageDetails = {
         user_images: profileData?.user_images,
-        setShowEditForm: setInEditMode,
-        showEditForm: inEditMode.showProfileImageForm,
-        id: profileData?.id,
     };
 
     const onSubmit = (success: boolean) => {
         if (success) {
             setInEditMode(initialFormState);
-            void refetch();
+            debouncedRefetch();
         }
     };
-    console.log(profileData);
+
     return (
         <Layout>
             {profileData?.user_id && !isLoading ? (
                 <section className="edit-profile-page py-10 ">
                     <div className="edit-profile-inner mx-auto">
-                        Login
                         <div className="two-cols flex gap-3">
                             <div className="details-col ">
-                                <ProfileImages props={profileImageProps} onSubmit={onSubmit} />
+                                <ProfileImages
+                                    props={profileImageProps}
+                                    onSubmit={onSubmit}
+                                    userId={userId}
+                                    formProps={{
+                                        setShowEditForm: setInEditMode,
+                                        showEditForm: inEditMode.showProfileImageForm,
+                                    }}
+                                />
                                 <PersonalDetails
                                     userId={userId}
                                     props={personalDetails}
@@ -217,7 +234,7 @@ const EditProfile = ({ userId }: { userId: string }) => {
                     </div>
                 </section>
             ) : (
-                <h2>I am loading man</h2>
+                <GridLoader color="#fe46ae" />
             )}
         </Layout>
     );
@@ -226,9 +243,13 @@ const EditProfile = ({ userId }: { userId: string }) => {
 const ProfileImages = ({
     props,
     onSubmit,
+    formProps,
+    userId,
 }: {
     props: IProfileImageDetails;
     onSubmit: (success: boolean) => void;
+    formProps: IFormVisibilityProps;
+    userId: string;
 }) => {
     const handleEditFormVisibility = (value: boolean) => {
         setShowEditForm((prevState) => {
@@ -238,23 +259,26 @@ const ProfileImages = ({
             };
         });
     };
-    const { user_images, setShowEditForm, showEditForm, id } = props;
+    const { setShowEditForm, showEditForm } = formProps;
+
+    const { user_images } = props;
     return (
         <div className="details-container">
             {!showEditForm ? (
                 <>
-                    {/* <ProfileDetailTitle
+                    <ProfileDetailTitle
                         title="Basic Details"
                         onClick={() => handleEditFormVisibility(true)}
-                    /> */}
-                    <UserImages userId={id} />
+                        showEditButton
+                    />
+                    <UserImages userId={userId} />
                 </>
             ) : (
                 <ImageEditForm
                     userImageNames={user_images}
                     onCancel={handleEditFormVisibility}
                     onSubmit={onSubmit}
-                    userId={id}
+                    userId={userId}
                 />
             )}
         </div>

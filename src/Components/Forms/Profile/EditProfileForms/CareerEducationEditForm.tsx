@@ -79,11 +79,10 @@ const EducationalInfo = ({ props }: { props: FormikProps<IEducationCareerDetails
                     onChange: props.handleChange,
                     type: 'text',
                     value: props.values.degree,
+                    error: props.errors.degree,
+                    fieldTouched: props.touched.degree,
                 }}
             />
-            {props.touched.degree && props.errors.degree ? (
-                <div className="error-container">{props.errors.degree}</div>
-            ) : null}
         </>
     );
 };
@@ -130,6 +129,8 @@ const CareerInfo = ({ props }: { props: FormikProps<IEducationCareerDetails> }) 
                     onChange: props.handleChange,
                     type: 'text',
                     value: props.values.organization_name,
+                    error: props.errors.organization_name,
+                    fieldTouched: props.touched.organization_name,
                 }}
             />
         </>

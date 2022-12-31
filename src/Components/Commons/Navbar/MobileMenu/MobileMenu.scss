@@ -1,0 +1,40 @@
+.mobile-menu-container {
+    .hamburger-react {
+        margin-left: auto;
+        z-index: 2;
+    }
+
+    .hamburger-react[aria-expanded='true'] {
+        right: 0;
+        width: 100%;
+        position: absolute !important;
+        top: 15px;
+    }
+
+    .mobile-menu-wrapper {
+        &.hide-menu {
+            transform: translateX(100%);
+            transition-delay: 300ms;
+            .mobile-main-menu {
+                transform: translateX(50%);
+            }
+        }
+        &.show-menu {
+            transform: translateX(0%);
+            .mobile-main-menu {
+                transform: translateX(0%);
+                transition-delay: 600ms;
+            }
+        }
+
+        position: fixed;
+        inset: 0;
+        transition: all 500ms ease;
+        background: var(--white);
+        padding: 30px;
+
+        .mobile-main-menu {
+            transition: all 400ms cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+    }
+}

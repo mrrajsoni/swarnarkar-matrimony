@@ -4,14 +4,27 @@ import { selectValue } from '../../Types/GlobalTypes';
 export default class FetchUser {
     static async getUserData(user_id: string) {
         try {
-            const { data, error, status } = await supabase
+            const { data, error } = await supabase
+                .from('user_registration')
+                .select('registration_completed, gender')
+                .eq('user_id', user_id)
+                .single();
+
+            return { data, error };
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async getFullUserData(user_id: string) {
+        try {
+            const { data, error } = await supabase
                 .from('user_registration')
                 .select('*')
-                .eq('user_id', user_id);
-            if (status === 200) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                return data;
-            }
+                .eq('user_id', user_id)
+                .single();
+
+            return { data, error };
         } catch (error) {
             console.log(error);
         }

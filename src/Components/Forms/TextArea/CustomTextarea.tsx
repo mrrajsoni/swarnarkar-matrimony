@@ -1,3 +1,5 @@
+import InputErrors from '../InputErrors';
+
 interface ICustomTextarea {
     label: string;
     id: string;
@@ -12,6 +14,8 @@ interface ICustomTextarea {
             ? void
             : (e: string | React.ChangeEvent<any>) => void;
     };
+    fieldTouched: boolean;
+    error: string;
     isRequired?: boolean;
     name?: string;
     subLabel?: string;
@@ -29,6 +33,8 @@ const CustomTextarea = ({ props }: { props: ICustomTextarea }) => {
         name,
         subLabel,
         className,
+        fieldTouched,
+        error,
         placeHolder,
     } = props;
     return (
@@ -47,6 +53,7 @@ const CustomTextarea = ({ props }: { props: ICustomTextarea }) => {
                     name={name}
                     placeholder={placeHolder}
                 />
+                <InputErrors error={error} fieldTouched={fieldTouched} />
             </div>
         </div>
     );

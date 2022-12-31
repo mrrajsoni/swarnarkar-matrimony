@@ -40,9 +40,16 @@ const validationSchema = Yup.object().shape({
         value: Yup.string(),
     }),
 });
-const EducationalForm = ({ user }: { user: IUser }) => {
+const EducationalForm = ({
+    user,
+    onFormUpdate,
+}: {
+    user: IUser;
+    onFormUpdate: (value: boolean) => void;
+}) => {
     const updateEducationalInformation = (values: IEducationalFormValues) => {
         void Registration.updateEducationalInfo(values, user.id);
+        onFormUpdate(true);
     };
     return (
         <section className="form-section">
@@ -74,10 +81,10 @@ const LivingInfo = ({ props }: { props: FormikProps<IEducationalFormValues> }) =
                 options={IndianState}
                 id="state"
                 value={props.values.state}
+                fieldTouched={props.touched.state?.label}
+                error={props.errors.state?.label}
             />
-            {props.touched.state && props.errors.state ? (
-                <div className="error-container">{props.errors.state.label}</div>
-            ) : null}
+
             <div className="form-container">
                 <div>
                     <label className="required" htmlFor="city">
@@ -125,10 +132,9 @@ const EducationInfo = ({ props }: { props: FormikProps<IEducationalFormValues> }
                 options={EmployedSectors}
                 id="employed_in"
                 value={props.values.employed_in}
+                fieldTouched={props.touched.employed_in?.label}
+                error={props.errors.employed_in?.label}
             />
-            {props.touched.employed_in && props.errors.employed_in ? (
-                <div className="error-container">{props.errors.employed_in.label}</div>
-            ) : null}
 
             <div className="form-container">
                 <label className="required" htmlFor="occupation">
@@ -153,10 +159,9 @@ const EducationInfo = ({ props }: { props: FormikProps<IEducationalFormValues> }
                 value={props.values.annual_income}
                 label={'Annual Income'}
                 isRequired
+                fieldTouched={props.touched.annual_income?.label}
+                error={props.errors.annual_income?.label}
             />
-            {props.touched.annual_income && props.errors.annual_income ? (
-                <div className="error-container">{props.errors.annual_income.label}</div>
-            ) : null}
         </>
     );
 };
