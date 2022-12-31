@@ -141,7 +141,7 @@ const ImageUploadGuidelines = () => {
     return (
         <div className="guidelines-container">
             <h3>Important guidelines while uploading images.</h3>
-            <ol className="guidelines-container">
+            <ol className="guidelines-container-inner">
                 {GUIDELINES.map((points) => (
                     <li key={points.label}>{points.label}</li>
                 ))}

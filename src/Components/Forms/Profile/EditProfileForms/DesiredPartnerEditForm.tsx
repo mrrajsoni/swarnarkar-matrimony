@@ -134,22 +134,22 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 gender={props.values.gender}
                 partner_age={props.values.partner_age}
                 setFieldValue={props.setFieldValue}
-                error={props.errors.gender.label}
-                fieldTouched={props.touched.gender.label}
+                error={props.errors.gender?.label}
+                fieldTouched={props.touched.gender?.label}
             />
 
             <PartnerHeightField
                 partner_height={props.values.partner_height}
                 setFieldValue={props.setFieldValue}
-                error={props.errors.partner_height.from.label}
-                fieldTouched={props.touched.partner_height.from.label}
+                error={props.errors.partner_height?.from?.label}
+                fieldTouched={props.touched.partner_height?.from?.label}
             />
 
             <PartnerIncomeField
                 partner_income={props.values.partner_income}
                 setFieldValue={props.setFieldValue}
-                error={props.errors.gender.label}
-                fieldTouched={props.touched.gender.label}
+                error={props.errors.partner_income?.from.label}
+                fieldTouched={props.touched.partner_income?.from?.label}
             />
 
             <SelectInput
@@ -162,8 +162,8 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 id="partner_occupation"
                 options={EmployedSectors}
                 value={props.values.partner_occupation}
-                error={props.errors.partner_occupation.label}
-                fieldTouched={props.touched.partner_occupation.label}
+                error={props.errors.partner_occupation?.label}
+                fieldTouched={props.touched.partner_occupation?.label}
             />
 
             <SelectInput
@@ -176,8 +176,8 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 id="partner_smoke"
                 options={DrinkingSmoking}
                 value={props.values.partner_smoke}
-                error={props.errors.partner_smoke.label}
-                fieldTouched={props.touched.partner_smoke.label}
+                error={props.errors.partner_smoke?.label}
+                fieldTouched={props.touched.partner_smoke?.label}
             />
 
             <SelectInput
@@ -190,8 +190,8 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 id="partner_drink"
                 options={DrinkingSmoking}
                 value={props.values.partner_drink}
-                error={props.errors.partner_drink.label}
-                fieldTouched={props.touched.partner_drink.label}
+                error={props.errors.partner_drink?.label}
+                fieldTouched={props.touched.partner_drink?.label}
             />
             <SelectInput
                 isRequired={false}
@@ -203,8 +203,8 @@ const PartnerInfo = ({ props }: { props: FormikProps<IDesiredPartnerDetails> }) 
                 id="partner_marital_status"
                 options={Marital_Status}
                 value={props.values.partner_marital_status}
-                error={props.errors.partner_marital_status.label}
-                fieldTouched={props.touched.partner_marital_status.label}
+                error={props.errors.partner_marital_status?.label}
+                fieldTouched={props.touched.partner_marital_status?.label}
             />
         </>
     );

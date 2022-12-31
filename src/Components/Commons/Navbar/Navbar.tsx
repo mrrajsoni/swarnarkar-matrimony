@@ -48,7 +48,13 @@ const Navbar = () => {
                     }}
                 />
             ) : (
-                <MobileMenu />
+                <MobileMenu
+                    isMenuOpen={isMenuOpen}
+                    isProfileMenuOpen={isProfileMenuOpen}
+                    setIsMenuOpen={handleRegisterMenu}
+                    setProfileMenuOpen={handleProfileMenu}
+                    profileMenuRef={profileMenuRef}
+                />
             )}
         </nav>
     );
@@ -56,7 +62,7 @@ const Navbar = () => {
 
 export const MainMenuLinks = ({ isDesktopMenu }: { isDesktopMenu: boolean }) => {
     return (
-        <ul className={`${isDesktopMenu ? 'desktop-main-menu' : 'mobile-main-menu'} main-menu `}>
+        <ul className={`${isDesktopMenu ? 'desktop-main-menu' : 'mobile-main-menu'} main-menu`}>
             {MainMenu.map((menu) => (
                 <li key={menu.link}>
                     <Link to={menu.link}>{menu.name}</Link>
@@ -66,7 +72,7 @@ export const MainMenuLinks = ({ isDesktopMenu }: { isDesktopMenu: boolean }) => 
     );
 };
 
-const HeaderSignUpLinks = ({
+export const HeaderSignUpLinks = ({
     isMenuOpen,
     setIsMenuOpen,
     isProfileMenuOpen,
@@ -130,7 +136,7 @@ const HeaderSignUpLinks = ({
     );
 };
 
-const LoginPopupForm = () => {
+export const LoginPopupForm = () => {
     return <LoginForm />;
 };
 

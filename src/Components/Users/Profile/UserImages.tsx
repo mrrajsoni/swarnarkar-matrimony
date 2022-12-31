@@ -17,6 +17,15 @@ const settings = {
     speed: 500,
     slidesToShow: 3,
     lazyLoad: true,
+    adaptiveHeight: true,
+    responsive: [
+        {
+            breakpoint: 767,
+            settings: {
+                slidesToShow: 1,
+            },
+        },
+    ],
 };
 
 const UserImages = ({ userId, showDelete }: { userId: string; showDelete?: boolean }) => {

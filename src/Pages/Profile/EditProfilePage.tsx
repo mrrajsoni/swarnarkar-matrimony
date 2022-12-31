@@ -144,7 +144,7 @@ const EditProfile = ({ userId }: { userId: string }) => {
         partner_occupation: profileData?.partner_occupation,
         partner_smoke: profileData?.partner_smoke,
         partner_drink: profileData?.partner_drink,
-        partner_marital_status: profileData?.own_house,
+        partner_marital_status: profileData?.martial_status,
         gender: profileData?.gender,
     };
 
@@ -164,7 +164,6 @@ const EditProfile = ({ userId }: { userId: string }) => {
             {profileData?.user_id && !isLoading ? (
                 <section className="edit-profile-page py-10 ">
                     <div className="edit-profile-inner mx-auto">
-                        Login
                         <div className="two-cols flex gap-3">
                             <div className="details-col ">
                                 <ProfileImages

@@ -153,6 +153,9 @@
                 }
             }
             .upload-images-container {
+                input {
+                    width: 100%;
+                }
                 > img {
                     height: 300px;
                     width: 300px;
@@ -193,6 +196,22 @@
                     ul {
                         padding-left: 0;
                     }
+                }
+            }
+        }
+        .edit-profile-inner,
+        .profile-page-inner {
+            .edit-form-section {
+                .registration-form {
+                    .guidelines-container-inner {
+                        padding: var(--mobilePadding);
+                    }
+                }
+            }
+
+            .user-image-container {
+                img {
+                    width: 100%;
                 }
             }
         }

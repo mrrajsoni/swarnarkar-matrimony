@@ -261,3 +261,18 @@ label {
 }
 
 // Mobile Syles
+
+@media (max-width: 767px) {
+    .form-section,
+    .edit-form-section {
+        .form-container {
+            input {
+                width: 100% !important;
+            }
+
+            .disabled-input {
+                width: 60px !important;
+            }
+        }
+    }
+}
