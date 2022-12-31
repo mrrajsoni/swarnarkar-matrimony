@@ -137,10 +137,8 @@ const ProfilePage = () => {
 const ProfileImages = ({ userId }: { userId: string }) => {
     return (
         <div className="details-container">
-            <>
-                <ProfileDetailTitle title="Photos" />
-                <UserImages userId={userId} />
-            </>
+            <ProfileDetailTitle title="Photos" />
+            <UserImages userId={userId} />
         </div>
     );
 };

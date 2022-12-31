@@ -11,7 +11,7 @@ import useWindowDimensions from '../../../CustomHooks/getScreenSize';
 import MobileMenu from './MobileMenu/MobileMenu';
 
 interface IDesktopMenuProps {
-    profileMenuRef: React.MutableRefObject<HTMLUListElement>;
+    profileMenuRef: React.MutableRefObject<HTMLDivElement>;
     isProfileMenuOpen: boolean;
     isMenuOpen: boolean;
     setIsMenuOpen: () => void;
@@ -20,7 +20,7 @@ interface IDesktopMenuProps {
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
-    const profileMenuRef = useRef<HTMLUListElement>(null);
+    const profileMenuRef = useRef<HTMLDivElement>(null);
 
     CommonUtils.useOutsideClick([profileMenuRef], () => {
         setProfileMenuOpen(false);
@@ -83,10 +83,9 @@ export const HeaderSignUpLinks = ({
     setIsMenuOpen: () => void;
     isProfileMenuOpen: boolean;
     setProfileMenuOpen: () => void;
-    profileMenuRef: React.MutableRefObject<HTMLUListElement>;
+    profileMenuRef: React.MutableRefObject<HTMLDivElement>;
 }) => {
     const { user, userLogout } = useUser();
-
     return (
         <ul className="register-menu relative ml-auto">
             {user ? (
@@ -98,7 +97,7 @@ export const HeaderSignUpLinks = ({
                         <DownArrow />
                     </li>
                     {isProfileMenuOpen && (
-                        <div className="profile-menu-dropdown absolute">
+                        <div ref={profileMenuRef} className="profile-menu-dropdown absolute">
                             <ul>
                                 <li>
                                     <Link to="/edit-profile">Edit Profile</Link>
