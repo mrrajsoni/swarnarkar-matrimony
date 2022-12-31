@@ -4,6 +4,13 @@
         z-index: 2;
     }
 
+    .hamburger-react[aria-expanded='true'] {
+        right: 0;
+        width: 100%;
+        position: absolute !important;
+        top: 15px;
+    }
+
     .mobile-menu-wrapper {
         &.hide-menu {
             transform: translateX(100%);

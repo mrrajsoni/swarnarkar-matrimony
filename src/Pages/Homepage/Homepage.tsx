@@ -8,6 +8,8 @@ import { ReactComponent as ConnectIcon } from '../../Assets/Svg/call.svg';
 import './Homepage.scss';
 import Title from '../../Components/Commons/Title/Title';
 
+const RingImageURL =
+    'https://res.cloudinary.com/rajsoni/image/upload/v1672400128/man_putting_a_ring_on_woman_index_finger_bknn58.webp';
 const uspList = [
     {
         icon: 'https://res.cloudinary.com/rajsoni/image/upload/v1665826577/security_1_jkwr4u.png',
@@ -63,12 +65,16 @@ const HomePage = () => {
 
 const HomeHero = ({ onRegisterClick }: { onRegisterClick: () => void }) => {
     return (
-        <section className="flex items-center fluid-container homepage-hero-section">
-            <div className="flex-1">
+        <section className="flex items-center fluid-container homepage-hero-section gap-5">
+            <div className="flex-1 ">
                 <h1>A dedicated matrimonial site for Maidh Kshatriya Swarnakar Community</h1>
-                <Button name="Register Now" onClick={onRegisterClick} />
+                <Button
+                    className="hero-register-button"
+                    name="Register Now"
+                    onClick={onRegisterClick}
+                />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 hero-image-container">
                 <img
                     src="https://res.cloudinary.com/rajsoni/image/upload/v1665810856/Sliders/swarnakar_matrimony_hero_image_nubwll.webp"
                     alt="swarnakar matrimony hero image"
@@ -81,7 +87,7 @@ const HomeHero = ({ onRegisterClick }: { onRegisterClick: () => void }) => {
 const USP = () => {
     return (
         <section className="usp-section py-24">
-            <div className="fluid-container flex justify-between">
+            <div className="fluid-container flex-wrap gap-5 flex justify-between">
                 {uspList.map((usp) => (
                     <div key={usp.alt} className="flex items-center gap-5">
                         <img className="usp-icon" src={usp.icon} alt={usp.alt} />
@@ -97,19 +103,27 @@ const AboutPlatform = () => {
     return (
         <section className="about-platform-section text-center py-24 bg-white">
             <div>
-                <Title
-                    props={{
-                        title: 'Welcome to Swarnkar Matrimonial',
-                        showUnderline: true,
-                    }}
+                <div className="welcome-container">
+                    <Title
+                        props={{
+                            title: 'Welcome to Swarnkar Matrimonial',
+                            showUnderline: true,
+                        }}
+                    />
+                    <p>
+                        This platform provides a stage for all the young individuals, divorced, or
+                        widows of our Maidh Kshatriya Swarnkar community to create their marriage
+                        profile and view all the other prospects under a single platform. This
+                        doesn`t invovle any sort of fees or charges. It`s my small token of
+                        contribution for the people of the community.
+                    </p>
+                </div>
+
+                <img
+                    className="ring-image"
+                    src={RingImageURL}
+                    alt="man putting a ring on woman index finger"
                 />
-                <p>
-                    This platform provides a stage for all the young individuals, divorced, or
-                    widows of our Maidh Kshatriya Swarnkar community to create their marriage
-                    profile and view all the other prospects under a single platform. This doesn`t
-                    invovle any sort of fees or charges. It`s my small token of contribution for the
-                    people of the community.
-                </p>
 
                 <div className="purpose-platform-container">
                     <Title

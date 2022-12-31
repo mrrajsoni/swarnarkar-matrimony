@@ -1,11 +1,11 @@
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, className }: { children: JSX.Element; className?: string }) => {
     return (
         <>
             <Header />
-            <main>{children}</main>
+            <main className={className}> {children}</main>
             <Footer />
         </>
     );

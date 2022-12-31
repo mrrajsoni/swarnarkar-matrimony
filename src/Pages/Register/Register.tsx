@@ -13,7 +13,6 @@ import { ReactComponent as Tick } from '../../Assets/Svg/tick.svg';
 import classNames from 'classnames';
 import { IStepCompleteStatus, IUser } from '../../Types/GlobalTypes';
 import FetchUser from '../../Services/API/FetchUser';
-import { Link } from 'react-router-dom';
 
 const IntialStepStatus = {
     one: false,
@@ -90,7 +89,7 @@ const Register = ({ userId }: { userId: string }) => {
         }
     }, [currentStep, userDetails]);
     return (
-        <Layout>
+        <Layout className="registration-page-main">
             <section className="register-page">
                 <div className="register-section-inner flex">
                     <div className="form-steps-section">

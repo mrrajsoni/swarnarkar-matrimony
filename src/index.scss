@@ -47,19 +47,19 @@ h6 {
 }
 
 h1 {
-    font-size: 52px;
+    font-size: clamp(1.8rem, 2.5vw + 1.3rem, 3.3rem);
 }
 
 h2 {
-    font-size: 40px;
+    font-size: clamp(1.5rem, 2.5vw + 1rem, 3rem);
 }
 
 h3 {
-    font-size: 32px;
+    font-size: clamp(1.2rem, 2.5vw + 1.1rem, 2.7rem);
 }
 
 h4 {
-    font-size: 28px;
+    font-size: clamp(1rem, 2.5vw + 1rem, 2.4rem);
 }
 
 main {
@@ -261,7 +261,3 @@ label {
 }
 
 // Mobile Syles
-
-main {
-    padding: 15px;
-}
