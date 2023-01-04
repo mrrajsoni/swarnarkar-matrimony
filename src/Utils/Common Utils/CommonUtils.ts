@@ -17,7 +17,6 @@ export default class CommonUtils {
                     (ref) => ref.current && !ref.current.contains(event.target),
                 );
                 if (outsideRefs) {
-                    // event.stopPropagation();
                     event.stopImmediatePropagation();
                     event.preventDefault();
                     onOutsideClick(event);
@@ -49,7 +48,15 @@ export default class CommonUtils {
 
     public static getFormattedDob(dateString: string) {
         const birthDate = new Date(dateString).toDateString().split(' ');
-        const [weekDay, month, date, year] = birthDate;
+        const [, month, date, year] = birthDate;
         return `${date} ${month}, ${year}`;
+    }
+
+    public static getPagination(page: number, size: number) {
+        const limit = size ? +size : 3;
+        const from = page ? page * limit : 0;
+        const to = page ? from + size : size;
+
+        return { from, to };
     }
 }

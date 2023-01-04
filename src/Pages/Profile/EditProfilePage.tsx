@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import Layout from '../../Components/Commons/Layout/Layout';
-import { useUser } from '../../Context/UserContext';
 import {
     IContactDetails,
     IDesiredPartnerDetails,
