@@ -1,0 +1,15 @@
+.filter-container {
+    .filters-wrapper {
+        > div {
+            // Direct filter containers with just div
+            margin-bottom: 20px;
+
+            label {
+                cursor: pointer;
+            }
+        }
+        h6 {
+            margin-bottom: 10px;
+        }
+    }
+}

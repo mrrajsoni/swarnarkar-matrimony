@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Layout from '../../../Components/Commons/Layout/Layout';
 import { useUser } from '../../../Context/UserContext';
 import { selectValue } from '../../../Types/GlobalTypes';
@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import Button from '../../../Components/Commons/Button/Button';
 import LoadingSpinner from '../../../Components/Commons/LoadingSpinner/LoadingSpinner';
 import { debounce } from 'lodash';
+import Filters from '../../../Components/Commons/Filters/Filters';
 
 export interface IProfileArchiveData {
     first_name: string;
@@ -22,20 +23,37 @@ export interface IProfileArchiveData {
     occupation: string;
     user_id: string;
     user_images: string;
+    employed_in: selectValue;
+    manglik: boolean;
+    martial_status: selectValue;
 }
+
+interface IProfileData {
+    data: IProfileArchiveData[];
+    filters: Set<unknown>;
+}
+
 const ProfileArchive = () => {
     const { user } = useUser();
     const [currentPage, setCurrentPage] = useState(0);
     const [profileData, setProfileData] = useState<IProfileArchiveData[]>(null);
+    const [filteredProfileData, setFilteredProfileData] = useState<IProfileData>({
+        data: null,
+        filters: new Set(),
+    });
     const [profileCount, setProfileCount] = useState(0);
 
     const fetchProfileArchiveData = (page: number) => {
         return FetchUser.getArchivePageProfileData(user?.id, user?.gender, page).then(
             (response) => {
                 setProfileData(response.data);
+                setFilteredProfileData((prevState) => {
+                    return {
+                        ...prevState,
+                        data: response.data,
+                    };
+                });
                 setProfileCount(response.data.length);
-                console.log(response.count);
-
                 return response.data;
             },
         );
@@ -43,19 +61,28 @@ const ProfileArchive = () => {
     const handleRefetch = () => {
         void refetch()
             .then((value) => {
-                setProfileData(value.data);
+                setProfileData((prevState) => {
+                    return {
+                        ...prevState,
+                        data: value.data,
+                    };
+                });
             })
             .catch((reason) => console.log(reason));
     };
 
     const debouncedRefetch = useCallback(debounce(handleRefetch, 500), []);
 
-    const handlePrevPageState = () => {
-        setCurrentPage((prevState) => Math.max(prevState - 1, 0));
-        debouncedRefetch();
-    };
-    const handleNextPageState = () => {
-        setCurrentPage((prevState) => prevState + 1);
+    const handleFilterChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFilteredProfileData((previousState) => {
+                return updateFilters(profileData, previousState, event, setProfileCount);
+            });
+        },
+        [profileData, setFilteredProfileData],
+    );
+    const handlePaginationState = (isPrevButton: boolean) => {
+        setCurrentPage((prevState) => (isPrevButton ? Math.max(prevState - 1, 0) : prevState + 1));
         debouncedRefetch();
     };
 
@@ -65,6 +92,7 @@ const ProfileArchive = () => {
         {
             keepPreviousData: true,
             enabled: !!user?.gender && !!user?.id,
+            cacheTime: 120000,
         },
     );
 
@@ -77,14 +105,17 @@ const ProfileArchive = () => {
     return (
         <Layout>
             <section className="profile-archive-page flex  py-10">
-                <div className="filter-container flex-auto archive-mini-label">Filters</div>
+                <div className="filter-container flex-auto">
+                    <h5 className="archive-mini-label">Filters</h5>
+                    <Filters onFilterChange={handleFilterChange} />
+                </div>
                 <div className="profiles-container">
-                    <div className="archive-mini-label">{profileTerm}</div>
+                    <h5 className="archive-mini-label">{profileTerm}</h5>
                     {user?.id && !isLoading ? (
                         <>
                             <div className="flex flex-wrap gap-6">
-                                {profileData &&
-                                    profileData.map((profile) => {
+                                {filteredProfileData.data &&
+                                    filteredProfileData.data.map((profile) => {
                                         const userImageArray =
                                             profile?.user_images && profile.user_images.split(',');
                                         const userImage = userImageArray
@@ -111,8 +142,7 @@ const ProfileArchive = () => {
                             </div>
                             <PaginationButtons
                                 disabledPrevButton={disabledPrevButton}
-                                handlePrevPageState={handlePrevPageState}
-                                handleNextPageState={handleNextPageState}
+                                handlePaginationState={handlePaginationState}
                             />
                         </>
                     ) : (
@@ -171,19 +201,50 @@ const ProfileCard = ({
 
 const PaginationButtons = ({
     disabledPrevButton,
-    handlePrevPageState,
-    handleNextPageState,
+    handlePaginationState,
 }: {
     disabledPrevButton: boolean;
-    handlePrevPageState: () => void;
-    handleNextPageState: () => void;
+    handlePaginationState: (value: boolean) => void;
 }) => {
     return (
         <div>
-            <Button name="Previous" onClick={handlePrevPageState} disabled={disabledPrevButton} />
-            <Button name="Next" onClick={handleNextPageState} />
+            <Button
+                name="Previous"
+                onClick={() => handlePaginationState(true)}
+                disabled={disabledPrevButton}
+            />
+            <Button name="Next" onClick={() => handlePaginationState(false)} />
         </div>
     );
 };
+
+function updateFilters(
+    profileData: IProfileArchiveData[],
+    state: IProfileData,
+    event: React.ChangeEvent<HTMLInputElement>,
+    setProfileCount: React.Dispatch<React.SetStateAction<number>>,
+) {
+    const filters = new Set(state.filters);
+    let products = profileData;
+
+    if (event.target.checked) {
+        filters.add(event.target.value);
+    } else {
+        filters.delete(event.target.value);
+    }
+
+    if (filters.size && products?.length > 0) {
+        products = products.filter((product) => {
+            return (
+                filters.has(product.employed_in.value) || filters.has(product.martial_status.value)
+            );
+        });
+    }
+    setProfileCount(products.length);
+    return {
+        filters,
+        data: products,
+    };
+}
 
 export default ProfileArchive;

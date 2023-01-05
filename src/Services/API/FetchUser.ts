@@ -37,7 +37,7 @@ export default class FetchUser {
             const { data, error, count } = await supabase
                 .from('user_registration')
                 .select(
-                    `first_name, last_name, dob, self_gotra, occupation, annual_income, height, user_id, user_images`,
+                    `first_name, last_name, dob, self_gotra, occupation, annual_income, height, user_id, user_images, employed_in, manglik, martial_status`,
                 )
                 .not('user_id', 'eq', user_id)
                 .not('gender->>label', 'eq', gender.label)
