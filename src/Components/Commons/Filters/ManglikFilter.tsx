@@ -1,5 +1,6 @@
 import { IChildFiltersProps } from '../../../Types/GlobalTypes';
 import MultiCheckbox from '../../Forms/MultiCheckbox/MultiCheckbox';
+import Accordion from '../Accordion/Accordion';
 
 const ManglikCheckboxOptions = [
     {
@@ -13,14 +14,16 @@ const ManglikCheckboxOptions = [
 ];
 const ManglikFilter = ({ onFilterChange }: IChildFiltersProps) => {
     return (
-        <div>
-            <h6>Manglik</h6>
-            <MultiCheckbox
-                name="occupation-filter"
-                options={ManglikCheckboxOptions}
-                onChange={onFilterChange}
-            />
-        </div>
+        <Accordion
+            tabTitle={'Manglik'}
+            content={
+                <MultiCheckbox
+                    name="occupation-filter"
+                    options={ManglikCheckboxOptions}
+                    onChange={onFilterChange}
+                />
+            }
+        />
     );
 };
 

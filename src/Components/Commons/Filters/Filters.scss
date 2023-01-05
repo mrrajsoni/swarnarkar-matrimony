@@ -2,7 +2,7 @@
     .filters-wrapper {
         > div {
             // Direct filter containers with just div
-            margin-bottom: 20px;
+            margin-bottom: 10px;
 
             label {
                 cursor: pointer;
@@ -10,6 +10,24 @@
         }
         h6 {
             margin-bottom: 10px;
+        }
+
+        .accordion-container {
+            max-width: 275px;
+            overflow: hidden;
+            .accordion-title {
+                padding: 10px 21px;
+            }
+        }
+    }
+}
+
+// Mobile Styles
+
+.filter-container {
+    .filters-wrapper {
+        .accordion-container {
+            max-width: 100%;
         }
     }
 }
