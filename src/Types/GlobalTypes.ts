@@ -156,3 +156,7 @@ export interface IStepCompleteStatus {
     three: boolean;
     four: boolean;
 }
+
+export interface IChildFiltersProps {
+    onFilterChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}

@@ -102,15 +102,19 @@ input,
 textarea {
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    padding: 10px;
+
     margin-bottom: 5px;
     transition: var(--transition);
 }
 
-input:focus {
+input:not(input[type='range']):not(input[type='checkbox']):focus {
     border: 1px solid var(--border-color);
     outline: none;
     box-shadow: var(--box-shadow);
+}
+
+input:not(input[type='range']):not(input[type='checkbox']) {
+    padding: 10px;
 }
 
 label {
