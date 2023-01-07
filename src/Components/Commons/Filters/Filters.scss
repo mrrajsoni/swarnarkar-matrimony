@@ -1,9 +1,6 @@
 .filter-container {
     .filters-wrapper {
         > div {
-            // Direct filter containers with just div
-            margin-bottom: 10px;
-
             label {
                 cursor: pointer;
             }
@@ -13,7 +10,7 @@
         }
 
         .accordion-container {
-            max-width: 275px;
+            max-width: 250px;
             overflow: hidden;
             .accordion-title {
                 padding: 10px 21px;
@@ -24,10 +21,12 @@
 
 // Mobile Styles
 
-.filter-container {
-    .filters-wrapper {
-        .accordion-container {
-            max-width: 100%;
+@media (max-width: 767px) {
+    .filter-container {
+        .filters-wrapper {
+            .accordion-container {
+                max-width: 100%;
+            }
         }
     }
 }
