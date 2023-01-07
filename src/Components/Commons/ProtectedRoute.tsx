@@ -7,7 +7,7 @@ const ProtectedRoute = ({
 }: {
     isLoggedin: boolean;
     children: JSX.Element;
-    isRegistrationComplete: boolean;
+    isRegistrationComplete?: boolean;
 }) => {
     if (!isLoggedin) return <Navigate to="/" />;
     else if (!isRegistrationComplete) return <Navigate to="/register" />;

@@ -3,10 +3,10 @@ export const MainMenu = [
         name: 'Partner Search',
         link: '/all-profiles',
     },
-    {
-        name: 'Help',
-        link: '/contact',
-    },
+    // {
+    //     name: 'Help',
+    //     link: '/contact',
+    // },
 ];
 
 export const SignUpMenu = [
@@ -17,14 +17,10 @@ export const SignUpMenu = [
 ];
 
 export const FooterQuickMenu = [
-    {
-        name: 'About',
-        link: '/about',
-    },
-    {
-        name: 'Contact',
-        link: '/contact',
-    },
+    // {
+    //     name: 'Contact',
+    //     link: '/contact',
+    // },
     {
         name: 'Register',
         link: '/register',
