@@ -9,7 +9,7 @@
     }
 
     .profiles-container {
-        flex: 1 1 50%;
+        flex: 1 1 68%;
 
         .profile-card {
             width: 50%;
@@ -45,6 +45,10 @@
                 }
             }
         }
+    }
+
+    &.loading-layout {
+        justify-content: center;
     }
 }
 

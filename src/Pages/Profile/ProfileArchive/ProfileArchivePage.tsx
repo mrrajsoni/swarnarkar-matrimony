@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Layout from '../../../Components/Commons/Layout/Layout';
 import { useUser } from '../../../Context/UserContext';
 import { selectValue } from '../../../Types/GlobalTypes';
@@ -35,7 +35,7 @@ interface IProfileData {
 
 const ProfileArchive = () => {
     const { user } = useUser();
-    const [currentPage, setCurrentPage] = useState(0);
+    // const [currentPage, setCurrentPage] = useState(0);
     const [profileData, setProfileData] = useState<IProfileArchiveData[]>(null);
     const [filteredProfileData, setFilteredProfileData] = useState<IProfileData>({
         data: null,
@@ -43,35 +43,38 @@ const ProfileArchive = () => {
     });
     const [profileCount, setProfileCount] = useState(0);
 
-    const fetchProfileArchiveData = (page: number) => {
-        return FetchUser.getArchivePageProfileData(user?.id, user?.gender, page).then(
-            (response) => {
-                setProfileData(response.data);
-                setFilteredProfileData((prevState) => {
-                    return {
-                        ...prevState,
-                        data: response.data,
-                    };
-                });
-                setProfileCount(response.data.length);
-                return response.data;
-            },
-        );
-    };
-    const handleRefetch = () => {
-        void refetch()
-            .then((value) => {
-                setProfileData((prevState) => {
-                    return {
-                        ...prevState,
-                        data: value.data,
-                    };
-                });
-            })
-            .catch((reason) => console.log(reason));
+    const setUserDataLocalState = (data) => {
+        setProfileData(data);
+        setFilteredProfileData((prevState) => {
+            return {
+                ...prevState,
+                data: data,
+            };
+        });
+        setProfileCount(data.length);
     };
 
-    const debouncedRefetch = useCallback(debounce(handleRefetch, 500), []);
+    const fetchProfileArchiveData = () => {
+        return FetchUser.getArchivePageProfileData(user?.id, user?.gender).then((response) => {
+            setUserDataLocalState(response.data);
+            return response.data;
+        });
+    };
+
+    // const handleRefetch = () => {
+    //     void refetch()
+    //         .then((value) => {
+    //             setProfileData((prevState) => {
+    //                 return {
+    //                     ...prevState,
+    //                     data: value.data,
+    //                 };
+    //             });
+    //         })
+    //         .catch((reason) => console.log(reason));
+    // };
+
+    // const debouncedRefetch = useCallback(debounce(handleRefetch, 500), []);
 
     const handleFilterChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,22 +84,23 @@ const ProfileArchive = () => {
         },
         [profileData, setFilteredProfileData],
     );
-    const handlePaginationState = (isPrevButton: boolean) => {
-        setCurrentPage((prevState) => (isPrevButton ? Math.max(prevState - 1, 0) : prevState + 1));
-        debouncedRefetch();
-    };
+    // const handlePaginationState = (isPrevButton: boolean) => {
+    //     setCurrentPage((prevState) => (isPrevButton ? Math.max(prevState - 1, 0) : prevState + 1));
+    //     debouncedRefetch();
+    // };
 
-    const { isLoading, refetch } = useQuery(
-        ['archiveProfiles'],
-        () => fetchProfileArchiveData(currentPage),
-        {
-            keepPreviousData: true,
-            enabled: !!user?.gender && !!user?.id,
-            cacheTime: 120000,
-        },
-    );
+    const { data, isLoading } = useQuery(['archiveProfiles'], () => fetchProfileArchiveData(), {
+        enabled: !!user?.gender && !!user?.id,
+        cacheTime: 120000,
+    });
 
-    const disabledPrevButton = currentPage === 0;
+    useEffect(() => {
+        if (data) {
+            setUserDataLocalState(data);
+        }
+    }, [data]);
+
+    // const disabledPrevButton = currentPage === 0;
 
     const profileTerm =
         profileCount === 1
@@ -104,15 +108,18 @@ const ProfileArchive = () => {
             : `Showing all ${profileCount} profiles`;
     return (
         <Layout>
-            <section className="profile-archive-page flex  py-10">
-                <div className="filter-container flex-auto">
-                    <h5 className="archive-mini-label">Filters</h5>
-                    <Filters onFilterChange={handleFilterChange} />
-                </div>
-                <div className="profiles-container">
-                    <h5 className="archive-mini-label">{profileTerm}</h5>
-                    {user?.id && !isLoading ? (
-                        <>
+            <section
+                className={`profile-archive-page flex py-10 ${
+                    isLoading ? 'loading-layout' : 'loaded-layout'
+                }`}>
+                {user?.id && !isLoading ? (
+                    <>
+                        <div className="filter-container flex-auto">
+                            <h5 className="archive-mini-label">Filters</h5>
+                            <Filters onFilterChange={handleFilterChange} />
+                        </div>
+                        <div className="profiles-container">
+                            <h5 className="archive-mini-label">{profileTerm}</h5>
                             <div className="flex flex-wrap gap-6">
                                 {filteredProfileData.data &&
                                     filteredProfileData.data.map((profile) => {
@@ -140,15 +147,11 @@ const ProfileArchive = () => {
                                         );
                                     })}
                             </div>
-                            <PaginationButtons
-                                disabledPrevButton={disabledPrevButton}
-                                handlePaginationState={handlePaginationState}
-                            />
-                        </>
-                    ) : (
-                        <LoadingSpinner />
-                    )}
-                </div>
+                        </div>
+                    </>
+                ) : (
+                    <LoadingSpinner />
+                )}
             </section>
         </Layout>
     );
