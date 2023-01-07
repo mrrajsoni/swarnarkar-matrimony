@@ -26,6 +26,12 @@ const ForgotPasswordPage = () => {
             setDisableButton(false);
         }, 60000);
     };
+    useEffect(() => {
+        return () => {
+            clearTimeout(timerRef.current);
+        };
+    }, []);
+
     const { callService, data, error, isLoading } = useSupabaseCall(handlePasswordRecovery);
     useEffect(() => {
         if (isLoading) {
@@ -34,12 +40,6 @@ const ForgotPasswordPage = () => {
             console.log(error.message);
         }
     }, [isLoading, error]);
-
-    useEffect(() => {
-        return () => {
-            clearTimeout(timerRef.current);
-        };
-    }, []);
 
     const handleOnSubmit = (value: string) => {
         void callService(value);

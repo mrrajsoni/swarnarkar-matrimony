@@ -31,17 +31,16 @@ export default class FetchUser {
         }
     }
 
-    static async getArchivePageProfileData(user_id: string, gender: selectValue, page: number) {
+    static async getArchivePageProfileData(user_id: string, gender: selectValue) {
         try {
-            const { from, to } = CommonUtils.getPagination(page, 10);
+            // const { from, to } = CommonUtils.getPagination(page, 10);
             const { data, error, count } = await supabase
                 .from('user_registration')
                 .select(
                     `first_name, last_name, dob, self_gotra, occupation, annual_income, height, user_id, user_images, employed_in, manglik, martial_status`,
                 )
                 .not('user_id', 'eq', user_id)
-                .not('gender->>label', 'eq', gender.label)
-                .range(from, to);
+                .not('gender->>label', 'eq', gender.label);
             return {
                 error,
                 data,
